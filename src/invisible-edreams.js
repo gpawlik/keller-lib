@@ -78,6 +78,12 @@
             return template;
         },
 
+        showSidebarWidget: function (page_name) {
+            var $settingsPages = $('.ue-sidebar-widgets');
+            $settingsPages.find('li').removeClass('show');
+            $settingsPages.find('li[data-widget-name="' + page_name + '"]').addClass('show');
+        },
+
         navigateKeyboard: function (action) {
             var $keyboard = $('.ue-keyboard'),
                 allItemsLength = $keyboard.find('li').length,
@@ -91,6 +97,10 @@
             }
             else if (action === 'left') {
                 nextItem = ((currentItem - 1) < 0) ? allItemsLength - 1 : currentItem - 1;
+            }
+            else if (action === 'enter') {
+                this.writeText();
+                nextItem = currentItem;
             }
             $keyboard.find('li').removeClass('active');
             $keyboard.find('li[data-id="' + nextItem + '"]').addClass('active');
@@ -131,6 +141,7 @@
             var $controls = $(this.element).find('#ue-controls li'),
                 $currentControl = $controls.filter('.active'),
                 currentControlId = $currentControl.data('ue-control-id') || 0,
+                currentControlName = $currentControl.data('ue-control-name') || 'key',
                 nextControlId;
 
             if (action === 'right') {
@@ -140,7 +151,8 @@
                 nextControlId = ((currentControlId - 1) < 0) ? $controls.length - 1 : currentControlId - 1;
             }
             else if (action === 'enter') {
-                $currentControl.toggleClass('active');
+                $currentControl.toggleClass('show');
+                this.showSidebarWidget(currentControlName);
                 nextControlId = currentControlId;
             }
 
@@ -167,6 +179,16 @@
             else if ((action === 'up') || (action === 'down')) {
                 this.navigateSettings(action);
             }
+            else if (action === 'enter') {
+                switch (focus) {
+                    case 'controls':
+                        this.navigateControls(action);
+                        break;
+                    case 'settings':
+                        this.navigateKeyboard(action);
+                        break;
+                }
+            }
         },
 
         getFocus: function () {
@@ -180,7 +202,7 @@
         writeText: function () {
             var $input = $('input[name="test"]'),
                 currentValue = $input.val(),
-                currentChar = $(this.element).find('li.active').text().toLowerCase();
+                currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
 
             $input.val(currentValue + currentChar);
         },
@@ -242,7 +264,7 @@
                     this.navigateHandler('down');
                     break;
                 case 13:
-                    this.writeText();
+                    this.navigateHandler('enter', this.currentFocus);
             }
 
         }

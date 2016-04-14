@@ -31,43 +31,57 @@
     <div id="ue-sidebar" class="active">
         <div id="ue-controls">
             <ul>
-                <li data-ue-control-id="0" data-ue-control="mic" class="active">MIC</li>
-                <li data-ue-control-id="1" data-ue-control="vid">VID</li>
-                <li data-ue-control-id="2" data-ue-control="key">KEY</li>
-                <li data-ue-control-id="3" data-ue-control="set">SET</li>
+                <li data-ue-control-id="0" data-ue-control-name="mic" class="active">MIC</li>
+                <li data-ue-control-id="1" data-ue-control-name="vid">VID</li>
+                <li data-ue-control-id="2" data-ue-control-name="key">KEY</li>
+                <li data-ue-control-id="3" data-ue-control-name="set">SET</li>
             </ul>
         </div>
 
-        <div class="ue-keyboard"></div>
+        <ul class="ue-sidebar-widgets">
+            <li data-widget-name="key" class="show">
+                <div class="ue-keyboard"></div>
+            </li>
+            <li data-widget-name="set">
+                <div class="ue-settings">
+                    <div class="ue-settings-row">
+                        Something
+                    </div>
+                    <div class="ue-settings-row">
+                        Something else
+                    </div>
+                    <div class="ue-settings-row">
+                        <div class="ue-controls-voice-switch">
+                            VOICE
+                        </div>
+                    </div>
+                    <div class="ue-settings-row">
+                        <div class="ue-settings-label">Font enhancer</div>
+                        <div class="ue-settings-stepper">
+                            <div class="ue-stepper-button" data-step="subtract">-</div>
+                            <div class="ue-stepper-button" data-step="add">+</div>
+                        </div>
+                    </div>
+                    <div class="ue-settings-row">
+                        <div class="ue-settings-label">Event logger</div>
+                        <div class="ue-settings-logger">
+                            <div class="ue-logger-box">?</div>
+                        </div>
+                    </div>
+                    <div class="ue-settings-toggle"></div>
+                </div>
+            </li>
+            <li data-widget-name="mic">
+                <div class="ue-microphone">MICRO</div>
+            </li>
+            <li data-widget-name="vid">
+                <div class="ue-microphone">VIDEO</div>
+            </li>
+        </ul>
 
 
-        <div class="ue-settings">
-            <div class="ue-settings-row">
-                Something
-            </div>
-            <div class="ue-settings-row">
-                Something else
-            </div>
-            <div class="ue-settings-row">
-                <div class="ue-controls-voice-switch">
-                    VOICE
-                </div>
-            </div>
-            <div class="ue-settings-row">
-                <div class="ue-settings-label">Font enhancer</div>
-                <div class="ue-settings-stepper">
-                    <div class="ue-stepper-button" data-step="subtract">-</div>
-                    <div class="ue-stepper-button" data-step="add">+</div>
-                </div>
-            </div>
-            <div class="ue-settings-row">
-                <div class="ue-settings-label">Event logger</div>
-                <div class="ue-settings-logger">
-                    <div class="ue-logger-box">?</div>
-                </div>
-            </div>
-            <div class="ue-settings-toggle"></div>
-        </div>
+
+
 
 
     </div>
