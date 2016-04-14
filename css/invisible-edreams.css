@@ -1,0 +1,45 @@
+.ue-module {
+    display:none;
+}
+.ue-module.active {
+    display:block;
+}
+
+h3 {
+    font-family:Arial, Verdana, sans-serif;
+    padding:20px 40px;
+    font-size:30px;
+}
+ul {
+    list-style-type:none;
+    display:table;
+    width:100%;
+    padding:0;
+}
+li {
+    float:left;
+    width:25%;
+    text-align:center;
+    text-transform:uppercase;
+    line-height:50px;
+}
+li.active {
+    background:#222;
+    color:#fff;
+}
+input[type="text"] {
+    border:none;
+    font-size:35px;
+    padding:20px 40px;
+    text-transform:capitalize;
+}
+
+/* sidebar */
+#ue-sidebar {
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    right:0px;
+    width:300px;
+    border-left:1px solid #ddd;
+}
