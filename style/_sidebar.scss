@@ -1,0 +1,8 @@
+.ue-sidebar-widgets {
+  > li {
+    display:none;
+    &.show {
+      display:block;
+    }
+  }
+}
