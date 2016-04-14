@@ -10,7 +10,7 @@
  *
  *  Under MIT License
  */
-;(function($, voice, window, document, undefined) {
+;(function($, voice, speech, window, document, undefined) {
 
     "use strict";
 
@@ -18,7 +18,8 @@
     var pluginName = "invisibleEdreams",
         defaults = {
             propertyName: "value",
-            focusAreas: ['input', 'controls', 'settings']
+            focusAreas: ['input', 'controls', 'settings'],
+            speechLanguage: "Google UK English Male"
         };
 
     // The actual plugin constructor
@@ -44,6 +45,9 @@
                 '22/04/2016': '(next week)',
                 '17/04/2016': '(this weekend)'
             });
+            speech.OnVoiceReady = _.bind(function() {
+                this.readModuleHeaders();
+            }, this);
         },
 
         eventHandlers: function () {
@@ -128,6 +132,9 @@
 
             $modules.removeClass('active');
             $modules.filter('[data-ue-module="' + nextItem + '"]').addClass('active');
+            this.currentModuleId = nextItem;
+
+            this.readModuleHeaders();
         },
 
         navigateSettings: function (action) {
@@ -206,7 +213,7 @@
         },
 
         writeText: function () {
-            var $currentInputValue = this.getCurrentInput().val(),
+            var $currentInputValue = this.getCurrentModule().find('input').val(),
                 currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
             this.fillOutInput($currentInputValue + currentChar);
         },
@@ -217,12 +224,23 @@
             $input.val(currentValue.slice(0, -1));
         },
 
+        readText: function (text) {
+            speech.speak(text);
+        },
+
+        readModuleHeaders: function () {
+            var $moduleHeaders = this.getCurrentModule().find('h3[data-ue-speech], h5[data-ue-speech]');
+            _.each($moduleHeaders, function(header){
+                this.readText($(header).data('ue-speech'));
+            }, this);
+        },
+
         fillOutInput: function (text) {
             this.getCurrentInput().val(text);
         },
 
-        getCurrentInput: function () {
-            return $('[data-ue-module="' + this.currentModuleId + '"] input');
+        getCurrentModule: function () {
+            return $('[data-ue-module="' + this.currentModuleId + '"]');
         },
 
         gamepadConnected: function () {
@@ -320,4 +338,4 @@
         } );
     };
 
-})(jQuery, annyang, window, document);
+})(jQuery, annyang, responsiveVoice, window, document);
