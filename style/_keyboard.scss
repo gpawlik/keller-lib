@@ -1,0 +1,19 @@
+.ue-keyboard {
+  ul {
+    list-style-type:none;
+    display:table;
+    width:100%;
+    padding:0;
+  }
+  li {
+    float:left;
+    width:25%;
+    text-align:center;
+    text-transform:uppercase;
+    line-height:50px;
+    &.active {
+      background:#222;
+      color:#fff;
+    }
+  }
+}

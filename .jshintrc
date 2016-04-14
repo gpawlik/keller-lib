@@ -6,6 +6,5 @@
   "expr": true,
   "immed": true,
   "noarg": true,
-  "unused": true,
   "node": true
 }
