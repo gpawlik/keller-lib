@@ -200,18 +200,23 @@
         },
 
         writeText: function () {
-            var $input = $('input[name="test"]'),
-                currentValue = $input.val(),
+            var $currentInputValue = this.getCurrentInput().val(),
                 currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
-
-            $input.val(currentValue + currentChar);
+            this.fillOutInput($currentInputValue + currentChar);
         },
 
         removeText: function () {
             var $input = $('input[name="test"]'),
                 currentValue = $input.val();
-
             $input.val(currentValue.slice(0, -1));
+        },
+
+        fillOutInput: function (text) {
+            this.getCurrentInput().val(text);
+        },
+
+        getCurrentInput: function () {
+            return $(this.element).find('.ue-module.active input');
         },
 
         gamepadConnected: function () {
