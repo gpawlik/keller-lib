@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invisible eDreams Demo</title>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/underscore/underscore-min.js"></script>
+    <script src="../src/invisible-edreams.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/invisible-edreams.css">
+</head>
+<body>
+    <div id="firstInput" class="ue-module active" data-ue-module="1"
+         data-ue-left="odigeo:goLeft"
+         data-ue-right="odigeo:goRight"
+         data-ue-up="odigeo:goUp"
+         data-ue-down="odigeo:goDown"
+         data-ue-enter="odigeo:enter"
+         >
+         <h3>Where do you want to go?</h3>
+         <input type="text" name="test" placeholder="Your destination..." autocomplete="off" />
+    </div>
+    <div id="secondInput" class="ue-module" data-ue-module="2"
+         data-ue-left="odigeo:goLeft"
+         data-ue-right="odigeo:goRight"
+         data-ue-up="odigeo:goUp"
+         data-ue-down="odigeo:goDown"
+         >
+         <h3>Where are you right now?</h3>
+         <input type="text" name="test" placeholder="Your origin..." autocomplete="off" />
+    </div>
+    <div id="ue-sidebar">
+        <div class="ue-keyboard"></div>
+    </div>
+    <script>
+        $(function() {
+            $("body").invisibleEdreams({
+                propertyName: "a custom value"
+            });
+
+            $(document).on('odigeo:goLeft', function () {
+                console.log('I am an eDreams function, please go LEFT!');
+
+                var currentId = $('.ue-module.active').data('ue-module');
+                $('.ue-module').removeClass('active');
+                $('.ue-module[data-ue-module="' + (currentId - 1) + '"]').addClass('active');
+            });
+
+            $(document).on('odigeo:goRight', function () {
+                console.log('I am an eDreams function, please go RIGHT!');
+
+                var currentId = $('.ue-module.active').data('ue-module');
+                $('.ue-module').removeClass('active');
+                $('.ue-module[data-ue-module="' + (currentId + 1) + '"]').addClass('active');
+            });
+
+            $(document).on('odigeo:enter', function () {
+                console.log('I am an eDreams function, please SUBMIT THE FIELD!');
+            });
+        });
+    </script>
+</body>
+</html>

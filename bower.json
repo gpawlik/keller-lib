@@ -1,0 +1,17 @@
+{
+  "name": "invisible-edreams",
+  "license": "MIT",
+  "authors": [
+    ""
+  ],
+  "description": "",
+  "main": "src/invisible-edreams.js",
+  "dependencies": {
+    "jquery": "1"
+  },
+  "ignore": [
+    "npm-debug.log",
+    "bower_components",
+    "node_modules"
+  ]
+}
