@@ -86,7 +86,7 @@
             return template;
         },
 
-        navigateKeyboard: function (direction) {
+        navigateKeyboard: function (action) {
             var $keyboard = $('.ue-keyboard'),
                 allItemsLength = $keyboard.find('li').length,
                 currentItem = $keyboard.find('li.active').data('id') || 0,
@@ -94,10 +94,10 @@
 
             console.log('keys', allItemsLength);
 
-            if (direction === 'right') {
+            if (action === 'right') {
                 nextItem = ((currentItem + 1) > allItemsLength) ? 0 : currentItem + 1;
             }
-            else if (direction === 'left') {
+            else if (action === 'left') {
                 nextItem = ((currentItem - 1) < 0) ? allItemsLength - 1 : currentItem - 1;
             }
             $keyboard.find('li').removeClass('active');
@@ -105,16 +105,16 @@
 
         },
 
-        navigateModules: function (direction) {
+        navigateModules: function (action) {
 
             var $modules = $(this.element).find('.ue-module'),
                 currentItem = $modules.filter('.active').data('ue-module') || 1,
                 nextItem;
 
-            if (direction === 'right') {
+            if (action === 'right') {
                 nextItem = ((currentItem + 1) > $modules.length) ? 0 : currentItem + 1;
             }
-            else if (direction === 'left') {
+            else if (action === 'left') {
                 nextItem = ((currentItem - 1) < 0) ? $modules.length - 1 : currentItem - 1;
             }
 
@@ -122,16 +122,38 @@
             $modules.filter('[data-ue-module="' + nextItem + '"]').addClass('active');
         },
 
-        navigateSettings: function (direction) {
+        navigateSettings: function (action) {
             var focusAreas = this.settings.focusAreas,
                 currentFocusIndex = focusAreas.indexOf(this.getFocus());
 
-            if (direction === 'up' && ((currentFocusIndex + 1) < focusAreas.length)) {
+            if (action === 'up' && ((currentFocusIndex + 1) < focusAreas.length)) {
                 this.setFocus(currentFocusIndex + 1);
             }
-            else if (direction === 'down' && ((currentFocusIndex - 1) >= 0)) {
+            else if (action === 'down' && ((currentFocusIndex - 1) >= 0)) {
                 this.setFocus(currentFocusIndex - 1);
             }
+        },
+
+        navigateControls: function (action) {
+
+            var $controls = $(this.element).find('#ue-controls li'),
+                $currentControl = $controls.filter('.active'),
+                currentControlId = $currentControl.data('ue-control-id') || 0,
+                nextControlId;
+
+            if (action === 'right') {
+                nextControlId = ((currentControlId + 1) >= $controls.length) ? 0 : currentControlId + 1;
+            }
+            else if (action === 'left') {
+                nextControlId = ((currentControlId - 1) < 0) ? $controls.length - 1 : currentControlId - 1;
+            }
+            else if (action === 'enter') {
+                $currentControl.toggleClass('active');
+                nextControlId = currentControlId;
+            }
+
+            $controls.removeClass('active');
+            $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('active');
         },
 
         navigateHandler: function (action, focus) {
@@ -141,6 +163,9 @@
                 switch (focus) {
                     case 'input':
                         this.navigateModules(action);
+                        break;
+                    case 'controls':
+                        this.navigateControls(action);
                         break;
                     case 'settings':
                         this.navigateKeyboard(action);
