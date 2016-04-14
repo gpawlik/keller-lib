@@ -10,7 +10,7 @@
  *
  *  Under MIT License
  */
-;(function($, window, document, undefined) {
+;(function($, voice, window, document, undefined) {
 
     "use strict";
 
@@ -38,6 +38,12 @@
             this.testFunction( "hello!!!");
             this.showKeyboard();
             this.eventHandlers();
+            this.generateVoiceCommands({
+                'Barcelona': '(Barcelona)',
+                'Berlin': '(Berlin)',
+                '22/04/2016': '(next week)',
+                '17/04/2016': '(this weekend)'
+            });
         },
 
         eventHandlers: function () {
@@ -216,7 +222,7 @@
         },
 
         getCurrentInput: function () {
-            return $(this.element).find('.ue-module.active input');
+            return $('[data-ue-module="' + this.currentModuleId + '"] input');
         },
 
         gamepadConnected: function () {
@@ -249,6 +255,33 @@
             if(gp.buttons[5].pressed) {
                 this.writeText();
             }
+        },
+
+        activateVoice: function () {
+            voice.start();
+        },
+
+        deActivateVoice: function () {
+            voice.stop();
+        },
+
+        debugVoice: function () {
+            voice.addCallback("resultMatch", function(n, a, o) {
+                console.log("said: " + n + ", cmd: " + a + ", phrases: " + o)
+            });
+            voice.debug();
+        },
+
+        generateVoiceCommands: function (commands) {
+            var commandTriggers = _.object(_.map(commands, function(command, trigger){
+                return [command,
+                        _.bind(function () {
+                            this.fillOutInput(trigger);
+                        }, this)
+                ];
+            }, this));
+            voice.addCommands(commandTriggers);
+            this.debugVoice();
         },
 
         getKeyEvent: function (e) {
@@ -287,4 +320,4 @@
         } );
     };
 
-})(jQuery, window, document);
+})(jQuery, annyang, window, document);
