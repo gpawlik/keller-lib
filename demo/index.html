@@ -5,6 +5,7 @@
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/underscore/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
+    <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <script src="../src/invisible-edreams.js"></script>
     <link rel="stylesheet" type="text/css" href="../dist/invisible-edreams.css">
 </head>
@@ -16,7 +17,8 @@
          data-ue-down="odigeo:goDown"
          data-ue-enter="odigeo:enter"
          >
-         <h3>Where do you want to go?</h3>
+         <h3 data-ue-speech="Welcome to universal eeDreams!">Welcome to universal eDreams!</h3>
+         <h5 data-ue-speech="Where do you want to go?">Where do you want to go?</h5>
          <input type="text" name="destination" placeholder="Your destination..." autocomplete="off" />
     </div>
     <div id="secondInput" class="ue-module" data-ue-module="2"
@@ -25,7 +27,7 @@
          data-ue-up="odigeo:goUp"
          data-ue-down="odigeo:goDown"
          >
-         <h3>Where are you right now?</h3>
+         <h3 data-ue-speech="Where are you right now?">Where are you right now?</h3>
          <input type="text" name="origin" placeholder="Your origin..." autocomplete="off" />
     </div>
 
