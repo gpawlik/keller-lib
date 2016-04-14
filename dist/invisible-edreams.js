@@ -18,7 +18,7 @@
  *
  *  Under MIT License
  */
-;(function($, window, document, undefined) {
+;(function($, voice, window, document, undefined) {
 
     "use strict";
 
@@ -224,7 +224,7 @@
         },
 
         getCurrentInput: function () {
-            return $(this.element).find('.ue-module.active input');
+            return $('[data-ue-module="' + this.currentModuleId + '"] input');
         },
 
         gamepadConnected: function () {
@@ -257,6 +257,10 @@
             if(gp.buttons[5].pressed) {
                 this.writeText();
             }
+        },
+
+        getVoiceEvent: function () {
+
         },
 
         getKeyEvent: function (e) {
@@ -295,4 +299,4 @@
         } );
     };
 
-})(jQuery, window, document);
+})(jQuery, annyang, window, document);
