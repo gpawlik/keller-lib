@@ -27,15 +27,17 @@
          <h3>Where are you right now?</h3>
          <input type="text" name="test" placeholder="Your origin..." autocomplete="off" />
     </div>
-    <div id="ue-controls">
-        <ul>
-            <li>MIC</li>
-            <li>VID</li>
-            <li>KEY</li>
-            <li>SET</li>
-        </ul>
-    </div>
+
     <div id="ue-sidebar" class="active">
+        <div id="ue-controls">
+            <ul>
+                <li data-ue-control-id="0" data-ue-control="mic" class="active">MIC</li>
+                <li data-ue-control-id="1" data-ue-control="vid">VID</li>
+                <li data-ue-control-id="2" data-ue-control="key">KEY</li>
+                <li data-ue-control-id="3" data-ue-control="set">SET</li>
+            </ul>
+        </div>
+
         <div class="ue-keyboard"></div>
 
 
