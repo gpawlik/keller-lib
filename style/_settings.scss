@@ -1,0 +1,71 @@
+#ue-sidebar {
+  background:#fff;
+  position:fixed;
+  top:0;
+  bottom:0;
+  right:-300px;
+  width:300px;
+  border-left:1px solid #ddd;
+  z-index:9999999;
+  &.active {
+    right:0;
+  }
+}
+
+.ue-settings {
+  //.transition(right 0.3s ease-out);
+  .ue-settings-toggle {
+    position:absolute;
+    top:10px;
+    left:-25px;
+    display:block;
+    width:25px;
+    height:25px;
+    background:#ddd;
+    cursor:pointer;
+  }
+  .ue-settings-row {
+    padding:15px 10px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+  }
+  .ue-settings-voice-switch {
+    display:block;
+    background:#ddd;
+    width:50px;
+    height:50px;
+    margin:0 auto;
+    text-align:center;
+    line-height:50px;
+    font-size:8px;
+    cursor:pointer;
+    border:3px solid #ddd;
+    //.border-radius(50%);
+    &.active {
+      border-color:green;
+    }
+  }
+  .ue-settings-stepper {
+    display:table;
+    background:#ddd;
+    width:80px;
+    margin:0 auto;
+    //.border-radius(5px);
+    > div {
+      display:table-cell;
+      width:50%;
+      height:25px;
+      vertical-align:middle;
+      cursor:pointer;
+    }
+  }
+  .ue-settings-logger {
+    .ue-logger-box {
+      border:1px solid #ddd;
+      margin:15px;
+      padding:10px;
+      height:100px;
+      overflow-y:scroll;
+    }
+  }
+}

@@ -17,7 +17,8 @@
     // Create the defaults once
     var pluginName = "invisibleEdreams",
         defaults = {
-            propertyName: "value"
+            propertyName: "value",
+            focusAreas: ['input', 'controls', 'settings']
         };
 
     // The actual plugin constructor
@@ -27,7 +28,7 @@
         this._defaults = defaults;
         this._name = pluginName;
         this.currentModuleId = 1;
-        this.currentFocus = 'input';
+        this.currentFocus = this.settings.focusAreas[0];
         this.init();
     }
 
@@ -52,17 +53,17 @@
 
         showKeyboard: function() {
             var alphabet = this.createAlphabet();
-            $(this.element).find('.ue-keyboard').html(alphabet);
+            $(this.element).find('.ue-keyboard').append(alphabet);
         },
 
         createAlphabet: function () {
             var letters,
                 template;
 
-            //Create an array with the letters
-            letters = _.map(_.range(
+                //Create an array with the letters
+                letters = _.map(_.range(
                     'a'.charCodeAt(0),
-                        'z'.charCodeAt(0) + 1
+                    'z'.charCodeAt(0) + 1
                 ),
                 function(value) {
                     return String.fromCharCode(value);
@@ -82,6 +83,8 @@
                 allItemsLength = $keyboard.find('li').length,
                 currentItem = $keyboard.find('li.active').data('id') || 0,
                 nextItem;
+
+            console.log('keys', allItemsLength);
 
             if (direction === 'right') {
                 nextItem = ((currentItem + 1) > allItemsLength) ? 0 : currentItem + 1;
@@ -109,6 +112,44 @@
 
             $modules.removeClass('active');
             $modules.filter('[data-ue-module="' + nextItem + '"]').addClass('active');
+        },
+
+        navigateSettings: function (direction) {
+            var focusAreas = this.settings.focusAreas,
+                currentFocusIndex = focusAreas.indexOf(this.getFocus());
+
+            if (direction === 'up' && ((currentFocusIndex + 1) < focusAreas.length)) {
+                this.setFocus(currentFocusIndex + 1);
+            }
+            else if (direction === 'down' && ((currentFocusIndex - 1) >= 0)) {
+                this.setFocus(currentFocusIndex - 1);
+            }
+        },
+
+        navigateHandler: function (action, focus) {
+            console.log('action', action);
+            console.log('focus', focus);
+            if ((action === 'right') || (action === 'left')) {
+                switch (focus) {
+                    case 'input':
+                        this.navigateModules(action);
+                        break;
+                    case 'settings':
+                        this.navigateKeyboard(action);
+                        break;
+                }
+            }
+            else if ((action === 'up') || (action === 'down')) {
+                this.navigateSettings(action);
+            }
+        },
+
+        getFocus: function () {
+            return this.currentFocus;
+        },
+
+        setFocus: function (idx) {
+            this.currentFocus = this.settings.focusAreas[idx];
         },
 
         writeText: function () {
@@ -164,36 +205,16 @@
 
             switch (e.keyCode) {
                 case 39:
-                    if(this.currentFocus === 'input') {
-                        //$(document).trigger($currentModule.data('ueRight'));
-                        this.navigateModules('right');
-                    }
-                    else {
-                        this.navigateKeyboard('right');
-                    }
+                    this.navigateHandler('right', this.currentFocus);
                     break;
                 case 37:
-                    if(this.currentFocus === 'input') {
-                        //$(document).trigger($currentModule.data('ueLeft'));
-                        this.navigateModules('right');
-                    }
-                    else {
-                        this.navigateKeyboard('left');
-                    }
+                    this.navigateHandler('left', this.currentFocus);
                     break;
                 case 38:
-                    direction = 'up';
-                    console.log('switching: SETTINGS');
-                    if(this.currentFocus === 'input') {
-                        this.currentFocus = 'settings';
-                    }
+                    this.navigateHandler('up');
                     break;
                 case 40:
-                    direction = 'down';
-                    console.log('switching: INPUT');
-                    if(this.currentFocus === 'settings') {
-                        this.currentFocus = 'input';
-                    }
+                    this.navigateHandler('down');
                     break;
                 case 13:
                     this.writeText();

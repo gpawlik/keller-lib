@@ -76,11 +76,22 @@ module.exports = function( grunt ) {
 			}
 		},
 
+        sass: {
+            dist: {
+                options: {
+                    style: 'expanded'
+                },
+                files: {
+                    'dist/invisible-edreams.css': 'style/style.scss'
+                }
+            }
+        },
+
 		// watch for changes to source
 		// Better than calling grunt a million times
 		// (call 'grunt watch')
 		watch: {
-			files: [ "src/*", "test/**/*" ],
+			files: [ "src/*", "style/*", "test/**/*" ],
 			tasks: [ "default" ]
 		}
 
@@ -92,11 +103,12 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( "grunt-contrib-uglify" );
 	grunt.loadNpmTasks( "grunt-contrib-coffee" );
 	grunt.loadNpmTasks( "grunt-contrib-watch" );
+    grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks( "grunt-karma" );
     grunt.loadNpmTasks( "grunt-serve" );
 
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "uglify" ] );
-	grunt.registerTask( "default", [ "jshint", "build", "karma:unit:run" ] );
+	grunt.registerTask( "default", [ "jshint", "sass", "build" ] );
 };

@@ -5,7 +5,7 @@
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/underscore/underscore-min.js"></script>
     <script src="../src/invisible-edreams.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/invisible-edreams.css">
+    <link rel="stylesheet" type="text/css" href="../dist/invisible-edreams.css">
 </head>
 <body>
     <div id="firstInput" class="ue-module active" data-ue-module="1"
@@ -27,8 +27,47 @@
          <h3>Where are you right now?</h3>
          <input type="text" name="test" placeholder="Your origin..." autocomplete="off" />
     </div>
-    <div id="ue-sidebar">
+    <div id="ue-controls">
+        <ul>
+            <li>MIC</li>
+            <li>VID</li>
+            <li>KEY</li>
+            <li>SET</li>
+        </ul>
+    </div>
+    <div id="ue-sidebar" class="active">
         <div class="ue-keyboard"></div>
+
+
+        <div class="ue-settings">
+            <div class="ue-settings-row">
+                Something
+            </div>
+            <div class="ue-settings-row">
+                Something else
+            </div>
+            <div class="ue-settings-row">
+                <div class="ue-controls-voice-switch">
+                    VOICE
+                </div>
+            </div>
+            <div class="ue-settings-row">
+                <div class="ue-settings-label">Font enhancer</div>
+                <div class="ue-settings-stepper">
+                    <div class="ue-stepper-button" data-step="subtract">-</div>
+                    <div class="ue-stepper-button" data-step="add">+</div>
+                </div>
+            </div>
+            <div class="ue-settings-row">
+                <div class="ue-settings-label">Event logger</div>
+                <div class="ue-settings-logger">
+                    <div class="ue-logger-box">?</div>
+                </div>
+            </div>
+            <div class="ue-settings-toggle"></div>
+        </div>
+
+
     </div>
     <script>
         $(function() {
