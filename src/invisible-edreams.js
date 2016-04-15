@@ -29,8 +29,10 @@
         this._defaults = defaults;
         this._name = pluginName;
         this.currentModuleId = 1;
+        this.focusOnModule = 1;
         this.currentFocus = this.settings.focusAreas[0];
         this.init();
+        this.datesModule = [3, 4];
     }
 
     // Avoid UniversalEdreams.prototype conflicts
@@ -125,9 +127,11 @@
 
             if (action === 'right') {
                 nextItem = ((currentItem + 1) > $modules.length) ? 0 : currentItem + 1;
+                this.currentModuleId += 1;
             }
             else if (action === 'left') {
                 nextItem = ((currentItem - 1) < 0) ? $modules.length - 1 : currentItem - 1;
+                this.currentModuleId -= 1;
             }
 
             $modules.removeClass('active');
@@ -171,15 +175,21 @@
 
             $controls.removeClass('active');
             $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('active');
+
+            if (_.contains(this.datesModule, nextControlId)) {
+                this.focusOnModule = 1;
+            }
         },
 
         navigateHandler: function (action, focus) {
-            console.log('action', action);
-            console.log('focus', focus);
             if ((action === 'right') || (action === 'left')) {
                 switch (focus) {
                     case 'input':
-                        this.navigateModules(action);
+                        if (_.contains(this.datesModule, this.currentModuleId)) {
+                            this.modifyDates(action, focus);
+                        } else {
+                            this.navigateModules(action);
+                        }
                         break;
                     case 'controls':
                         this.navigateControls(action);
@@ -190,9 +200,12 @@
                 }
             }
             else if ((action === 'up') || (action === 'down')) {
-                this.navigateSettings(action);
-            }
-            else if (action === 'enter') {
+                if (_.contains(this.datesModule, this.currentModuleId)) {
+                    this.navigateDates(focus, action);
+                } else {
+                    this.navigateSettings(action);
+                }
+            } else if (action === 'enter') {
                 switch (focus) {
                     case 'controls':
                         this.navigateControls(action);
@@ -202,6 +215,91 @@
                         break;
                 }
             }
+        },
+
+        modifyDates: function (action, focus) {
+            var $moduleWithFocus = $('[data-ue-module="' + this.currentModuleId + '"]');
+            switch (this.focusOnModule) {
+                case 1:
+                    var valueDay = parseInt($moduleWithFocus.find('input[data-day]').attr('data-day'));
+                    this.changeDay(valueDay, action, $moduleWithFocus);
+                    break;
+                case 2:
+                    var valueMonth = parseInt($moduleWithFocus.find('input[data-month]').attr('data-month'));
+                    var valueYear = parseInt($moduleWithFocus.find('input[data-year]').attr('data-year'));
+                    this.changeMonth(valueMonth, valueYear, action, $moduleWithFocus);
+                    break;
+            }
+        },
+
+        changeMonth: function (valueMonth, valueYear, action, module) {
+            if (action === 'right') {
+                if (valueMonth === 12) {
+                    valueMonth = 1;
+                    valueYear += 1;
+                } else {
+                    valueMonth += 1;
+                }
+            } else {
+                if (valueMonth === 1) {
+                    valueMonth = 12;
+                    valueYear -= 1;
+                } else {
+                    valueMonth -= 1;
+                }
+            }
+            module.find('input[data-month]').attr('data-month', valueMonth);
+            module.find('input[data-year]').attr('data-year', valueYear);
+            module.find('[data-ue-focus=2]').val(this.getMonthText(valueMonth).toUpperCase() + ', ' + valueYear);
+        },
+
+        getMonthText: function(valueMonth) {
+            var months = ['January', 'February', 'March', 'April', 'May', 'Juny', 'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[valueMonth - 1];
+        },
+
+        changeDay: function (valueDay, action, module) {
+            if (action === 'right') {
+                if (valueDay < 31) {
+                    valueDay += 1;
+                }
+            } else {
+                if (valueDay !== 1) {
+                    valueDay -= 1;
+                }
+            }
+            module.find('input[data-day]').attr('data-day', valueDay);
+            module.find('[data-ue-focus=1]').val(valueDay);
+        },
+
+        navigateDates: function (focus, action) {
+            if (action === 'up') {
+                switch (this.focusOnModule) {
+                case 1:
+                    this.focusOnModule = 1;
+                    this.navigateModules('left');
+                    break;
+                case 2:
+                    this.focusOnModule -= 1;
+                    break;
+                }
+            } else if (this.focusOnModule === 1) {
+                this.focusOnModule += 1;
+            }
+        },
+
+        errorValidate: function (moduleWithFocus) {
+
+        },
+
+        validateDates: function (moduleWithFocus) {
+            var valueDay = parseInt(moduleWithFocus.find('input[data-day]').attr('data-day')),
+                valueMonth = parseInt(moduleWithFocus.find('input[data-month]').attr('data-month')),
+                valueYear = parseInt(moduleWithFocus.find('input[data-year]').attr('data-year'));
+
+            var dateToValidate = new Date (valueYear, valueMonth - 1, valueDay);
+            var validator = (!dateToValidate || dateToValidate.getFullYear() === valueYear && dateToValidate.getMonth() === (valueMonth - 1) && dateToValidate.getDate() === valueDay);
+            return validator;
         },
 
         getFocus: function () {
@@ -303,10 +401,22 @@
         },
 
         getKeyEvent: function (e) {
-            var $currentModule = $('[data-ue-module="' + this.currentModuleId + '"]'),
-                direction;
-
+            //var $currentModule = $('[data-ue-module="' + this.currentModuleId + '"]'),
+              //  direction;
             switch (e.keyCode) {
+                case 13:
+                    if (_.contains(this.datesModule, this.currentModuleId)) {
+                        var $moduleWithFocus = $('[data-ue-module="' + this.currentModuleId + '"]');
+                        if (this.validateDates($moduleWithFocus)) {
+                            this.focusOnModule = 1;
+                            this.navigateModules('right');
+                        } else {
+                            this.errorValidate($moduleWithFocus);
+                        }
+                    } else {
+                        this.writeText();
+                    }
+                    break;
                 case 39:
                     this.navigateHandler('right', this.currentFocus);
                     break;
@@ -319,8 +429,6 @@
                 case 40:
                     this.navigateHandler('down');
                     break;
-                case 13:
-                    this.navigateHandler('enter', this.currentFocus);
             }
 
         }
