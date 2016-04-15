@@ -18,7 +18,7 @@
  *
  *  Under MIT License
  */
-;(function($, voice, window, document, undefined) {
+;(function($, voice, speech, window, document, undefined) {
 
     "use strict";
 
@@ -26,7 +26,8 @@
     var pluginName = "invisibleEdreams",
         defaults = {
             propertyName: "value",
-            focusAreas: ['input', 'controls', 'settings']
+            focusAreas: ['input', 'controls', 'settings'],
+            speechLanguage: "Google UK English Male"
         };
 
     // The actual plugin constructor
@@ -46,6 +47,15 @@
             this.testFunction( "hello!!!");
             this.showKeyboard();
             this.eventHandlers();
+            this.generateVoiceCommands({
+                'Barcelona': '(Barcelona)',
+                'Berlin': '(Berlin)',
+                '22/04/2016': '(next week)',
+                '17/04/2016': '(this weekend)'
+            });
+            speech.OnVoiceReady = _.bind(function() {
+                this.readModuleHeaders();
+            }, this);
         },
 
         eventHandlers: function () {
@@ -76,6 +86,10 @@
                 function(value) {
                     return String.fromCharCode(value);
                 });
+
+            for(var j = 0; j < 10; j++) {
+                letters.push(j);
+            }
 
             template = '<ul>';
             for(var i = 0; i < letters.length; i++) {
@@ -130,6 +144,9 @@
 
             $modules.removeClass('active');
             $modules.filter('[data-ue-module="' + nextItem + '"]').addClass('active');
+            this.currentModuleId = nextItem;
+
+            this.readModuleHeaders();
         },
 
         navigateSettings: function (action) {
@@ -147,7 +164,7 @@
         navigateControls: function (action) {
 
             var $controls = $(this.element).find('#ue-controls li'),
-                $currentControl = $controls.filter('.active'),
+                $currentControl = $controls.filter('.show'),
                 currentControlId = $currentControl.data('ue-control-id') || 0,
                 currentControlName = $currentControl.data('ue-control-name') || 'key',
                 nextControlId;
@@ -164,8 +181,8 @@
                 nextControlId = currentControlId;
             }
 
-            $controls.removeClass('active');
-            $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('active');
+            $controls.removeClass('show');
+            $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('show');
         },
 
         navigateHandler: function (action, focus) {
@@ -208,7 +225,7 @@
         },
 
         writeText: function () {
-            var $currentInputValue = this.getCurrentInput().val(),
+            var $currentInputValue = this.getCurrentModule().find('input').val(),
                 currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
             this.fillOutInput($currentInputValue + currentChar);
         },
@@ -219,12 +236,23 @@
             $input.val(currentValue.slice(0, -1));
         },
 
-        fillOutInput: function (text) {
-            this.getCurrentInput().val(text);
+        readText: function (text) {
+            //speech.speak(text);
         },
 
-        getCurrentInput: function () {
-            return $('[data-ue-module="' + this.currentModuleId + '"] input');
+        readModuleHeaders: function () {
+            var $moduleHeaders = this.getCurrentModule().find('h3[data-ue-speech], h5[data-ue-speech]');
+            _.each($moduleHeaders, function(header){
+                this.readText($(header).data('ue-speech'));
+            }, this);
+        },
+
+        fillOutInput: function (text) {
+            this.getCurrentModule().find('input').val(text);
+        },
+
+        getCurrentModule: function () {
+            return $('[data-ue-module="' + this.currentModuleId + '"]');
         },
 
         gamepadConnected: function () {
@@ -259,8 +287,31 @@
             }
         },
 
-        getVoiceEvent: function () {
+        activateVoice: function () {
+            voice.start();
+        },
 
+        deActivateVoice: function () {
+            voice.stop();
+        },
+
+        debugVoice: function () {
+            voice.addCallback("resultMatch", function(n, a, o) {
+                console.log("said: " + n + ", cmd: " + a + ", phrases: " + o);
+            });
+            voice.debug();
+        },
+
+        generateVoiceCommands: function (commands) {
+            var commandTriggers = _.object(_.map(commands, function(command, trigger){
+                return [command,
+                        _.bind(function () {
+                            this.fillOutInput(trigger);
+                        }, this)
+                ];
+            }, this));
+            voice.addCommands(commandTriggers);
+            this.debugVoice();
         },
 
         getKeyEvent: function (e) {
@@ -299,4 +350,4 @@
         } );
     };
 
-})(jQuery, annyang, window, document);
+})(jQuery, annyang, responsiveVoice, window, document);

@@ -7,6 +7,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <script src="../src/invisible-edreams.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../dist/invisible-edreams.css">
 </head>
 <body>
@@ -34,10 +35,11 @@
     <div id="ue-sidebar" class="active">
         <div id="ue-controls">
             <ul>
-                <li data-ue-control-id="0" data-ue-control-name="mic" class="active">MIC</li>
-                <li data-ue-control-id="1" data-ue-control-name="vid">VID</li>
-                <li data-ue-control-id="2" data-ue-control-name="key">KEY</li>
-                <li data-ue-control-id="3" data-ue-control-name="set">SET</li>
+                <li data-ue-control-id="0" data-ue-control-name="set" class="control-icon-set show">J</li>
+                <li data-ue-control-id="1" data-ue-control-name="vid" class="control-icon-vid selected">0</li>
+                <li data-ue-control-id="2" data-ue-control-name="mic" class="control-icon-mic">1</li>
+                <li data-ue-control-id="3" data-ue-control-name="sou" class="control-icon-sou selected">3</li>
+                <li data-ue-control-id="4" data-ue-control-name="key" class="control-icon-key">2</li>
             </ul>
         </div>
 
@@ -54,8 +56,8 @@
                         Something else
                     </div>
                     <div class="ue-settings-row">
-                        <div class="ue-controls-voice-switch">
-                            VOICE
+                        <div class="ue-settings-label">Letter spacing</div>
+                        <div class="ue-settings-voice-switch">
                         </div>
                     </div>
                     <div class="ue-settings-row">
@@ -91,7 +93,7 @@
     <script>
         $(function() {
             $("body").invisibleEdreams({
-                propertyName: "a custom value"
+                //propertyName: "a custom value"
             });
 
             $(document).on('odigeo:goLeft', function () {
