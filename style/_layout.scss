@@ -1,14 +1,25 @@
+body {
+  background-color:$primary-color-dark;
+  color:#fff;
+}
+
 .ue-module {
   display:none;
+  padding:40px;
 }
 .ue-module.active {
   display:block;
 }
-
-h3 {
+h1, h2, h3, h4, h5 {
   font-family:Arial, Verdana, sans-serif;
-  padding:20px 40px;
+}
+h3 {
+  margin-bottom:20px;
   font-size:30px;
+}
+h5 {
+  margin-bottom:20px;
+  font-size:20px;
 }
 input[type="text"] {
   border:none;
