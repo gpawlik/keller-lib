@@ -79,6 +79,10 @@
                     return String.fromCharCode(value);
                 });
 
+            for(var j = 0; j < 10; j++) {
+                letters.push(j);
+            }
+
             template = '<ul>';
             for(var i = 0; i < letters.length; i++) {
                 template += '<li data-id="' + i + '">' + letters[i] + '</li>';
@@ -152,7 +156,7 @@
         navigateControls: function (action) {
 
             var $controls = $(this.element).find('#ue-controls li'),
-                $currentControl = $controls.filter('.active'),
+                $currentControl = $controls.filter('.show'),
                 currentControlId = $currentControl.data('ue-control-id') || 0,
                 currentControlName = $currentControl.data('ue-control-name') || 'key',
                 nextControlId;
@@ -169,8 +173,8 @@
                 nextControlId = currentControlId;
             }
 
-            $controls.removeClass('active');
-            $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('active');
+            $controls.removeClass('show');
+            $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('show');
         },
 
         navigateHandler: function (action, focus) {
@@ -225,7 +229,7 @@
         },
 
         readText: function (text) {
-            speech.speak(text);
+            //speech.speak(text);
         },
 
         readModuleHeaders: function () {
@@ -236,7 +240,7 @@
         },
 
         fillOutInput: function (text) {
-            this.getCurrentInput().val(text);
+            this.getCurrentModule().find('input').val(text);
         },
 
         getCurrentModule: function () {
@@ -285,7 +289,7 @@
 
         debugVoice: function () {
             voice.addCallback("resultMatch", function(n, a, o) {
-                console.log("said: " + n + ", cmd: " + a + ", phrases: " + o)
+                console.log("said: " + n + ", cmd: " + a + ", phrases: " + o);
             });
             voice.debug();
         },
