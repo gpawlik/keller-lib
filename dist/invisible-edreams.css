@@ -164,6 +164,22 @@ input[type="text"] {
   display: block;
 }
 
+.ui-sidebar-header {
+  height: 80px;
+  background-color: #0E3178;
+}
+.ui-sidebar-header .ui-sidebar-close {
+  display: block;
+  width: 80px;
+  height: 80px;
+  background: #091e4a;
+  line-height: 80px;
+  text-align: center;
+  font-size: 30px;
+  font-family: "Universal eDreams";
+  cursor: pointer;
+}
+
 .ue-keyboard {
   margin: 10px 5px;
 }
@@ -200,7 +216,6 @@ input[type="text"] {
   bottom: 0;
   right: -350px;
   width: 350px;
-  border-left: 1px solid #ddd;
   z-index: 9999999;
 }
 #ue-sidebar.active {
@@ -216,18 +231,21 @@ input[type="text"] {
   height: 25px;
   background: #ddd;
   cursor: pointer;
+  display: none;
 }
 .ue-settings .ue-settings-row {
   padding: 25px 20px;
+  height: 25px;
   border-bottom: 1px solid #ddd;
   background-image: linear-gradient(-180deg, #EAEFFA 0%, #FFFFFF 100%);
 }
 .ue-settings .ue-settings-label {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   font-family: "Roboto";
   color: #0E3178;
   display: inline-block;
+  vertical-align: top;
 }
 .ue-settings .ue-settings-voice-switch {
   display: block;
@@ -238,9 +256,23 @@ input[type="text"] {
   border-radius: 20px;
   float: right;
   position: relative;
+  top: -3px;
+  background-color: #0E3178;
 }
 .ue-settings .ue-settings-voice-switch:after {
   position: absolute;
+  display: block;
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  top: 2px;
+  left: 2px;
+  content: "";
+  border-radius: 100%;
+}
+.ue-settings .ue-settings-voice-switch.on:after {
+  left: auto;
+  right: 2px;
 }
 .ue-settings .ue-settings-stepper {
   display: table;
@@ -261,16 +293,50 @@ input[type="text"] {
   font-size: 20px;
   font-weight: 600;
   font-family: "Roboto";
+  top: -3px;
 }
 .ue-settings .ue-settings-stepper > div:first-child {
   border-right: 1px solid #fff;
 }
-.ue-settings .ue-settings-logger .ue-logger-box {
-  border: 1px solid #ddd;
-  margin: 15px;
-  padding: 10px;
-  height: 100px;
-  overflow-y: scroll;
+
+.ue-settings-media {
+  font-size: 250px;
+  padding: 220px 0;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.ue-big-icon {
+  font-family: "Universal eDreams";
+}
+
+.gps_ring {
+  border: 10px solid #FD4646;
+  -webkit-border-radius: 90px;
+  height: 150px;
+  width: 150px;
+  position: absolute;
+  left: 88px;
+  top: 300px;
+  -webkit-animation: pulsate 1.5s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  opacity: 0.0;
+  z-index: -1;
+}
+
+@-webkit-keyframes pulsate {
+  0% {
+    -webkit-transform: scale(0.1, 0.1);
+    opacity: 0.0;
+  }
+  50% {
+    opacity: 1.0;
+  }
+  100% {
+    -webkit-transform: scale(1.2, 1.2);
+    opacity: 0.0;
+  }
 }
 
 /*# sourceMappingURL=invisible-edreams.css.map */

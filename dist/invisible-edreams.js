@@ -40,7 +40,7 @@
         this.focusOnModule = 1;
         this.currentFocus = this.settings.focusAreas[0];
         this.init();
-        this.datesModule = [3, 4];
+        this.datesModule = [5];
     }
 
     // Avoid UniversalEdreams.prototype conflicts
@@ -51,6 +51,7 @@
             this.eventHandlers();
             this.generateVoiceCommands({
                 'Barcelona': '(Barcelona)',
+                'Mallorca': '(Mallorca)(Mayorga)',
                 'Berlin': '(Berlin)',
                 '22/04/2016': '(next week)',
                 '17/04/2016': '(this weekend)'
@@ -58,6 +59,7 @@
             speech.OnVoiceReady = _.bind(function() {
                 this.readModuleHeaders();
             }, this);
+            this.generateVoiceCommands();
         },
 
         eventHandlers: function () {
@@ -103,6 +105,7 @@
         },
 
         showSidebarWidget: function (page_name) {
+            console.log('pn', page_name);
             var $settingsPages = $('.ue-sidebar-widgets');
             $settingsPages.find('li').removeClass('show');
             $settingsPages.find('li[data-widget-name="' + page_name + '"]').addClass('show');
@@ -133,22 +136,29 @@
 
         navigateModules: function (action) {
 
-            var $modules = $(this.element).find('.ue-module'),
+            var $module_wrapper = $('.ue-wrapper'),
+                $modules = $(this.element).find('.ue-module'),
                 currentItem = $modules.filter('.active').data('ue-module') || 1,
                 nextItem;
 
             if (action === 'right') {
-                nextItem = ((currentItem + 1) > $modules.length) ? 0 : currentItem + 1;
+                nextItem = ((currentItem ) > $modules.length) ? 0 : currentItem + 1;
                 this.currentModuleId += 1;
+                $module_wrapper.css('left', -(100*(nextItem-1)) + "%");
             }
             else if (action === 'left') {
                 nextItem = ((currentItem - 1) < 0) ? $modules.length - 1 : currentItem - 1;
                 this.currentModuleId -= 1;
+                $module_wrapper.css('left', -(100*(nextItem-1)) + "%");
             }
+
+            console.log('new pos', $module_wrapper.css('left'), -(100*(nextItem-1)) + "%");
 
             $modules.removeClass('active');
             $modules.filter('[data-ue-module="' + nextItem + '"]').addClass('active');
             this.currentModuleId = nextItem;
+
+            console.log('current module ID', this.currentModuleId);
 
             this.readModuleHeaders();
         },
@@ -180,6 +190,7 @@
                 nextControlId = ((currentControlId - 1) < 0) ? $controls.length - 1 : currentControlId - 1;
             }
             else if (action === 'enter') {
+                console.log('entering');
                 $currentControl.toggleClass('show');
                 this.showSidebarWidget(currentControlName);
                 nextControlId = currentControlId;
@@ -335,11 +346,11 @@
         },
 
         readText: function (text) {
-            //speech.speak(text);
+            speech.speak(text);
         },
 
         readModuleHeaders: function () {
-            var $moduleHeaders = this.getCurrentModule().find('h3[data-ue-speech], h5[data-ue-speech]');
+            var $moduleHeaders = this.getCurrentModule().find('h3[data-ue-speech], h4[data-ue-speech], .title[data-ue-speech], .subtitle[data-ue-speech]');
             _.each($moduleHeaders, function(header){
                 this.readText($(header).data('ue-speech'));
             }, this);
@@ -410,11 +421,13 @@
             }, this));
             voice.addCommands(commandTriggers);
             this.debugVoice();
+            voice.start();
         },
 
         getKeyEvent: function (e) {
             //var $currentModule = $('[data-ue-module="' + this.currentModuleId + '"]'),
               //  direction;
+            e.preventDefault();
             switch (e.keyCode) {
                 case 13:
                     if (_.contains(this.datesModule, this.currentModuleId)) {
@@ -426,7 +439,7 @@
                             this.errorValidate($moduleWithFocus);
                         }
                     } else {
-                        this.writeText();
+                        this.navigateHandler('enter', this.currentFocus);
                     }
                     break;
                 case 39:
