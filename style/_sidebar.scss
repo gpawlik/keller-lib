@@ -7,3 +7,18 @@
     }
   }
 }
+.ui-sidebar-header {
+  height: 80px;
+  background-color:$primary-color-dark;
+  .ui-sidebar-close {
+    display:block;
+    width:80px;
+    height:80px;
+    background:darken($primary-color-dark, 10%);
+    line-height:80px;
+    text-align:center;
+    font-size:30px;
+    font-family:"Universal eDreams";
+    cursor:pointer;
+  }
+}

@@ -82,7 +82,8 @@ module.exports = function( grunt ) {
                     style: 'expanded'
                 },
                 files: {
-                    'dist/invisible-edreams.css': 'style/style.scss'
+                    'dist/invisible-edreams.css': 'style/style.scss',
+                    'dist/edreams-core.css': 'style/core/main.scss'
                 }
             }
         },
@@ -91,7 +92,7 @@ module.exports = function( grunt ) {
 		// Better than calling grunt a million times
 		// (call 'grunt watch')
 		watch: {
-			files: [ "src/*", "style/*", "test/**/*" ],
+			files: [ "src/*", "style/*", "style/core/*", "test/**/*" ],
 			tasks: [ "default" ]
 		}
 

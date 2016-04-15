@@ -9,60 +9,145 @@
     <script src="../src/invisible-edreams.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../dist/invisible-edreams.css">
+    <link rel="stylesheet" type="text/css" href="../dist/edreams-core.css">
 </head>
 <body>
-    <div id="firstInput" class="ue-module active" data-ue-module="1"
-         data-ue-left="odigeo:goLeft"
-         data-ue-right="odigeo:goRight"
-         data-ue-up="odigeo:goUp"
-         data-ue-down="odigeo:goDown"
-         data-ue-enter="odigeo:enter"
-         >
-         <h3 data-ue-speech="Welcome to universal eeDreams!">Welcome to universal eDreams!</h3>
-         <h5 data-ue-speech="Where do you want to go?">Where do you want to go?</h5>
-         <input type="text" name="destination" placeholder="Your destination..." autocomplete="off" />
+
+<div class="app kite kite--fill is-equalize ue-wrapper">
+    <div style="position:relative;" class="kite__item layer ue-module layer--destination active" data-ue-module="1">
+        <div class="title" data-ue-speech="Welcome to universal eeDreams!">Welcome to Universal eDreams</div>
+        <div>
+            <label for="destination-input" class="label subtitle" data-ue-speech="How do you want to browse?">How do you want to browse?</label>
+            <div class="select_container kite">
+                <div class="button-wrapper kite__item">
+                    <div class="press-key">Press <i class="icon">F</i></div>
+                    <button class="button focus button--wide button--yes">DIALOGUE</button>
+                </div>
+                <div data-left="" data-right="" class="button-wrapper kite__item">
+                    <div class="press-key">Press <i class="icon">G</i></div>
+                    <button class="button button--wide button--yes">KEYBOARD</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="secondInput" class="ue-module" data-ue-module="2"
-         data-ue-left="odigeo:goLeft"
-         data-ue-right="odigeo:goRight"
-         data-ue-up="odigeo:goUp"
-         data-ue-down="odigeo:goDown"
-         >
-         <h3 data-ue-speech="Where are you right now?">Where are you right now?</h3>
-         <input type="text" name="origin" placeholder="Your origin..." autocomplete="off" />
+    <div style="position:relative;" class="kite__item layer ue-module layer layer--confirm-origin" data-ue-module="2">
+        <div class="title" data-ue-speech="Dialogue! Cool! Nice to have you on board!">Dialogue! Cool! Nice to have you on board!</div>
+        <div class="label subtitle" data-ue-speech="Where do you want to go?">Where do you want to go?</div>
+        <div class="select_container">   <input id="origin-input" type="text" placeholder="Write or say your destination" class="input input--wide"></div>
+        <div class="confirm_container"><button class="button button--wide button--ok">OK</button><span class="press-enter">Press ENTER</span></div>
     </div>
-    <div id="thirdInput" class="ue-module" data-ue-module="3">
-        <h3>We love DEPARTURE</h3>
-        <h4>Now its time to select departure dates</h4>
-        <button></button>
-        <input type="text" id="departureDay"
-            data-day="1"
-            data-ue-focus="1" value="1" />
-        <button></button><br/>
-        <button></button>
-        <input type="text" id="departureMonth" 
-            data-month="04"
-            data-year="2016"
-            data-ue-focus="2" value="APRIL, 2016" />
-        <button></button><br/>
-        <button id="departureButton">OK</button>
+    <div style="position:relative;" class="layer ue-module layer layer--confirm-origin kite__item" data-ue-module="3">
+        <div class="title" data-ue-speech="Perfect!">Perfect!</div>
+        <div>
+            <div class="label subtitle" data-ue-speech="Are you travelling from Madrid?">Are you travelling from Madrid?</div>
+            <div class="select_container kite">
+                <div class="button-wrapper kite__item">
+                    <div class="press-key">Press <span>Y</span></div>
+                    <button class="button button--wide button--yes">YES</button>
+                </div>
+                <div class="button-wrapper kite__item">
+                    <div class="press-key">Press <span>N</span></div>
+                    <button class="button button--wide button--yes">NO</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="fourthInput" class="ue-module" data-ue-module="4">
-        <h3>Nice</h3>
-        <h4>Now its time to select departure dates</h4>
-        <button></button>
-        <input type="text" id="arrivalDay"
-            data-day="20"
-            data-ue-focus="1" value="20" />
-        <button></button><br/>
-        <button></button>
-        <input type="text" id="arrivalMonth" 
-            data-month="4"
-            data-year="2016"
-            data-ue-focus="2" value="APRIL, 2016" />
-        <button></button><br/>
-        <button id="arrivalButton">OK</button>
+    <div style="position:relative;" class="kite__item layer ue-module layer layer--origin" data-ue-module="4">
+        <div class="title" data-ue-speech="Sweet!">Sweet!</div>
+        <label for="origin-input" class="label subtitle" data-ue-speech="So, where are you travelling from?">So, where are you travelling from?</label>
+        <div class="select_container"><input id="origin-input" type="text" placeholder="Write or say your origin" class="input input--wide"></div>
+        <div class="confirm_container"><button class="button button--wide button--ok">OK</button><span class="press-enter">Press ENTER</span></div>
     </div>
+    <div id="fourthInput" class="kite__item layer ue-module layer layer--origin" data-ue-module="5">
+        <h3 data-ue-speech="Nice!">Nice</h3>
+        <h4 data-ue-speech="Now its time to select departure dates">Now its time to select departure dates</h4>
+
+        <div class="select_container">
+            <div class="departure_day-wrapper">
+                <div class="departure_day kite kite--middle kite--center">
+                    <div class="button button--narrow kite__item" style="margin-top:-25px;height:60px;"><i class="icon">F</i></div>
+                    <input type="text" id="arrivalDay"
+                           data-day="20"
+                           data-ue-focus="1" value="20" style="height:20px;" />
+                    <div class="button button--narrow kite__item down" style="margin-top:-25px;height:60px;"><i class="icon">G</i></div>
+                </div>
+            </div>
+            <div class="departure_month-wrapper">
+                <div class="departure_month kite kite--middle kite--center">
+                    <div class="button button--narrow kite__item up" style="margin-top:-25px;height:60px;"><i class="icon">F</i></div>
+                    <input type="text" id="arrivalMonth"
+                           data-month="4"
+                           data-year="2016"
+                           data-ue-focus="2" value="APRIL, 2016"  style="height:20px;"/>
+                    <div class="button button--narrow kite__item down" style="margin-top:-25px;height:60px;"><i class="icon">G</i></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div style="position:relative;" class="kite__item layer ue-module layer--passengers" data-ue-module="6">
+        <div class="title" data-ue-speech="Perfect dates to go to Mallorca!">Perfect dates to go to Mallorca!</div>
+        <div>
+            <div class="label subtitle" data-ue-speech="How many people is travelling?">How many people is travelling?</div>
+            <div class="select_container passengers kite">
+                <div class="button button--narrow kite__item kite--center">1</div>
+                <div class="button button--narrow kite__item kite--center">2</div>
+                <div class="button button--narrow kite__item kite--center">3</div>
+                <div class="button button--narrow kite__item kite--center">4</div>
+                <div class="button button--narrow kite__item kite--center">5</div>
+                <div class="button button--narrow kite__item kite--center">6</div>
+                <div class="button button--narrow kite__item kite--center">7</div>
+                <div class="button button--narrow kite__item kite--center">8</div>
+                <div class="button button--narrow kite__item kite--center">9</div>
+            </div>
+        </div>
+    </div>
+    <div style="position:relative;" class="kite__item layer layer--confirm-origin" data-ue-module="7">
+        <div class="title" data-ue-speech="Barcelona to Mallorca | 13th of June | 2 people">Barcelona to Mallorca | 13th of June | 2 people</div>
+        <div class="label subtitle" data-ue-speech="Choose your departure flight">Choose your departure flight</div>
+        <div class="select_container kite">
+            <div class="results-left kite__item"><i class="arrow">E</i></div>
+            <div class="results-container kite__item">
+                <div class="results-container-top">
+                    <div class="flight-number">1</div>
+                    <div class="flight-direction">Outbound flight</div>
+                    <div class="flight-price">20&euro;</div>
+                </div>
+                <div class="results-container-flight">
+                    <div class="flight-departure">
+                        <div class="flight-hour">8:00</div>
+                        <div class="flight-airport">EL PRAT</div>
+                    </div>
+                    <div class="flight-intermediate">
+                        <div class="flight-intermediate-plane"><i class="icon">(</i></div>
+                        <div class="flight-intermediate-company">Ryanair</div>
+                    </div>
+                    <div class="flight-arrival">
+                        <div class="flight-hour">10:00</div>
+                        <div class="flight-airport">PALMA</div>
+                    </div>
+                </div>
+            </div>
+            <div class="results-right kite__item"><i class="arrow">D</i></div>
+        </div>
+        <div class="confirm_container"><button class="button button--wide button--ok">SELECT</button><span class="press-enter">Press ENTER</span></div>
+    </div>
+</div>
+<div class="fixed_layers">
+    <div class="footer">
+        <div class="logo kite kite--left">
+            <div class="kite__item">eDreams</div>
+        </div>
+        <div class="made_by kite kite--right">
+            <div class="kite__item">Made by eDreams with<i class="icon">B</i></div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
     <div id="ue-sidebar" class="active">
         <div id="ue-controls">
@@ -75,18 +160,16 @@
             </ul>
         </div>
 
+        <div class="ui-sidebar-header">
+            <span class="ui-sidebar-close">r</span>
+        </div>
+
         <ul class="ue-sidebar-widgets">
             <li data-widget-name="key" class="show">
                 <div class="ue-keyboard"></div>
             </li>
             <li data-widget-name="set">
                 <div class="ue-settings">
-                    <div class="ue-settings-row">
-                        Something
-                    </div>
-                    <div class="ue-settings-row">
-                        Something else
-                    </div>
                     <div class="ue-settings-row">
                         <div class="ue-settings-label">Letter spacing</div>
                         <div class="ue-settings-voice-switch">
@@ -100,19 +183,39 @@
                         </div>
                     </div>
                     <div class="ue-settings-row">
-                        <div class="ue-settings-label">Event logger</div>
-                        <div class="ue-settings-logger">
-                            <div class="ue-logger-box">?</div>
+                        <div class="ue-settings-label">Reverse colors</div>
+                        <div class="ue-settings-voice-switch on">
+                        </div>
+                    </div>
+                    <div class="ue-settings-row">
+                        <div class="ue-settings-label">Contrast enhancer</div>
+                        <div class="ue-settings-stepper">
+                            <div class="ue-stepper-button" data-step="subtract">-</div>
+                            <div class="ue-stepper-button" data-step="add">+</div>
                         </div>
                     </div>
                     <div class="ue-settings-toggle"></div>
                 </div>
             </li>
             <li data-widget-name="mic">
-                <div class="ue-microphone">MICRO</div>
+                <div class="ue-microphone ue-settings-media">
+                    <div class="ue-settings-big-icon ue-big-icon">1</div>
+                    <div class="gps_ring"></div>
+                </div>
             </li>
+
+            <li data-widget-name="sou">
+                <div class="ue-sound ue-settings-media">
+                    <div class="ue-settings-big-icon ue-big-icon">3</div>
+                    <div class="gps_ring"></div>
+                </div>
+            </li>
+
             <li data-widget-name="vid">
-                <div class="ue-microphone">VIDEO</div>
+                <div class="ue-video ue-settings-media">
+                    <div class="ue-settings-big-icon ue-big-icon">0</div>
+                    <div class="gps_ring"></div>
+                </div>
             </li>
         </ul>
 
