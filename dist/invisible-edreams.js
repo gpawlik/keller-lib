@@ -18,7 +18,7 @@
  *
  *  Under MIT License
  */
-;(function($, window, document, undefined) {
+;(function($, voice, speech, window, document, undefined) {
 
     "use strict";
 
@@ -26,7 +26,8 @@
     var pluginName = "invisibleEdreams",
         defaults = {
             propertyName: "value",
-            focusAreas: ['input', 'controls', 'settings']
+            focusAreas: ['input', 'controls', 'settings'],
+            speechLanguage: "Google UK English Male"
         };
 
     // The actual plugin constructor
@@ -48,6 +49,15 @@
             this.testFunction( "hello!!!");
             this.showKeyboard();
             this.eventHandlers();
+            this.generateVoiceCommands({
+                'Barcelona': '(Barcelona)',
+                'Berlin': '(Berlin)',
+                '22/04/2016': '(next week)',
+                '17/04/2016': '(this weekend)'
+            });
+            speech.OnVoiceReady = _.bind(function() {
+                this.readModuleHeaders();
+            }, this);
         },
 
         eventHandlers: function () {
@@ -79,6 +89,10 @@
                     return String.fromCharCode(value);
                 });
 
+            for(var j = 0; j < 10; j++) {
+                letters.push(j);
+            }
+
             template = '<ul>';
             for(var i = 0; i < letters.length; i++) {
                 template += '<li data-id="' + i + '">' + letters[i] + '</li>';
@@ -86,6 +100,12 @@
             template += '</ul>';
 
             return template;
+        },
+
+        showSidebarWidget: function (page_name) {
+            var $settingsPages = $('.ue-sidebar-widgets');
+            $settingsPages.find('li').removeClass('show');
+            $settingsPages.find('li[data-widget-name="' + page_name + '"]').addClass('show');
         },
 
         navigateKeyboard: function (action) {
@@ -101,6 +121,10 @@
             }
             else if (action === 'left') {
                 nextItem = ((currentItem - 1) < 0) ? allItemsLength - 1 : currentItem - 1;
+            }
+            else if (action === 'enter') {
+                this.writeText();
+                nextItem = currentItem;
             }
             $keyboard.find('li').removeClass('active');
             $keyboard.find('li[data-id="' + nextItem + '"]').addClass('active');
@@ -124,6 +148,9 @@
 
             $modules.removeClass('active');
             $modules.filter('[data-ue-module="' + nextItem + '"]').addClass('active');
+            this.currentModuleId = nextItem;
+
+            this.readModuleHeaders();
         },
 
         navigateSettings: function (action) {
@@ -141,8 +168,9 @@
         navigateControls: function (action) {
 
             var $controls = $(this.element).find('#ue-controls li'),
-                $currentControl = $controls.filter('.active'),
+                $currentControl = $controls.filter('.show'),
                 currentControlId = $currentControl.data('ue-control-id') || 0,
+                currentControlName = $currentControl.data('ue-control-name') || 'key',
                 nextControlId;
 
             if (action === 'right') {
@@ -152,12 +180,13 @@
                 nextControlId = ((currentControlId - 1) < 0) ? $controls.length - 1 : currentControlId - 1;
             }
             else if (action === 'enter') {
-                $currentControl.toggleClass('active');
+                $currentControl.toggleClass('show');
+                this.showSidebarWidget(currentControlName);
                 nextControlId = currentControlId;
             }
 
-            $controls.removeClass('active');
-            $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('active');
+            $controls.removeClass('show');
+            $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('show');
 
             if (_.contains(this.datesModule, nextControlId)) {
                 this.focusOnModule = 1;
@@ -187,6 +216,15 @@
                     this.navigateDates(focus, action);
                 } else {
                     this.navigateSettings(action);
+                }
+            } else if (action === 'enter') {
+                switch (focus) {
+                    case 'controls':
+                        this.navigateControls(action);
+                        break;
+                    case 'settings':
+                        this.navigateKeyboard(action);
+                        break;
                 }
             }
         },
@@ -285,18 +323,34 @@
         },
 
         writeText: function () {
-            var $input = $('input[name="test"]'),
-                currentValue = $input.val(),
-                currentChar = $(this.element).find('li.active').text().toLowerCase();
-
-            $input.val(currentValue + currentChar);
+            var $currentInputValue = this.getCurrentModule().find('input').val(),
+                currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
+            this.fillOutInput($currentInputValue + currentChar);
         },
 
         removeText: function () {
             var $input = $('input[name="test"]'),
                 currentValue = $input.val();
-
             $input.val(currentValue.slice(0, -1));
+        },
+
+        readText: function (text) {
+            //speech.speak(text);
+        },
+
+        readModuleHeaders: function () {
+            var $moduleHeaders = this.getCurrentModule().find('h3[data-ue-speech], h5[data-ue-speech]');
+            _.each($moduleHeaders, function(header){
+                this.readText($(header).data('ue-speech'));
+            }, this);
+        },
+
+        fillOutInput: function (text) {
+            this.getCurrentModule().find('input').val(text);
+        },
+
+        getCurrentModule: function () {
+            return $('[data-ue-module="' + this.currentModuleId + '"]');
         },
 
         gamepadConnected: function () {
@@ -329,6 +383,33 @@
             if(gp.buttons[5].pressed) {
                 this.writeText();
             }
+        },
+
+        activateVoice: function () {
+            voice.start();
+        },
+
+        deActivateVoice: function () {
+            voice.stop();
+        },
+
+        debugVoice: function () {
+            voice.addCallback("resultMatch", function(n, a, o) {
+                console.log("said: " + n + ", cmd: " + a + ", phrases: " + o);
+            });
+            voice.debug();
+        },
+
+        generateVoiceCommands: function (commands) {
+            var commandTriggers = _.object(_.map(commands, function(command, trigger){
+                return [command,
+                        _.bind(function () {
+                            this.fillOutInput(trigger);
+                        }, this)
+                ];
+            }, this));
+            voice.addCommands(commandTriggers);
+            this.debugVoice();
         },
 
         getKeyEvent: function (e) {
@@ -377,4 +458,4 @@
         } );
     };
 
-})(jQuery, window, document);
+})(jQuery, annyang, responsiveVoice, window, document);
