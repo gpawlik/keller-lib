@@ -12,7 +12,7 @@ module.exports = function( grunt ) {
 				" *  <%= pkg.description %>\n" +
 				" *  <%= pkg.homepage %>\n" +
 				" *\n" +
-				" *  Made by <%= pkg.author.name %>\n" +
+				" *  Author <%= pkg.author.name %>\n" +
 				" *  Under <%= pkg.license %> License\n" +
 				" */\n"
 		},
@@ -23,14 +23,14 @@ module.exports = function( grunt ) {
 				banner: "<%= meta.banner %>"
 			},
 			dist: {
-				src: [ "src/invisible-edreams.js" ],
-				dest: "dist/invisible-edreams.js"
+				src: [ "src/keller-lib.js" ],
+				dest: "dist/keller-lib.js"
 			}
 		},
 
 		// Lint definitions
 		jshint: {
-			files: [ "src/invisible-edreams.js", "test/**/*" ],
+			files: [ "src/keller-lib.js", "test/**/*" ],
 			options: {
 				jshintrc: ".jshintrc"
 			}
@@ -46,8 +46,8 @@ module.exports = function( grunt ) {
 		// Minify definitions
 		uglify: {
 			dist: {
-				src: [ "dist/invisible-edreams.js" ],
-				dest: "dist/invisible-edreams.min.js"
+				src: [ "dist/keller-lib.js" ],
+				dest: "dist/keller-lib.min.js"
 			},
 			options: {
 				banner: "<%= meta.banner %>"
@@ -82,8 +82,7 @@ module.exports = function( grunt ) {
                     style: 'expanded'
                 },
                 files: {
-                    'dist/invisible-edreams.css': 'style/style.scss',
-                    'dist/edreams-core.css': 'style/core/main.scss'
+                    'dist/keller-lib.css': 'style/style.scss'                   
                 }
             }
         },

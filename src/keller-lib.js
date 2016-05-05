@@ -1,29 +1,9 @@
-/*
- *  invisible-edreams - v4.1.0
- *  
- *  
- *
- *  Made by 
- *  Under MIT License
- */
-/*
- *  invisible-edreams - v4.1.0
- *
- *  Made by Invisible/Universal eDreams Team:
- *  * Xavier Garcia Buils
- *  * Amaia Calvo
- *  * Grzegorz Pawlik
- *  * Luis Recuero
- *  * Alejandro Riera
- *
- *  Under MIT License
- */
 ;(function($, voice, speech, window, document, undefined) {
 
     "use strict";
 
     // Create the defaults once
-    var pluginName = "invisibleEdreams",
+    var pluginName = "keller",
         defaults = {
             propertyName: "value",
             focusAreas: ['input', 'controls', 'settings'],
@@ -31,7 +11,7 @@
         };
 
     // The actual plugin constructor
-    function UniversalEdreams (element, options) {
+    function Keller (element, options) {
         this.element = element;
         this.settings = $.extend({}, defaults, options);
         this._defaults = defaults;
@@ -43,8 +23,8 @@
         this.datesModule = [5];
     }
 
-    // Avoid UniversalEdreams.prototype conflicts
-    $.extend( UniversalEdreams.prototype, {
+    // Avoid Keller.prototype conflicts
+    $.extend( Keller.prototype, {
         init: function() {
             this.testFunction( "hello!!!");
             this.showKeyboard();
@@ -466,7 +446,7 @@
         return this.each(function() {
             if (!$.data(this, "plugin_" + pluginName)) {
                 $.data(this, "plugin_" +
-                    pluginName, new UniversalEdreams(this, options));
+                    pluginName, new Keller(this, options));
             }
         } );
     };

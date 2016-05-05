@@ -1,11 +1,11 @@
 {
-  "name": "invisible-edreams",
+  "name": "keller-lib",
   "license": "MIT",
   "authors": [
     ""
   ],
   "description": "",
-  "main": "src/invisible-edreams.js",
+  "main": "src/keller-lib.js",
   "dependencies": {
     "jquery": "1"
   },

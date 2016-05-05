@@ -5,7 +5,7 @@
 	var $testCanvas = $( "#testCanvas" );
 	var $fixture = null;
 
-	QUnit.module( "Invisible eDreams", {
+	QUnit.module( "Keller", {
 		beforeEach: function() {
 
 			// fixture is the element where your jQuery plugin will act

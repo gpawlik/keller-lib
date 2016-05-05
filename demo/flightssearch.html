@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Keller Library Demo</title>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/underscore/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
+    <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+    <script src="../src/keller-lib.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../dist/keller-lib.css">    
+</head>
+<body>
+    <div id="firstInput" class="ue-module active" data-ue-module="1"
+         data-ue-left="odigeo:goLeft"
+         data-ue-right="odigeo:goRight"
+         data-ue-up="odigeo:goUp"
+         data-ue-down="odigeo:goDown"
+         data-ue-enter="odigeo:enter"
+         >
+         <h3 data-ue-speech="Welcome to the flightssearch!">Welcome to the flights search!</h3>
+         <h5 data-ue-speech="Where do you want to go?">Where do you want to go?</h5>
+         <input type="text" name="destination" placeholder="Your destination..." autocomplete="off" />
+    </div>
+    <div id="secondInput" class="ue-module" data-ue-module="2"
+         data-ue-left="odigeo:goLeft"
+         data-ue-right="odigeo:goRight"
+         data-ue-up="odigeo:goUp"
+         data-ue-down="odigeo:goDown"
+         >
+         <h3 data-ue-speech="Where are you right now?">Where are you right now?</h3>
+         <input type="text" name="origin" placeholder="Your origin..." autocomplete="off" />
+    </div>
+    <div id="thirdInput" class="ue-module" data-ue-module="3">
+        <h3>We love DEPARTURE</h3>
+        <h4>Now its time to select departure dates</h4>
+        <button></button>
+        <input type="text" id="departureDay"
+            data-day="1"
+            data-ue-focus="1" value="1" />
+        <button></button><br/>
+        <button></button>
+        <input type="text" id="departureMonth" 
+            data-month="04"
+            data-year="2016"
+            data-ue-focus="2" value="APRIL, 2016" />
+        <button></button><br/>
+        <button id="departureButton">OK</button>
+    </div>
+    <div id="fourthInput" class="ue-module" data-ue-module="4">
+        <h3>Nice</h3>
+        <h4>Now its time to select departure dates</h4>
+        <button></button>
+        <input type="text" id="arrivalDay"
+            data-day="20"
+            data-ue-focus="1" value="20" />
+        <button></button><br/>
+        <button></button>
+        <input type="text" id="arrivalMonth" 
+            data-month="4"
+            data-year="2016"
+            data-ue-focus="2" value="APRIL, 2016" />
+        <button></button><br/>
+        <button id="arrivalButton">OK</button>
+    </div>
+
+    <div id="ue-sidebar" class="active">
+        <div id="ue-controls">
+            <ul>
+                <li data-ue-control-id="0" data-ue-control-name="set" class="control-icon-set show">J</li>
+                <li data-ue-control-id="1" data-ue-control-name="vid" class="control-icon-vid selected">0</li>
+                <li data-ue-control-id="2" data-ue-control-name="mic" class="control-icon-mic">1</li>
+                <li data-ue-control-id="3" data-ue-control-name="sou" class="control-icon-sou selected">3</li>
+                <li data-ue-control-id="4" data-ue-control-name="key" class="control-icon-key">2</li>
+            </ul>
+        </div>
+        <ul class="ue-sidebar-widgets">
+            <li data-widget-name="key" class="show">
+                <div class="ue-keyboard"></div>
+            </li>
+            <li data-widget-name="set">
+                <div class="ue-settings">
+                    <div class="ue-settings-row">
+                        Something
+                    </div>
+                    <div class="ue-settings-row">
+                        Something else
+                    </div>
+                    <div class="ue-settings-row">
+                        <div class="ue-settings-label">Letter spacing</div>
+                        <div class="ue-settings-voice-switch">
+                        </div>
+                    </div>
+                    <div class="ue-settings-row">
+                        <div class="ue-settings-label">Font enhancer</div>
+                        <div class="ue-settings-stepper">
+                            <div class="ue-stepper-button" data-step="subtract">-</div>
+                            <div class="ue-stepper-button" data-step="add">+</div>
+                        </div>
+                    </div>
+                    <div class="ue-settings-row">
+                        <div class="ue-settings-label">Event logger</div>
+                        <div class="ue-settings-logger">
+                            <div class="ue-logger-box">?</div>
+                        </div>
+                    </div>
+                    <div class="ue-settings-toggle"></div>
+                </div>
+            </li>
+            <li data-widget-name="mic">
+                <div class="ue-microphone">MICRO</div>
+            </li>
+            <li data-widget-name="vid">
+                <div class="ue-microphone">VIDEO</div>
+            </li>
+        </ul>
+    </div>
+    <script>
+    $(function() {
+        $("body").keller();
+    });
+    </script>
+</body>
+</html>
