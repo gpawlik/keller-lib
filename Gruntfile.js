@@ -9,8 +9,7 @@ module.exports = function( grunt ) {
 		meta: {
 			banner: "/*\n" +
 				" *  <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n" +
-				" *  <%= pkg.description %>\n" +
-				" *  <%= pkg.homepage %>\n" +
+				" *  <%= pkg.description %>\n" +				
 				" *\n" +
 				" *  Author <%= pkg.author.name %>\n" +
 				" *  Under <%= pkg.license %> License\n" +
@@ -19,14 +18,40 @@ module.exports = function( grunt ) {
 
 		// Concat definitions
 		concat: {
-			options: {
-				banner: "<%= meta.banner %>"
+			options: {	
+                banner: "<%= meta.banner %>",			
+                separator: "\n"
 			},
 			dist: {
-				src: [ "src/keller-lib.js" ],
-				dest: "dist/keller-lib.js"
+				src: [ 
+                    "src/modules/init.js",
+                    "src/modules/handlers.js",                    
+                    "src/modules/navigation.js",
+                    "src/modules/sidebar.js",
+                    "src/modules/keyboard.js",                                         
+                    "src/modules/gamepad.js",
+                    "src/modules/voice.js",
+                    "src/modules/speech.js",
+                    "src/modules/keys.js",
+                    "src/modules/inputs/dateselector.js",  
+                    "src/modules/inputs/textinput.js",                     
+                    "src/modules/helpers.js",                    
+                    "src/modules/plugin.js",
+                ],
+				dest: "src/output.js"
 			}
 		},
+        
+        // Wrap final file
+        wrap: {
+            modules: {
+                src: [ "src/output.js" ],
+                dest: "dist/js/keller-lib.js",
+                options: {
+                    wrapper: [';(function($, voice, speech, window, document, undefined) {\n"use strict"\n', '\n}(jQuery, annyang, responsiveVoice, window, document));']    
+                }                
+            }
+        },
 
 		// Lint definitions
 		jshint: {
@@ -46,8 +71,8 @@ module.exports = function( grunt ) {
 		// Minify definitions
 		uglify: {
 			dist: {
-				src: [ "dist/keller-lib.js" ],
-				dest: "dist/keller-lib.min.js"
+				src: [ "dist/js/keller-lib.js" ],
+				dest: "dist/js/keller-lib.min.js"
 			},
 			options: {
 				banner: "<%= meta.banner %>"
@@ -82,7 +107,7 @@ module.exports = function( grunt ) {
                     style: 'expanded'
                 },
                 files: {
-                    'dist/keller-lib.css': 'style/style.scss'                   
+                    'dist/css/keller-lib.css': 'style/style.scss'                   
                 }
             }
         },
@@ -99,16 +124,17 @@ module.exports = function( grunt ) {
 
 	grunt.loadNpmTasks( "grunt-contrib-concat" );
 	grunt.loadNpmTasks( "grunt-contrib-jshint" );
+    grunt.loadNpmTasks( "grunt-wrap" );
 	grunt.loadNpmTasks( "grunt-jscs" );
 	grunt.loadNpmTasks( "grunt-contrib-uglify" );
 	grunt.loadNpmTasks( "grunt-contrib-coffee" );
 	grunt.loadNpmTasks( "grunt-contrib-watch" );
-    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks( "grunt-contrib-sass" );
 	grunt.loadNpmTasks( "grunt-karma" );
     grunt.loadNpmTasks( "grunt-serve" );
 
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
-	grunt.registerTask( "build", [ "concat", "uglify" ] );
+	grunt.registerTask( "build", [ "concat", "wrap:modules", "uglify" ] );
 	grunt.registerTask( "default", [ "jshint", "sass", "build" ] );
 };
