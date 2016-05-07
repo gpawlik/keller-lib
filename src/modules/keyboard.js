@@ -1,32 +1,29 @@
 $.extend(Keller.prototype, {
 
-    showKeyboard: function() {
-        var alphabet = this.createAlphabet();
-        $(this.element).find('.ue-keyboard').append(alphabet);
+    showKeyboard: function() {        
+        this.element.getElementsByClassName('ue-keyboard')[0].appendChild(this.createAlphabet());
     },
 
     createAlphabet: function () {
-        var letters,
-            template;
+        var template = document.createElement("ul"),
+            character,
+            number;
 
-            //Create an array with the letters
-            letters = _.map(_.range(
-                'a'.charCodeAt(0),
-                'z'.charCodeAt(0) + 1
-            ),
-            function(value) {
-                return String.fromCharCode(value);
-            });
-
+        // Create an array with the letters and numbers
+        for (var i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++) {
+            character = document.createElement("li");
+            character.setAttribute("data-id", String.fromCharCode(i));
+            character.setAttribute("data-type", "letter");
+            character.innerHTML = String.fromCharCode(i); 
+            template.appendChild(character);                          
+        }
         for(var j = 0; j < 10; j++) {
-            letters.push(j);
-        }
-
-        template = '<ul>';
-        for(var i = 0; i < letters.length; i++) {
-            template += '<li data-id="' + i + '">' + letters[i] + '</li>';
-        }
-        template += '</ul>';
+            number = document.createElement("li");
+            number.setAttribute("data-id", j);
+            number.setAttribute("data-type", "number");
+            number.innerHTML = j;    
+            template.appendChild(number);  
+        }                 
 
         return template;
     }

@@ -22,6 +22,7 @@ $.extend(Keller.prototype, {
     init: function() {
         this.testFunction( "hello!!!");
         this.showKeyboard();
+        this.showSettings();
         this.eventHandlers();
         this.generateVoiceCommands({
             'Barcelona': '(Barcelona)',
@@ -34,5 +35,5 @@ $.extend(Keller.prototype, {
             this.readModuleHeaders();
         }, this);
         this.generateVoiceCommands();
-    },
+    }
 });

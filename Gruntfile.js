@@ -28,7 +28,8 @@ module.exports = function( grunt ) {
                     "src/modules/handlers.js",                    
                     "src/modules/navigation.js",
                     "src/modules/sidebar.js",
-                    "src/modules/keyboard.js",                                         
+                    "src/modules/keyboard.js",
+                    "src/modules/settings.js",                                         
                     "src/modules/gamepad.js",
                     "src/modules/voice.js",
                     "src/modules/speech.js",
@@ -38,21 +39,21 @@ module.exports = function( grunt ) {
                     "src/modules/helpers.js",                    
                     "src/modules/plugin.js",
                 ],
-				dest: "src/output.js"
+				dest: "src/main.js"
 			}
 		},
         
         // Wrap final file
         wrap: {
             modules: {
-                src: [ "src/output.js" ],
+                src: [ "src/main.js" ],
                 dest: "dist/js/keller-lib.js",
                 options: {
                     wrapper: [';(function($, voice, speech, window, document, undefined) {\n"use strict"\n', '\n}(jQuery, annyang, responsiveVoice, window, document));']    
                 }                
             }
         },
-
+        
 		// Lint definitions
 		jshint: {
 			files: [ "src/keller-lib.js", "test/**/*" ],
@@ -112,11 +113,8 @@ module.exports = function( grunt ) {
             }
         },
 
-		// watch for changes to source
-		// Better than calling grunt a million times
-		// (call 'grunt watch')
 		watch: {
-			files: [ "src/*", "style/*", "style/core/*", "test/**/*" ],
+			files: [ "src/*", "src/modules/*", "style/*", "style/core/*", "test/**/*" ],
 			tasks: [ "default" ]
 		}
 
@@ -129,7 +127,7 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( "grunt-contrib-uglify" );
 	grunt.loadNpmTasks( "grunt-contrib-coffee" );
 	grunt.loadNpmTasks( "grunt-contrib-watch" );
-    grunt.loadNpmTasks( "grunt-contrib-sass" );
+    grunt.loadNpmTasks( "grunt-contrib-sass" );    
 	grunt.loadNpmTasks( "grunt-karma" );
     grunt.loadNpmTasks( "grunt-serve" );
 
