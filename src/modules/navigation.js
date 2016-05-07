@@ -66,7 +66,7 @@ $.extend(Keller.prototype, {
 
     navigateControls: function (action) {
 
-        var $controls = $(this.element).find('#ue-controls li'),
+        var $controls = $(this.element).find('.ue-sidebar-controls li'),
             $currentControl = $controls.filter('.show'),
             currentControlId = $currentControl.data('ue-control-id') || 0,
             currentControlName = $currentControl.data('ue-control-name') || 'key',

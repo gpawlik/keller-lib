@@ -21,8 +21,9 @@ function Keller (element, options) {
 $.extend(Keller.prototype, {
     init: function() {
         this.testFunction( "hello!!!");
-        this.showKeyboard();
-        this.showSettings();
+        this.showSidebar();
+        this.showKeyboard(); // todo: move to showsidebar
+        this.showSettings(); // todo: move to showsidebar
         this.eventHandlers();
         this.generateVoiceCommands({
             'Barcelona': '(Barcelona)',
