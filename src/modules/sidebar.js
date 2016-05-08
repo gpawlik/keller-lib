@@ -90,7 +90,14 @@ $.extend(Keller.prototype, {
             else {                 
                 this._removeClass(sidebarWidgets[i], 'show');  
             }            
-        }                        
+        }  
+        // Temporary voice activation 
+        if(page_name === 'mic') {
+            this.voiceStart();
+        }  
+        else {
+            this.voiceStop();
+        }                   
     }
     
 });        

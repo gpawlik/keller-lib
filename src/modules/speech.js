@@ -1,7 +1,9 @@
 $.extend(Keller.prototype, {
 
-    readText: function (text) {        
-        this.speak(text);
+    readText: function (text) { 
+        if (this.settings.enableAudio) {
+            this.speak(text);
+        }               
     },
 
     readModuleHeaders: function () {
@@ -13,7 +15,7 @@ $.extend(Keller.prototype, {
     },
     
     initSpeechSynthesis: function () {
-        if (typeof window.speechSynthesis === 'undefined') {
+        if (!('speechSynthesis' in window)) {
             console.log('Speach synthesis is not supported...');
             return false;                        
         } 

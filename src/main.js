@@ -10,13 +10,13 @@ var pluginName = "keller",
     defaults = {
         propertyName: "value",
         focusAreas: ['input', 'controls', 'settings'],
+        enableAudio: false,
         speech: {
             voice: "Google UK English Male",
             volume: 1,
             pitch: 1,
             rate: 1            
-        }
-        
+        }            
     };
 
 // The actual plugin constructor
@@ -31,22 +31,13 @@ function Keller (element, options) {
     this.init();
     this.datesModule = [5];
 }
+
 $.extend(Keller.prototype, {
     init: function() {        
         this.showSidebar();
         this.eventHandlers();
-        this.generateVoiceCommands({
-            'Barcelona': '(Barcelona)',
-            'Mallorca': '(Mallorca)(Mayorga)',
-            'Berlin': '(Berlin)',
-            '22/04/2016': '(next week)',
-            '17/04/2016': '(this weekend)'
-        });
         this.initSpeechSynthesis();
-        /*speech.OnVoiceReady = _.bind(function() {
-            this.readModuleHeaders();
-        }, this);*/
-        this.generateVoiceCommands();
+        this.initVoiceRecognition();
     }
 });
 $.extend(Keller.prototype, {
@@ -275,7 +266,14 @@ $.extend(Keller.prototype, {
             else {                 
                 this._removeClass(sidebarWidgets[i], 'show');  
             }            
-        }                        
+        }  
+        // Temporary voice activation 
+        if(page_name === 'mic') {
+            this.voiceStart();
+        }  
+        else {
+            this.voiceStop();
+        }                   
     }
     
 });        
@@ -434,39 +432,82 @@ $.extend(Keller.prototype, {
 });        
 $.extend(Keller.prototype, {
 
-    activateVoice: function () {
-        voice.start();
+    initVoiceRecognition: function () {
+        if(!('webkitSpeechRecognition' in window)) {            
+            this.voiceRecognition = false;
+            console.log('Speech recognition not supported');
+        }
+        else {
+            this.voiceRecognition = new webkitSpeechRecognition();
+            this.voiceRecognition.continuous = true;
+            this.voiceRecognition.interimResults = true;  
+            this.processRecognizedText(this.voiceRecognition);   
+            //this.voiceStart();       
+        }
     },
 
-    deActivateVoice: function () {
-        voice.stop();
+    voiceStart: function () {
+        if (this.voiceRecognition) {
+            this.voiceRecognition.start();            
+        }
     },
-
-    debugVoice: function () {
-        voice.addCallback("resultMatch", function(n, a, o) {
-            console.log("said: " + n + ", cmd: " + a + ", phrases: " + o);
-        });
-        voice.debug();
-    },
-
-    generateVoiceCommands: function (commands) {
-        var commandTriggers = _.object(_.map(commands, function(command, trigger){
-            return [command,
-                    _.bind(function () {
-                        this.fillOutInput(trigger);
-                    }, this)
-            ];
-        }, this));
-        voice.addCommands(commandTriggers);
-        this.debugVoice();
-        voice.start();
-    }
     
-});        
+    voiceStop: function () {        
+        if (this.voiceRecognition) {
+            this.voiceRecognition.stop();            
+        }        
+    },
+    
+    processRecognizedText: function (recognition) { 
+            
+        recognition.onresult = function(event) {
+            var final_transcript = '',
+                interim_transcript = '';
+                            
+            if (typeof(event.results) === 'undefined') {
+                recognition.stop();
+                console.log('There was a problem receiving results');
+                return;
+            }
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    final_transcript += event.results[i][0].transcript;
+                } else {
+                    interim_transcript += event.results[i][0].transcript;
+                }
+            }
+            console.log('final transcript', final_transcript);
+            console.log('iterim transcript', interim_transcript);
+        }; 
+        recognition.onerror = function(event) {
+            if (event.error == 'no-speech') {
+                console.log('Speech recognition error: no speech.');                
+            }
+            if (event.error == 'audio-capture') {
+                console.log('Speech recognition error: no microphone.');                
+            }
+            if (event.error == 'not-allowed') {              
+                console.log('Speech recognition not allowed.');           
+            }
+        };
+        recognition.onstart = function () {
+            console.log('Speech recognition started, speak now!');            
+        };
+        recognition.onend = function () {
+            console.log('Speech recognition ended!');
+            //recognition.start(); // TODO: allow continuous listening        
+        }; 
+        recognition.onnomatch = function () {
+            console.log('Sorry! There was no match...');
+        };                        
+    }    
+});    
 $.extend(Keller.prototype, {
 
-    readText: function (text) {        
-        this.speak(text);
+    readText: function (text) { 
+        if (this.settings.enableAudio) {
+            this.speak(text);
+        }               
     },
 
     readModuleHeaders: function () {
@@ -478,7 +519,7 @@ $.extend(Keller.prototype, {
     },
     
     initSpeechSynthesis: function () {
-        if (typeof window.speechSynthesis === 'undefined') {
+        if (!('speechSynthesis' in window)) {
             console.log('Speach synthesis is not supported...');
             return false;                        
         } 
