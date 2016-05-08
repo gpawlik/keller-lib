@@ -12,7 +12,7 @@ function Keller (element, options) {
     this.settings = $.extend({}, defaults, options);
     this._defaults = defaults;
     this._name = pluginName;
-    this.currentModuleId = 1;
+    this.currentModuleId = 0;
     this.focusOnModule = 1;
     this.currentFocus = this.settings.focusAreas[0];
     this.init();

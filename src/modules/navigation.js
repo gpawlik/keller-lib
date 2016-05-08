@@ -17,39 +17,33 @@ $.extend(Keller.prototype, {
             this.writeText();
             nextItem = currentItem;
         }
-        for(var i = 0; i < allItemsLength; i++) {
-            keyboard.querySelectorAll('li')[i].classList.remove('active');
-        }
-        console.log('next', nextItem);
-        keyboard.querySelector('li[data-id="' + nextItem + '"]').classList.add('active');
+        this.removeClass(keyboard.querySelectorAll('li'), 'active');   
+        this.addClass(keyboard.querySelector('li[data-id="' + nextItem + '"]'), 'active');              
     },
 
     navigateModules: function (action) {
 
-        var $module_wrapper = $('.ue-wrapper'),
-            $modules = $(this.element).find('.ue-module'),
-            currentItem = $modules.filter('.active').data('ue-module') || 1,
+        var modules = this.element.querySelectorAll('.ue-module'),
+            currentItem = this.currentModuleId || 0,
             nextItem;
 
         if (action === 'right') {
-            nextItem = ((currentItem ) > $modules.length) ? 0 : currentItem + 1;
-            this.currentModuleId += 1;
-            $module_wrapper.css('left', -(100*(nextItem-1)) + "%");
+            nextItem = ((currentItem + 1) > modules.length - 1) ? 0 : currentItem + 1;            
         }
         else if (action === 'left') {
-            nextItem = ((currentItem - 1) < 0) ? $modules.length - 1 : currentItem - 1;
-            this.currentModuleId -= 1;
-            $module_wrapper.css('left', -(100*(nextItem-1)) + "%");
+            nextItem = ((currentItem - 1) < 0) ? modules.length - 1 : currentItem - 1;                      
+        }                     
+
+        for (var i = 0; i < modules.length; i++) {            
+            if (parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem) {
+                this.addClass(modules[i], 'active');                
+            }
+            else {
+                this.removeClass(modules[i], 'active');
+            }
         }
 
-        console.log('new pos', $module_wrapper.css('left'), -(100*(nextItem-1)) + "%");
-
-        $modules.removeClass('active');
-        $modules.filter('[data-ue-module="' + nextItem + '"]').addClass('active');
-        this.currentModuleId = nextItem;
-
-        console.log('current module ID', this.currentModuleId);
-
+        this.currentModuleId = nextItem;        
         this.readModuleHeaders();
     },
 
