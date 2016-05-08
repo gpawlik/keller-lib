@@ -3,7 +3,13 @@ var pluginName = "keller",
     defaults = {
         propertyName: "value",
         focusAreas: ['input', 'controls', 'settings'],
-        speechLanguage: "Google UK English Male"
+        speech: {
+            voice: "Google UK English Male",
+            volume: 1,
+            pitch: 1,
+            rate: 1            
+        }
+        
     };
 
 // The actual plugin constructor
@@ -29,9 +35,10 @@ $.extend(Keller.prototype, {
             '22/04/2016': '(next week)',
             '17/04/2016': '(this weekend)'
         });
-        speech.OnVoiceReady = _.bind(function() {
+        this.initSpeechSynthesis();
+        /*speech.OnVoiceReady = _.bind(function() {
             this.readModuleHeaders();
-        }, this);
+        }, this);*/
         this.generateVoiceCommands();
     }
 });

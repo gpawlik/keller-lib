@@ -10,7 +10,13 @@ var pluginName = "keller",
     defaults = {
         propertyName: "value",
         focusAreas: ['input', 'controls', 'settings'],
-        speechLanguage: "Google UK English Male"
+        speech: {
+            voice: "Google UK English Male",
+            volume: 1,
+            pitch: 1,
+            rate: 1            
+        }
+        
     };
 
 // The actual plugin constructor
@@ -36,9 +42,10 @@ $.extend(Keller.prototype, {
             '22/04/2016': '(next week)',
             '17/04/2016': '(this weekend)'
         });
-        speech.OnVoiceReady = _.bind(function() {
+        this.initSpeechSynthesis();
+        /*speech.OnVoiceReady = _.bind(function() {
             this.readModuleHeaders();
-        }, this);
+        }, this);*/
         this.generateVoiceCommands();
     }
 });
@@ -106,8 +113,8 @@ $.extend(Keller.prototype, {
             this.writeText();
             nextItem = currentItem;
         }
-        this.removeClass(keyboard.querySelectorAll('li'), 'active');   
-        this.addClass(keyboard.querySelector('li[data-id="' + nextItem + '"]'), 'active');              
+        this._removeClass(keyboard.querySelectorAll('li'), 'active');   
+        this._addClass(keyboard.querySelector('li[data-id="' + nextItem + '"]'), 'active');              
     },
 
     navigateModules: function (action) {
@@ -124,10 +131,10 @@ $.extend(Keller.prototype, {
 
         for (var i = 0; i < modules.length; i++) {            
             if (parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem) {
-                this.addClass(modules[i], 'active');                
+                this._addClass(modules[i], 'active');                
             }
             else {
-                this.removeClass(modules[i], 'active');
+                this._removeClass(modules[i], 'active');
             }
         }
 
@@ -167,10 +174,10 @@ $.extend(Keller.prototype, {
         
         for (var i = 0; i < controls.length; i++) {            
             if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {
-                this.addClass(controls[i], 'show');                
+                this._addClass(controls[i], 'show');                
             }
             else {
-                this.removeClass(controls[i], 'show');
+                this._removeClass(controls[i], 'show');
             }
         }
     }
@@ -263,10 +270,10 @@ $.extend(Keller.prototype, {
         
         for (var i = 0; i < sidebarWidgets.length; i++) {            
             if(sidebarWidgets[i].getAttribute('data-widget-name') === page_name) {                
-                this.addClass(sidebarWidgets[i], 'show');
+                this._addClass(sidebarWidgets[i], 'show');
             }
             else {                 
-                this.removeClass(sidebarWidgets[i], 'show');  
+                this._removeClass(sidebarWidgets[i], 'show');  
             }            
         }                        
     }
@@ -458,8 +465,8 @@ $.extend(Keller.prototype, {
 });        
 $.extend(Keller.prototype, {
 
-    readText: function (text) {
-        //speech.speak(text);
+    readText: function (text) {        
+        this.speak(text);
     },
 
     readModuleHeaders: function () {
@@ -467,9 +474,41 @@ $.extend(Keller.prototype, {
         
         for (var i = 0; i < moduleHeaders.length; i++) {            
             this.readText(moduleHeaders[i].getAttribute('data-ue-speech'));
-        }
-    }
+        }        
+    },
     
+    initSpeechSynthesis: function () {
+        if (typeof window.speechSynthesis === 'undefined') {
+            console.log('Speach synthesis is not supported...');
+            return false;                        
+        } 
+        // "onvoiceschanged" event fires when voices are ready                       
+        window.speechSynthesis.onvoiceschanged = _.bind(function() {
+            this.cachedVoice = this.loadVoice(this.settings.speech.voice)
+        }, this);     
+    },
+    
+    loadVoice: function (voiceName) {                   
+        return window.speechSynthesis.getVoices().filter(function(voice) { 
+            return voice.name === voiceName; 
+        })[0];  
+    },
+    
+    speak: function (text) { 
+        // TODO: check character limit, split long texts into chunks 
+        var msg = new SpeechSynthesisUtterance();                   
+        msg.volume = this.settings.speech.volume;
+        msg.rate = this.settings.speech.rate;
+        msg.pitch = this.settings.speech.pitch;
+        msg.voice = this.cachedVoice || this.loadVoice(this.settings.speech.voice);
+        msg.text = text;                 
+                        
+        msg.onerror = function () {
+            console.log('An error occured while generating:', msg.text);
+        };            
+        
+        window.speechSynthesis.speak(msg);
+    }            
 });        
 $.extend(Keller.prototype, {
 
@@ -598,19 +637,18 @@ $.extend(Keller.prototype, {
 $.extend(Keller.prototype, {
         
     writeText: function () {
-        var $currentInputValue = $(this.getCurrentModule()).find('input').val(),
-            currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
-        this.fillOutInput($currentInputValue + currentChar);
+        var currentInputValue = this.getCurrentModule().querySelector('input[type="text"]').value,
+            currentChar = this.element.querySelector('.ue-keyboard li.active').innerHTML.toLowerCase();
+        this.fillOutInput(currentInputValue + currentChar);
     },
 
     removeText: function () {
-        var $input = $('input[name="test"]'),
-            currentValue = $input.val();
-        $input.val(currentValue.slice(0, -1));
+        var currentInputValue = this.getCurrentModule().querySelector('input[type="text"]').value;   
+        this.fillOutInput(currentInputValue.slice(0, -1));
     },
 
     fillOutInput: function (text) {
-        $(this.getCurrentModule()).find('input').val(text);
+        this.getCurrentModule().querySelector('input').value = text;
     }
     
 });        
@@ -628,8 +666,8 @@ $.extend(Keller.prototype, {
         return document.querySelector('[data-ue-module="' + this.currentModuleId + '"]');
     },
     
-    removeClass: function (elements, className) {
-        if(elements && Array === elements.constructor) {
+    _removeClass: function (elements, className) {
+        if(elements && NodeList === elements.constructor) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.remove(className);
             }             
@@ -639,8 +677,8 @@ $.extend(Keller.prototype, {
         }
     },
     
-    addClass: function (elements, className) {
-        if(elements && Array === elements.constructor) {
+    _addClass: function (elements, className) {
+        if(elements && NodeList === elements.constructor) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.add(className);
             }             

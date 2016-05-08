@@ -17,8 +17,8 @@ $.extend(Keller.prototype, {
             this.writeText();
             nextItem = currentItem;
         }
-        this.removeClass(keyboard.querySelectorAll('li'), 'active');   
-        this.addClass(keyboard.querySelector('li[data-id="' + nextItem + '"]'), 'active');              
+        this._removeClass(keyboard.querySelectorAll('li'), 'active');   
+        this._addClass(keyboard.querySelector('li[data-id="' + nextItem + '"]'), 'active');              
     },
 
     navigateModules: function (action) {
@@ -35,10 +35,10 @@ $.extend(Keller.prototype, {
 
         for (var i = 0; i < modules.length; i++) {            
             if (parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem) {
-                this.addClass(modules[i], 'active');                
+                this._addClass(modules[i], 'active');                
             }
             else {
-                this.removeClass(modules[i], 'active');
+                this._removeClass(modules[i], 'active');
             }
         }
 
@@ -78,10 +78,10 @@ $.extend(Keller.prototype, {
         
         for (var i = 0; i < controls.length; i++) {            
             if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {
-                this.addClass(controls[i], 'show');                
+                this._addClass(controls[i], 'show');                
             }
             else {
-                this.removeClass(controls[i], 'show');
+                this._removeClass(controls[i], 'show');
             }
         }
     }

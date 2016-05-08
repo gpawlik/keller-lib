@@ -49,7 +49,7 @@ module.exports = function( grunt ) {
                 src: [ "src/main.js" ],
                 dest: "dist/js/keller-lib.js",
                 options: {
-                    wrapper: [';(function($, voice, speech, window, document, undefined) {\n"use strict"\n', '\n}(jQuery, annyang, responsiveVoice, window, document));']    
+                    wrapper: [';(function($, voice, window, document, undefined) {\n"use strict"\n', '\n}(jQuery, annyang, window, document));']    
                 }                
             }
         },

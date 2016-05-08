@@ -85,10 +85,10 @@ $.extend(Keller.prototype, {
         
         for (var i = 0; i < sidebarWidgets.length; i++) {            
             if(sidebarWidgets[i].getAttribute('data-widget-name') === page_name) {                
-                this.addClass(sidebarWidgets[i], 'show');
+                this._addClass(sidebarWidgets[i], 'show');
             }
             else {                 
-                this.removeClass(sidebarWidgets[i], 'show');  
+                this._removeClass(sidebarWidgets[i], 'show');  
             }            
         }                        
     }

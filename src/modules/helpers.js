@@ -12,8 +12,8 @@ $.extend(Keller.prototype, {
         return document.querySelector('[data-ue-module="' + this.currentModuleId + '"]');
     },
     
-    removeClass: function (elements, className) {
-        if(elements && Array === elements.constructor) {
+    _removeClass: function (elements, className) {
+        if(elements && NodeList === elements.constructor) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.remove(className);
             }             
@@ -23,8 +23,8 @@ $.extend(Keller.prototype, {
         }
     },
     
-    addClass: function (elements, className) {
-        if(elements && Array === elements.constructor) {
+    _addClass: function (elements, className) {
+        if(elements && NodeList === elements.constructor) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.add(className);
             }             
