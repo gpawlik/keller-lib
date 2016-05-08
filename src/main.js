@@ -111,7 +111,6 @@ $.extend(Keller.prototype, {
     },
 
     navigateModules: function (action) {
-
         var modules = this.element.querySelectorAll('.ue-module'),
             currentItem = this.currentModuleId || 0,
             nextItem;
@@ -149,31 +148,30 @@ $.extend(Keller.prototype, {
     },
 
     navigateControls: function (action) {
-
-        var $controls = $(this.element).find('.ue-sidebar-controls li'),
-            $currentControl = $controls.filter('.show'),
-            currentControlId = $currentControl.data('ue-control-id') || 0,
-            currentControlName = $currentControl.data('ue-control-name') || 'key',
+        var controls = this.element.querySelectorAll('.ue-sidebar-controls li'),
+            currentControl = this.element.querySelector('.ue-sidebar-controls li.show'),
+            currentControlName = currentControl.getAttribute('data-ue-control-name') || 'key',
+            currentControlId = parseInt(currentControl.getAttribute('data-ue-control-id'), 10) || 0,            
             nextControlId;
 
         if (action === 'right') {
-            nextControlId = ((currentControlId + 1) >= $controls.length) ? 0 : currentControlId + 1;
+            nextControlId = ((currentControlId + 1) >= controls.length) ? 0 : currentControlId + 1;
         }
         else if (action === 'left') {
-            nextControlId = ((currentControlId - 1) < 0) ? $controls.length - 1 : currentControlId - 1;
+            nextControlId = ((currentControlId - 1) < 0) ? controls.length - 1 : currentControlId - 1;
         }
-        else if (action === 'enter') {
-            console.log('entering');
-            $currentControl.toggleClass('show');
+        else if (action === 'enter') {                        
             this.showSidebarWidget(currentControlName);
             nextControlId = currentControlId;
         }
-
-        $controls.removeClass('show');
-        $controls.filter('[data-ue-control-id="' + nextControlId + '"]').addClass('show');
-
-        if (_.contains(this.datesModule, nextControlId)) {
-            this.focusOnModule = 1;
+        
+        for (var i = 0; i < controls.length; i++) {            
+            if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {
+                this.addClass(controls[i], 'show');                
+            }
+            else {
+                this.removeClass(controls[i], 'show');
+            }
         }
     }
     
