@@ -1,30 +1,31 @@
 $.extend(Keller.prototype, {
-
-    showKeyboard: function() {        
-        this.element.getElementsByClassName('ue-keyboard')[0].appendChild(this.createAlphabet());
-    },
-
+    
     createAlphabet: function () {
-        var template = document.createElement("ul"),
-            character,
-            number;
-
-        // Create an array with the letters and numbers
-        for (var i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++) {
-            character = document.createElement("li");
-            character.setAttribute("data-id", String.fromCharCode(i));
-            character.setAttribute("data-type", "letter");
-            character.innerHTML = String.fromCharCode(i); 
-            template.appendChild(character);                          
+        var template = document.createElement('ul'),
+            firstCharCode = 'a'.charCodeAt(0),
+            lastCharCode = 'z'.charCodeAt(0),
+            firstNumber = 0,
+            lastNumber = 9,         
+            currentCharacter,
+            currentNumber;
+        
+        for (var i = 0; i <= lastCharCode - firstCharCode; i++) {
+            currentCharacter = document.createElement('li');
+            currentCharacter.setAttribute('data-id', i);
+            currentCharacter.setAttribute('data-type', 'letter');
+            currentCharacter.innerHTML = String.fromCharCode(firstCharCode + i); 
+            if (i === 0) {
+                currentCharacter.className = 'active';
+            }
+            template.appendChild(currentCharacter);                          
         }
-        for(var j = 0; j < 10; j++) {
-            number = document.createElement("li");
-            number.setAttribute("data-id", j);
-            number.setAttribute("data-type", "number");
-            number.innerHTML = j;    
-            template.appendChild(number);  
+        for(var j = firstNumber; j <= lastNumber; j++) {
+            currentNumber = document.createElement('li');
+            currentNumber.setAttribute('data-id', i + j);
+            currentNumber.setAttribute('data-type', 'number');
+            currentNumber.innerHTML = j;    
+            template.appendChild(currentNumber);  
         }                 
-
         return template;
     }
     

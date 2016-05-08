@@ -1,9 +1,4 @@
-$.extend(Keller.prototype, {
-    
-    testFunction: function( text ) {
-        //$( this.element ).text( text );
-        console.log(text, this.settings.propertyName);
-    },
+$.extend(Keller.prototype, {    
 
     getFocus: function () {
         return this.currentFocus;
@@ -13,8 +8,8 @@ $.extend(Keller.prototype, {
         this.currentFocus = this.settings.focusAreas[idx];
     },
 
-    getCurrentModule: function () {
-        return $('[data-ue-module="' + this.currentModuleId + '"]');
+    getCurrentModule: function () {        
+        return document.querySelector('[data-ue-module="' + this.currentModuleId + '"]');
     }
     
 });        

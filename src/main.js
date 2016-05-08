@@ -26,11 +26,8 @@ function Keller (element, options) {
     this.datesModule = [5];
 }
 $.extend(Keller.prototype, {
-    init: function() {
-        this.testFunction( "hello!!!");
+    init: function() {        
         this.showSidebar();
-        this.showKeyboard(); // todo: move to showsidebar
-        this.showSettings(); // todo: move to showsidebar
         this.eventHandlers();
         this.generateVoiceCommands({
             'Barcelona': '(Barcelona)',
@@ -93,12 +90,11 @@ $.extend(Keller.prototype, {
 $.extend(Keller.prototype, {
 
     navigateKeyboard: function (action) {
-        var $keyboard = $('.ue-keyboard'),
-            allItemsLength = $keyboard.find('li').length,
-            currentItem = $keyboard.find('li.active').data('id') || 0,
-            nextItem;
-
-        console.log('keys', allItemsLength);
+        var keyboard = this.element.querySelector('.ue-keyboard'),            
+            activeItem = keyboard.querySelector('li.active'),
+            currentItem = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
+            allItemsLength = keyboard.querySelectorAll('li').length,
+            nextItem;        
 
         if (action === 'right') {
             nextItem = ((currentItem + 1) > allItemsLength) ? 0 : currentItem + 1;
@@ -110,9 +106,11 @@ $.extend(Keller.prototype, {
             this.writeText();
             nextItem = currentItem;
         }
-        $keyboard.find('li').removeClass('active');
-        $keyboard.find('li[data-id="' + nextItem + '"]').addClass('active');
-
+        for(var i = 0; i < allItemsLength; i++) {
+            keyboard.querySelectorAll('li')[i].classList.remove('active');
+        }
+        console.log('next', nextItem);
+        keyboard.querySelector('li[data-id="' + nextItem + '"]').classList.add('active');
     },
 
     navigateModules: function (action) {
@@ -189,7 +187,7 @@ $.extend(Keller.prototype, {
 $.extend(Keller.prototype, {
     
     showSidebar: function () {        
-        this.element.appendChild(this.createSidebar());      
+        this.element.appendChild(this.createSidebar());   
     },
     
     createSidebar: function () {
@@ -240,6 +238,15 @@ $.extend(Keller.prototype, {
         widget = document.createElement('div');
         widget.className = 'ue-' + name;   
         
+        switch (name) {
+            case 'keyboard':
+                widget.appendChild(this.createAlphabet());
+                break;
+            case 'settings':
+                widget.appendChild(this.createSettings());
+                break;            
+        }
+        
         widgetHolder.appendChild(widget);
         
         return widgetHolder;
@@ -260,10 +267,7 @@ $.extend(Keller.prototype, {
     },
     
     showSidebarWidget: function (page_name) {        
-        var sidebarWidgetsList = this.element.getElementsByClassName('ue-sidebar-widgets')[0],
-            sidebarWidgets = sidebarWidgetsList.getElementsByTagName('li');
-        
-        console.log('show', page_name);
+        var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li');                
         
         for (var i = 0; i < sidebarWidgets.length; i++) {            
             if(sidebarWidgets[i].getAttribute('data-widget-name') === page_name) {
@@ -277,41 +281,38 @@ $.extend(Keller.prototype, {
     
 });        
 $.extend(Keller.prototype, {
-
-    showKeyboard: function() {        
-        this.element.getElementsByClassName('ue-keyboard')[0].appendChild(this.createAlphabet());
-    },
-
+    
     createAlphabet: function () {
-        var template = document.createElement("ul"),
-            character,
-            number;
-
-        // Create an array with the letters and numbers
-        for (var i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++) {
-            character = document.createElement("li");
-            character.setAttribute("data-id", String.fromCharCode(i));
-            character.setAttribute("data-type", "letter");
-            character.innerHTML = String.fromCharCode(i); 
-            template.appendChild(character);                          
+        var template = document.createElement('ul'),
+            firstCharCode = 'a'.charCodeAt(0),
+            lastCharCode = 'z'.charCodeAt(0),
+            firstNumber = 0,
+            lastNumber = 9,         
+            currentCharacter,
+            currentNumber;
+        
+        for (var i = 0; i <= lastCharCode - firstCharCode; i++) {
+            currentCharacter = document.createElement('li');
+            currentCharacter.setAttribute('data-id', i);
+            currentCharacter.setAttribute('data-type', 'letter');
+            currentCharacter.innerHTML = String.fromCharCode(firstCharCode + i); 
+            if (i === 0) {
+                currentCharacter.className = 'active';
+            }
+            template.appendChild(currentCharacter);                          
         }
-        for(var j = 0; j < 10; j++) {
-            number = document.createElement("li");
-            number.setAttribute("data-id", j);
-            number.setAttribute("data-type", "number");
-            number.innerHTML = j;    
-            template.appendChild(number);  
+        for(var j = firstNumber; j <= lastNumber; j++) {
+            currentNumber = document.createElement('li');
+            currentNumber.setAttribute('data-id', i + j);
+            currentNumber.setAttribute('data-type', 'number');
+            currentNumber.innerHTML = j;    
+            template.appendChild(currentNumber);  
         }                 
-
         return template;
     }
     
 });        
 $.extend(Keller.prototype, {
-    
-    showSettings: function () {        
-        this.element.getElementsByClassName('ue-settings')[0].appendChild(this.createSettings());        
-    },
     
     createSettings: function () {
         var settingsFields,
@@ -466,14 +467,15 @@ $.extend(Keller.prototype, {
 $.extend(Keller.prototype, {
 
     readText: function (text) {
-        speech.speak(text);
+        //speech.speak(text);
     },
 
     readModuleHeaders: function () {
-        var $moduleHeaders = this.getCurrentModule().find('h3[data-ue-speech], h4[data-ue-speech]');
-        _.each($moduleHeaders, function(header){
-            this.readText($(header).data('ue-speech'));
-        }, this);
+        var moduleHeaders = this.getCurrentModule().querySelectorAll('[data-ue-speech]');
+        
+        for (var i = 0; i < moduleHeaders.length; i++) {            
+            this.readText(moduleHeaders[i].getAttribute('data-ue-speech'));
+        }
     }
     
 });        
@@ -604,7 +606,7 @@ $.extend(Keller.prototype, {
 $.extend(Keller.prototype, {
         
     writeText: function () {
-        var $currentInputValue = this.getCurrentModule().find('input').val(),
+        var $currentInputValue = $(this.getCurrentModule()).find('input').val(),
             currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
         this.fillOutInput($currentInputValue + currentChar);
     },
@@ -616,16 +618,11 @@ $.extend(Keller.prototype, {
     },
 
     fillOutInput: function (text) {
-        this.getCurrentModule().find('input').val(text);
+        $(this.getCurrentModule()).find('input').val(text);
     }
     
 });        
-$.extend(Keller.prototype, {
-    
-    testFunction: function( text ) {
-        //$( this.element ).text( text );
-        console.log(text, this.settings.propertyName);
-    },
+$.extend(Keller.prototype, {    
 
     getFocus: function () {
         return this.currentFocus;
@@ -635,8 +632,8 @@ $.extend(Keller.prototype, {
         this.currentFocus = this.settings.focusAreas[idx];
     },
 
-    getCurrentModule: function () {
-        return $('[data-ue-module="' + this.currentModuleId + '"]');
+    getCurrentModule: function () {        
+        return document.querySelector('[data-ue-module="' + this.currentModuleId + '"]');
     }
     
 });        

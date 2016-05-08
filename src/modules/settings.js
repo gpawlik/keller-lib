@@ -1,9 +1,5 @@
 $.extend(Keller.prototype, {
     
-    showSettings: function () {        
-        this.element.getElementsByClassName('ue-settings')[0].appendChild(this.createSettings());        
-    },
-    
     createSettings: function () {
         var settingsFields,
             settings;

@@ -1,7 +1,7 @@
 $.extend(Keller.prototype, {
         
     writeText: function () {
-        var $currentInputValue = this.getCurrentModule().find('input').val(),
+        var $currentInputValue = $(this.getCurrentModule()).find('input').val(),
             currentChar = $(this.element).find('.ue-keyboard li.active').text().toLowerCase();
         this.fillOutInput($currentInputValue + currentChar);
     },
@@ -13,7 +13,7 @@ $.extend(Keller.prototype, {
     },
 
     fillOutInput: function (text) {
-        this.getCurrentModule().find('input').val(text);
+        $(this.getCurrentModule()).find('input').val(text);
     }
     
 });        

@@ -19,11 +19,8 @@ function Keller (element, options) {
     this.datesModule = [5];
 }
 $.extend(Keller.prototype, {
-    init: function() {
-        this.testFunction( "hello!!!");
+    init: function() {        
         this.showSidebar();
-        this.showKeyboard(); // todo: move to showsidebar
-        this.showSettings(); // todo: move to showsidebar
         this.eventHandlers();
         this.generateVoiceCommands({
             'Barcelona': '(Barcelona)',

@@ -1,7 +1,7 @@
 $.extend(Keller.prototype, {
     
     showSidebar: function () {        
-        this.element.appendChild(this.createSidebar());      
+        this.element.appendChild(this.createSidebar());   
     },
     
     createSidebar: function () {
@@ -52,6 +52,15 @@ $.extend(Keller.prototype, {
         widget = document.createElement('div');
         widget.className = 'ue-' + name;   
         
+        switch (name) {
+            case 'keyboard':
+                widget.appendChild(this.createAlphabet());
+                break;
+            case 'settings':
+                widget.appendChild(this.createSettings());
+                break;            
+        }
+        
         widgetHolder.appendChild(widget);
         
         return widgetHolder;
@@ -72,10 +81,7 @@ $.extend(Keller.prototype, {
     },
     
     showSidebarWidget: function (page_name) {        
-        var sidebarWidgetsList = this.element.getElementsByClassName('ue-sidebar-widgets')[0],
-            sidebarWidgets = sidebarWidgetsList.getElementsByTagName('li');
-        
-        console.log('show', page_name);
+        var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li');                
         
         for (var i = 0; i < sidebarWidgets.length; i++) {            
             if(sidebarWidgets[i].getAttribute('data-widget-name') === page_name) {

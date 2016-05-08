@@ -1,12 +1,11 @@
 $.extend(Keller.prototype, {
 
     navigateKeyboard: function (action) {
-        var $keyboard = $('.ue-keyboard'),
-            allItemsLength = $keyboard.find('li').length,
-            currentItem = $keyboard.find('li.active').data('id') || 0,
-            nextItem;
-
-        console.log('keys', allItemsLength);
+        var keyboard = this.element.querySelector('.ue-keyboard'),            
+            activeItem = keyboard.querySelector('li.active'),
+            currentItem = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
+            allItemsLength = keyboard.querySelectorAll('li').length,
+            nextItem;        
 
         if (action === 'right') {
             nextItem = ((currentItem + 1) > allItemsLength) ? 0 : currentItem + 1;
@@ -18,9 +17,11 @@ $.extend(Keller.prototype, {
             this.writeText();
             nextItem = currentItem;
         }
-        $keyboard.find('li').removeClass('active');
-        $keyboard.find('li[data-id="' + nextItem + '"]').addClass('active');
-
+        for(var i = 0; i < allItemsLength; i++) {
+            keyboard.querySelectorAll('li')[i].classList.remove('active');
+        }
+        console.log('next', nextItem);
+        keyboard.querySelector('li[data-id="' + nextItem + '"]').classList.add('active');
     },
 
     navigateModules: function (action) {
