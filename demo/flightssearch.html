@@ -4,25 +4,24 @@
     <title>Keller Library Demo</title>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/underscore/underscore-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
-    <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
     <script src="../dist/js/keller-lib.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../dist/css/keller-lib.css">    
 </head>
 <body>
     <div id="firstInput" class="ue-module active" data-ue-module="1">
-         <h3 data-ue-speech="Welcome to the flightssearch!">Welcome to the flights search!</h3>
-         <h5 data-ue-speech="Where do you want to go?">Where do you want to go?</h5>
-         <input type="text" name="destination" placeholder="Your destination..." autocomplete="off" />
+         <h3 data-ue-speech="Welcome to the form!">Welcome to the form!</h3>
+         <h5 data-ue-speech="Please fill out the input">Please fill out the input</h5>
+         <input type="text" name="destination" placeholder="Your text..." autocomplete="off" />
     </div>
     <div id="secondInput" class="ue-module" data-ue-module="2">
-         <h3 data-ue-speech="Where are you right now?">Where are you right now?</h3>
-         <input type="text" name="origin" placeholder="Your origin..." autocomplete="off" />
+         <h3 data-ue-speech="Thank you!">Thank you!</h3>
+         <h3 data-ue-speech="Please, select an option">Please, select an option</h3>
+         <input type="text" name="origin" placeholder="Your option..." autocomplete="off" />
     </div>
     <div id="thirdInput" class="ue-module" data-ue-module="3">
-        <h3>We love DEPARTURE</h3>
-        <h4>Now its time to select departure dates</h4>
+        <h3>Thank you!</h3>
+        <h4>Please select a date</h4>
         <button></button>
         <input type="text" id="departureDay"
             data-day="1"
@@ -37,8 +36,8 @@
         <button id="departureButton">OK</button>
     </div>
     <div id="fourthInput" class="ue-module" data-ue-module="4">
-        <h3>Nice</h3>
-        <h4>Now its time to select departure dates</h4>
+        <h3>Thank you!</h3>
+        <h4>Please select a date</h4>
         <button></button>
         <input type="text" id="arrivalDay"
             data-day="20"
