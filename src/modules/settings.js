@@ -74,13 +74,10 @@ $.extend(Keller.prototype, {
                 button.className = "ue-logger-box";
                 wrapper.className = "ue-settings-logger";             
                 break;
-        }    
-        
+        }            
         if(wrapper) {
             wrapper.appendChild(button);
-        }                                                  
-        
+        }                                                          
         return wrapper || button; 
-    }
-    
+    }    
 });

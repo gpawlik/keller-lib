@@ -20,7 +20,7 @@ $.extend(Keller.prototype, {
             return false;                        
         } 
         // "onvoiceschanged" event fires when voices are ready                       
-        window.speechSynthesis.onvoiceschanged = _.bind(function() {
+        window.speechSynthesis.onvoiceschanged = this._bind(function() {
             this.cachedVoice = this.loadVoice(this.settings.speech.voice)
         }, this);     
     },

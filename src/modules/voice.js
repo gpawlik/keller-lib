@@ -9,8 +9,7 @@ $.extend(Keller.prototype, {
             this.voiceRecognition = new webkitSpeechRecognition();
             this.voiceRecognition.continuous = true;
             this.voiceRecognition.interimResults = true;  
-            this.processRecognizedText(this.voiceRecognition);   
-            //this.voiceStart();       
+            this.processRecognizedText(this.voiceRecognition);                   
         }
     },
 

@@ -42,10 +42,10 @@ $.extend(Keller.prototype, {
 });
 $.extend(Keller.prototype, {
 
-    eventHandlers: function () {
-        $(document).on('keydown', _.bind(this.getKeyEvent, this));
-        $(window).on('gamepadconnected', _.bind(this.gamepadConnected, this));
-        $(window).on('gamepaddisconnected', _.bind(this.gamepadDisconnected, this));
+    eventHandlers: function () {        
+        this._addEvent(document, 'keydown', this._bind(this.getKeyEvent, this));        
+        this._addEvent(window, 'gamepadconnected', this._bind(this.gamepadConnected, this));        
+        this._addEvent(window, 'gamepaddisconnected', this._bind(this.gamepadDisconnected, this));
     },
     
     navigateHandler: function (action, focus) {
@@ -212,8 +212,7 @@ $.extend(Keller.prototype, {
         sidebar.appendChild(sidebarWidgets);
         sidebar.appendChild(sidebarControls); 
         
-        return sidebar;  
-        
+        return sidebar;          
     },
     
     createSidebarWidget: function (name, alias, index) {
@@ -385,15 +384,12 @@ $.extend(Keller.prototype, {
                 button.className = "ue-logger-box";
                 wrapper.className = "ue-settings-logger";             
                 break;
-        }    
-        
+        }            
         if(wrapper) {
             wrapper.appendChild(button);
-        }                                                  
-        
+        }                                                          
         return wrapper || button; 
-    }
-    
+    }    
 });
 $.extend(Keller.prototype, {
 
@@ -401,7 +397,7 @@ $.extend(Keller.prototype, {
         // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
         // http://gamedevelopment.tutsplus.com/tutorials/using-the-html5-gamepad-api-to-add-controller-support-to-browser-games--cms-21345
         console.log("Gamepad connected.");
-        var repGP = window.setInterval(_.bind(this.checkGamepad, this),200);
+        var repGP = window.setInterval(this._bind(this.checkGamepad, this), 200);
     },
 
     gamepadDisconnected: function () {
@@ -441,8 +437,7 @@ $.extend(Keller.prototype, {
             this.voiceRecognition = new webkitSpeechRecognition();
             this.voiceRecognition.continuous = true;
             this.voiceRecognition.interimResults = true;  
-            this.processRecognizedText(this.voiceRecognition);   
-            //this.voiceStart();       
+            this.processRecognizedText(this.voiceRecognition);                   
         }
     },
 
@@ -524,7 +519,7 @@ $.extend(Keller.prototype, {
             return false;                        
         } 
         // "onvoiceschanged" event fires when voices are ready                       
-        window.speechSynthesis.onvoiceschanged = _.bind(function() {
+        window.speechSynthesis.onvoiceschanged = this._bind(function() {
             this.cachedVoice = this.loadVoice(this.settings.speech.voice)
         }, this);     
     },
@@ -727,7 +722,41 @@ $.extend(Keller.prototype, {
         else {
             elements.classList.add(className);
         }
-    }
+    },
+    
+    // Event handlers with fallback for <IE8
+    _addEvent: function(element, type, callback, bubble) { 
+        if(document.addEventListener) { 
+            return element.addEventListener(type, callback, bubble || false); 
+        }
+        return element.attachEvent('on' + type, callback); 
+    },
+
+    _onEvent: function(element, type, callback, bubble) { 
+        if(document.addEventListener) { 
+            document.addEventListener(type, function(event){ 
+                if(event.target === element || event.target.id === element) { 
+                    callback.apply(event.target, [event]); 
+                }
+            }, bubble || false);
+        } else {
+            document.attachEvent('on' + type, function(event){  
+                if(event.srcElement === element || event.srcElement.id === element) { 
+                    callback.apply(event.target, [event]); 
+                }
+            });
+        }
+    },
+
+    _bind: function(func, thisValue) {
+        if (typeof func !== "function") {
+            // closest thing possible to the ECMAScript 5 internal IsCallable function
+            throw new TypeError("bind - what is trying to be bound is not callable");
+        }
+        return function() {
+            return func.apply(thisValue, arguments);
+        }
+    }    
     
 });        
 // A really lightweight plugin wrapper around the constructor,

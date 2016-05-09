@@ -1,9 +1,9 @@
 $.extend(Keller.prototype, {
 
-    eventHandlers: function () {
-        $(document).on('keydown', _.bind(this.getKeyEvent, this));
-        $(window).on('gamepadconnected', _.bind(this.gamepadConnected, this));
-        $(window).on('gamepaddisconnected', _.bind(this.gamepadDisconnected, this));
+    eventHandlers: function () {        
+        this._addEvent(document, 'keydown', this._bind(this.getKeyEvent, this));        
+        this._addEvent(window, 'gamepadconnected', this._bind(this.gamepadConnected, this));        
+        this._addEvent(window, 'gamepaddisconnected', this._bind(this.gamepadDisconnected, this));
     },
     
     navigateHandler: function (action, focus) {

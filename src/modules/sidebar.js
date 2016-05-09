@@ -36,8 +36,7 @@ $.extend(Keller.prototype, {
         sidebar.appendChild(sidebarWidgets);
         sidebar.appendChild(sidebarControls); 
         
-        return sidebar;  
-        
+        return sidebar;          
     },
     
     createSidebarWidget: function (name, alias, index) {
