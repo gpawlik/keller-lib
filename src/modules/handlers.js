@@ -10,7 +10,7 @@ $.extend(Keller.prototype, {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (_.contains(this.datesModule, this.currentModuleId)) {
+                    if (this._contains(this.datesModule, this.currentModuleId)) {
                         this.modifyDates(action, focus);
                     } else {
                         this.navigateModules(action);
@@ -25,7 +25,7 @@ $.extend(Keller.prototype, {
             }
         }
         else if ((action === 'up') || (action === 'down')) {
-            if (_.contains(this.datesModule, this.currentModuleId)) {
+            if (this._contains(this.datesModule, this.currentModuleId)) {
                 this.navigateDates(focus, action);
             } else {
                 this.navigateSettings(action);

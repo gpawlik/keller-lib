@@ -5,7 +5,7 @@ $.extend(Keller.prototype, {
         e.preventDefault();
         switch (e.keyCode) {
             case 13:
-                if (_.contains(this.datesModule, this.currentModuleId)) {
+                if (this._contains(this.datesModule, this.currentModuleId)) {
                     var $moduleWithFocus = $('[data-ue-module="' + this.currentModuleId + '"]');
                     if (this.validateDates($moduleWithFocus)) {
                         this.focusOnModule = 1;

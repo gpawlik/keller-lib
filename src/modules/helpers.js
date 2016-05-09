@@ -66,6 +66,10 @@ $.extend(Keller.prototype, {
         return function() {
             return func.apply(thisValue, arguments);
         }
-    }    
+    },
+    
+    _contains: function(obj, item) {        
+        return obj.indexOf(item) >= 0;
+    }  
     
 });        

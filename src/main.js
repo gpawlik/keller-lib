@@ -52,7 +52,7 @@ $.extend(Keller.prototype, {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (_.contains(this.datesModule, this.currentModuleId)) {
+                    if (this._contains(this.datesModule, this.currentModuleId)) {
                         this.modifyDates(action, focus);
                     } else {
                         this.navigateModules(action);
@@ -67,7 +67,7 @@ $.extend(Keller.prototype, {
             }
         }
         else if ((action === 'up') || (action === 'down')) {
-            if (_.contains(this.datesModule, this.currentModuleId)) {
+            if (this._contains(this.datesModule, this.currentModuleId)) {
                 this.navigateDates(focus, action);
             } else {
                 this.navigateSettings(action);
@@ -553,7 +553,7 @@ $.extend(Keller.prototype, {
         e.preventDefault();
         switch (e.keyCode) {
             case 13:
-                if (_.contains(this.datesModule, this.currentModuleId)) {
+                if (this._contains(this.datesModule, this.currentModuleId)) {
                     var $moduleWithFocus = $('[data-ue-module="' + this.currentModuleId + '"]');
                     if (this.validateDates($moduleWithFocus)) {
                         this.focusOnModule = 1;
@@ -756,7 +756,11 @@ $.extend(Keller.prototype, {
         return function() {
             return func.apply(thisValue, arguments);
         }
-    }    
+    },
+    
+    _contains: function(obj, item) {        
+        return obj.indexOf(item) >= 0;
+    }  
     
 });        
 // A really lightweight plugin wrapper around the constructor,
