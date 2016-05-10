@@ -114,7 +114,7 @@ module.exports = function( grunt ) {
         },
 
 		watch: {
-			files: [ "src/*", "src/modules/*", "style/*", "style/core/*", "test/**/*" ],
+			files: [ "src/modules/*/*", "style/*", "style/core/*", "test/**/*" ],
 			tasks: [ "default" ]
 		}
 

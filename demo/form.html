@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Keller Library Demo</title>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>    
+    <script src="../dist/js/keller-lib.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../dist/css/keller-lib.css">    
+</head>
+<body>
+    <div id="firstInput" class="ue-module active" data-ue-module="0">
+         <h3 data-ue-speech="Welcome to the form!">Welcome to the form!</h3>
+         <h5 data-ue-speech="Please fill out the input">Please fill out the input</h5>
+         <input type="text" name="destination" placeholder="Your text..." autocomplete="off" />
+    </div>
+    <div id="secondInput" class="ue-module" data-ue-module="1">
+         <h3 data-ue-speech="Thank you!">Thank you!</h3>
+         <h5 data-ue-speech="Please, select an option">Please, select an option</h5>
+         <input type="text" name="origin" placeholder="Your option..." autocomplete="off" />
+    </div>
+    <div id="thirdInput" class="ue-module" data-ue-module="2">
+        <h3>Thank you!</h3>
+        <h5>Please select a date</h5>
+        <button></button>
+        <input type="text" id="departureDay"
+            data-day="1"
+            data-ue-focus="1" value="1" />
+        <button></button><br/>
+        <button></button>
+        <input type="text" id="departureMonth" 
+            data-month="04"
+            data-year="2016"
+            data-ue-focus="2" value="APRIL, 2016" />
+        <button></button><br/>
+        <button id="departureButton">OK</button>
+    </div>
+    <div id="fourthInput" class="ue-module" data-ue-module="3">
+        <h3>Thank you!</h3>
+        <h5>Please select a date</h5>
+        <span class="ue-button"></span>
+        <input type="text" id="arrivalDay"
+            data-day="20"
+            data-ue-focus="1" value="20" />
+        <span class="ue-button"></span>
+        <br/>
+        <button></button>
+        <input type="text" id="arrivalMonth" 
+            data-month="4"
+            data-year="2016"
+            data-ue-focus="2" value="APRIL, 2016" />
+        <button></button><br/>
+        <button id="arrivalButton">OK</button>
+    </div>
+    
+    <script>
+    $(function() {
+        $("body").keller();
+    });
+    </script>
+</body>
+</html>

@@ -33,15 +33,15 @@ $.extend(Keller.prototype, {
             elements.classList.add(className);
         }
     },
-    
-    // Event handlers with fallback for <IE8
+        
     _addEvent: function(element, type, callback, bubble) { 
         if(document.addEventListener) { 
             return element.addEventListener(type, callback, bubble || false); 
         }
+        // fallback for <IE8
         return element.attachEvent('on' + type, callback); 
     },
-
+    
     _onEvent: function(element, type, callback, bubble) { 
         if(document.addEventListener) { 
             document.addEventListener(type, function(event){ 
@@ -50,6 +50,7 @@ $.extend(Keller.prototype, {
                 }
             }, bubble || false);
         } else {
+            // fallback for <IE8
             document.attachEvent('on' + type, function(event){  
                 if(event.srcElement === element || event.srcElement.id === element) { 
                     callback.apply(event.target, [event]); 

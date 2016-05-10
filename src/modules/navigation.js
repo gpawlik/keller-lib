@@ -72,16 +72,17 @@ $.extend(Keller.prototype, {
             nextControlId = ((currentControlId - 1) < 0) ? controls.length - 1 : currentControlId - 1;
         }
         else if (action === 'enter') {                        
-            this.showSidebarWidget(currentControlName);
-            nextControlId = currentControlId;
+            this.showSidebarWidget(currentControlName);            
         }
         
-        for (var i = 0; i < controls.length; i++) {            
-            if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {
-                this._addClass(controls[i], 'show');                
-            }
-            else {
-                this._removeClass(controls[i], 'show');
+        if (typeof nextControlId !== 'undefined') {
+            for (var i = 0; i < controls.length; i++) {            
+                if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {
+                    this._addClass(controls[i], 'show');                
+                }
+                else {
+                    this._removeClass(controls[i], 'show');
+                }
             }
         }
     }
