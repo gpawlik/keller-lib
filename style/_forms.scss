@@ -1,10 +1,18 @@
+.ue-input-group {
+    margin-bottom:15px;
+}
+
 input[type="text"] {
-    height: 46px;
-    max-width: 270px;        
+    height: 60px;
+    max-width: 270px; 
+    font-size:30px;
+    line-height:60px;       
     background-color: transparent;
     color: $primary-color-light;
     border: solid 2px $primary-color-light;
-    border-radius: 4px;        
+    border-radius: 4px;  
+    padding:0 15px;    
+    vertical-align:top;  
 }
 
 .ue-button {    

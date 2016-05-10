@@ -28,7 +28,7 @@ $.extend(Keller.prototype, {
             if (this._contains(this.datesModule, this.currentModuleId)) {
                 this.navigateDates(focus, action);
             } else {
-                this.navigateSettings(action);
+                this.navigateFocusAreas(action);
             }
         } else if (action === 'enter') {
             switch (focus) {

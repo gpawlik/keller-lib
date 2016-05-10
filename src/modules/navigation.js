@@ -46,7 +46,7 @@ $.extend(Keller.prototype, {
         this.readModuleHeaders();
     },
 
-    navigateSettings: function (action) {
+    navigateFocusAreas: function (action) {
         var focusAreas = this.settings.focusAreas,
             currentFocusIndex = focusAreas.indexOf(this.getFocus());
 
