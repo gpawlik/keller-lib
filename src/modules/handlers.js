@@ -10,7 +10,7 @@ $.extend(Keller.prototype, {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (this._contains(this.datesModule, this.currentModuleId)) {
+                    if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) { 
                         this.modifyDates(action, focus);
                     } else {
                         this.navigateModules(action);
@@ -25,7 +25,7 @@ $.extend(Keller.prototype, {
             }
         }
         else if ((action === 'up') || (action === 'down')) {
-            if (this._contains(this.datesModule, this.currentModuleId)) {
+            if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
                 this.navigateDates(focus, action);
             } else {
                 this.navigateFocusAreas(action);

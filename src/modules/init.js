@@ -22,7 +22,6 @@ function Keller (element, options) {
     this.focusOnModule = 1;
     this.currentFocus = this.settings.focusAreas[0];
     this.init();
-    this.datesModule = [2, 3];
 }
 
 $.extend(Keller.prototype, {

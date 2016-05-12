@@ -29,7 +29,6 @@ function Keller (element, options) {
     this.focusOnModule = 1;
     this.currentFocus = this.settings.focusAreas[0];
     this.init();
-    this.datesModule = [2, 3];
 }
 
 $.extend(Keller.prototype, {
@@ -52,7 +51,7 @@ $.extend(Keller.prototype, {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (this._contains(this.datesModule, this.currentModuleId)) {
+                    if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) { 
                         this.modifyDates(action, focus);
                     } else {
                         this.navigateModules(action);
@@ -67,10 +66,10 @@ $.extend(Keller.prototype, {
             }
         }
         else if ((action === 'up') || (action === 'down')) {
-            if (this._contains(this.datesModule, this.currentModuleId)) {
+            if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
                 this.navigateDates(focus, action);
             } else {
-                this.navigateSettings(action);
+                this.navigateFocusAreas(action);
             }
         } else if (action === 'enter') {
             switch (focus) {
@@ -133,7 +132,7 @@ $.extend(Keller.prototype, {
         this.readModuleHeaders();
     },
 
-    navigateSettings: function (action) {
+    navigateFocusAreas: function (action) {
         var focusAreas = this.settings.focusAreas,
             currentFocusIndex = focusAreas.indexOf(this.getFocus());
 
@@ -554,8 +553,8 @@ $.extend(Keller.prototype, {
         e.preventDefault();
         switch (e.keyCode) {
             case 13:
-                if (this._contains(this.datesModule, this.currentModuleId)) {
-                    var $moduleWithFocus = $('[data-ue-module="' + this.currentModuleId + '"]');
+                if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+                    var $moduleWithFocus = this.getCurrentModule();
                     if (this.validateDates($moduleWithFocus)) {
                         this.focusOnModule = 1;
                         this.navigateModules('right');
