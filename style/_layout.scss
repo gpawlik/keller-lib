@@ -1,6 +1,10 @@
 body {
   background-color:$primary-color-dark;
-  color:#fff;
+  color:$primary-color-light;
+  &.reversed {
+      background-color:$primary-color-light;
+      color:$primary-color-dark;
+  }
 }
 
 .ue-module {

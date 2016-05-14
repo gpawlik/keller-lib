@@ -18,6 +18,10 @@
         color:$primary-color-dark;
         font-family: 'Keller';
         font-size:50px;
+        .reversed & {
+            background-image:linear-gradient(-180deg, $primary-color-dark 0%, lighten($primary-color-dark, 2%) 100%);
+            color:$primary-color-light;
+        }
         &.control-icon-mic {
             font-size:52px;
             line-height:78px;
@@ -52,7 +56,6 @@
             width:20px;
             height:20px;
             border-radius:100%;
-            background:#999;
             background-color:$primary-color-dark;
             border:1px solid #fff;
             color:#fff;

@@ -28,6 +28,7 @@ $.extend(Keller.prototype, {
     init: function() {        
         this.showSidebar();
         this.eventHandlers();
+        this.eventListeners();
         this.initSpeechSynthesis();
         this.initVoiceRecognition();
     }

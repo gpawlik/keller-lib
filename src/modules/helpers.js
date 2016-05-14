@@ -13,7 +13,7 @@ $.extend(Keller.prototype, {
     },
     
     _removeClass: function (elements, className) {
-        if(elements && NodeList === elements.constructor) {
+        if(elements && elements.constructor === NodeList) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.remove(className);
             }             
@@ -24,13 +24,24 @@ $.extend(Keller.prototype, {
     },
     
     _addClass: function (elements, className) {
-        if(elements && NodeList === elements.constructor) {
+        if(elements && elements.constructor === NodeList) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.add(className);
             }             
         }
         else {
             elements.classList.add(className);
+        }
+    },
+    
+    _toggleClass: function (elements, className) {
+        if(elements && elements.constructor === NodeList) {
+            for(var i = 0; i < elements.length; i++) {
+                elements[i].classList.toggle(className);
+            }             
+        }
+        else {
+            elements.classList.toggle(className);
         }
     },
         
@@ -57,6 +68,17 @@ $.extend(Keller.prototype, {
                 }
             });
         }
+    },
+    
+    _triggerEvent: function (el, eventName, options) {
+        var event;
+        if (window.CustomEvent) {
+            event = new CustomEvent(eventName, options);
+        } else {
+            event = document.createEvent('CustomEvent');
+            event.initCustomEvent(eventName, true, true, options);
+        }
+        el.dispatchEvent(event); 
     },
 
     _bind: function(func, thisValue) {

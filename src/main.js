@@ -35,6 +35,7 @@ $.extend(Keller.prototype, {
     init: function() {        
         this.showSidebar();
         this.eventHandlers();
+        this.eventListeners();
         this.initSpeechSynthesis();
         this.initVoiceRecognition();
     }
@@ -46,6 +47,11 @@ $.extend(Keller.prototype, {
         this._addEvent(window, 'gamepadconnected', this._bind(this.gamepadConnected, this));        
         this._addEvent(window, 'gamepaddisconnected', this._bind(this.gamepadDisconnected, this));
     },
+    
+    eventListeners: function () {
+        this._onEvent(document, 'settings:font-enhancer', this._bind(this.changeFontSize, this));
+        this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));        
+    },    
     
     navigateHandler: function (action, focus) {
         if ((action === 'right') || (action === 'left')) {
@@ -310,7 +316,7 @@ $.extend(Keller.prototype, {
 });        
 /* global ; */
 $.extend(Keller.prototype, {
-        
+                
     createSettings: function () {
         var settingsFields,
             settings;                        
@@ -419,7 +425,8 @@ $.extend(Keller.prototype, {
         }
         if (typeof newValue !== 'undefined') {
             el.setAttribute('data-value', newValue);        
-            this.storeSettings(settingName, newValue);              
+            this.storeSettings(settingName, newValue);
+            this._triggerEvent(document, 'settings:' + settingName);         
         }  
     },
     
@@ -429,6 +436,14 @@ $.extend(Keller.prototype, {
     
     getSettings: function (item) {
         return localStorage.getItem(item);
+    },
+    
+    changeFontSize: function () {
+        
+    },
+    
+    changeContrast: function () {
+        this._toggleClass(document.body, 'reversed');        
     }
 });
 $.extend(Keller.prototype, {
@@ -744,7 +759,7 @@ $.extend(Keller.prototype, {
     },
     
     _removeClass: function (elements, className) {
-        if(elements && NodeList === elements.constructor) {
+        if(elements && elements.constructor === NodeList) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.remove(className);
             }             
@@ -755,13 +770,24 @@ $.extend(Keller.prototype, {
     },
     
     _addClass: function (elements, className) {
-        if(elements && NodeList === elements.constructor) {
+        if(elements && elements.constructor === NodeList) {
             for(var i = 0; i < elements.length; i++) {
                 elements[i].classList.add(className);
             }             
         }
         else {
             elements.classList.add(className);
+        }
+    },
+    
+    _toggleClass: function (elements, className) {
+        if(elements && elements.constructor === NodeList) {
+            for(var i = 0; i < elements.length; i++) {
+                elements[i].classList.toggle(className);
+            }             
+        }
+        else {
+            elements.classList.toggle(className);
         }
     },
         
@@ -788,6 +814,17 @@ $.extend(Keller.prototype, {
                 }
             });
         }
+    },
+    
+    _triggerEvent: function (el, eventName, options) {
+        var event;
+        if (window.CustomEvent) {
+            event = new CustomEvent(eventName, options);
+        } else {
+            event = document.createEvent('CustomEvent');
+            event.initCustomEvent(eventName, true, true, options);
+        }
+        el.dispatchEvent(event); 
     },
 
     _bind: function(func, thisValue) {

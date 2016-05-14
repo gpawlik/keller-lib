@@ -1,6 +1,6 @@
 /* global ; */
 $.extend(Keller.prototype, {
-        
+                
     createSettings: function () {
         var settingsFields,
             settings;                        
@@ -109,7 +109,8 @@ $.extend(Keller.prototype, {
         }
         if (typeof newValue !== 'undefined') {
             el.setAttribute('data-value', newValue);        
-            this.storeSettings(settingName, newValue);              
+            this.storeSettings(settingName, newValue);
+            this._triggerEvent(document, 'settings:' + settingName);         
         }  
     },
     
@@ -119,5 +120,13 @@ $.extend(Keller.prototype, {
     
     getSettings: function (item) {
         return localStorage.getItem(item);
+    },
+    
+    changeFontSize: function () {
+        
+    },
+    
+    changeContrast: function () {
+        this._toggleClass(document.body, 'reversed');        
     }
 });

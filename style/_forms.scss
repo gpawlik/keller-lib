@@ -13,6 +13,10 @@ input[type="text"] {
     border-radius: 4px;  
     padding:0 15px;    
     vertical-align:top;  
+    .reversed & {
+        color: $primary-color-dark;
+        border-color: $primary-color-dark;        
+    }
 }
 
 .ue-button {    

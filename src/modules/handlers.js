@@ -6,6 +6,11 @@ $.extend(Keller.prototype, {
         this._addEvent(window, 'gamepaddisconnected', this._bind(this.gamepadDisconnected, this));
     },
     
+    eventListeners: function () {
+        this._onEvent(document, 'settings:font-enhancer', this._bind(this.changeFontSize, this));
+        this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));        
+    },    
+    
     navigateHandler: function (action, focus) {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
