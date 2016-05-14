@@ -1,5 +1,5 @@
 $.extend(Keller.prototype, {
-    
+        
     createSettings: function () {
         var settingsFields,
             settings;
@@ -7,77 +7,76 @@ $.extend(Keller.prototype, {
         settingsFields = [
             {
                 'label': 'Something',
-                'type': ''
+                'type': '',
+                'name': 'something'
             },
             {
                 'label': 'Letter spacing',
-                'type': 'switch'
+                'type': 'switch',
+                'name': 'letter-spacing'
             },
             {
                 'label': 'Font enhancer',
-                'type': 'stepper'
+                'type': 'stepper',
+                'name': 'font-enhancer'
             },
             {
                 'label': 'Event logger',
-                'type': 'logger'
+                'type': 'logger',
+                'name': 'event-logger'
             }
         ];
         
         settings = document.createElement('div');        
         for (var i = 0; i < settingsFields.length; i++) {
-            settings.appendChild(this.createSetting(settingsFields[i].label, settingsFields[i].type));
+            settings.appendChild(this.createSetting(settingsFields[i]));
         }
         return settings;
     },
     
-    createSetting: function (label, type) {
+    createSetting: function (field) {
         var wrapper, 
-            labelbox;
+            labelbox,
+            button;
         
         wrapper = document.createElement('div');
         wrapper.className = 'ue-settings-row';
         
         labelbox = document.createElement('div');
         labelbox.className = 'ue-settings-label';
-        labelbox.innerHTML = label;
+        labelbox.innerHTML = field.label;
         
         wrapper.appendChild(labelbox);
-        wrapper.appendChild(this.createSettingButton(type));        
         
+        button = this.createSettingButton(field);
+        wrapper.appendChild(button);
+        
+        this._addEvent(button, 'click', this._bind(this.changeSettings, this));
+                                
         return wrapper;
     },
     
-    createSettingButton: function (type) {
-        var wrapper,            
-            button,            
-            buttonSubtract, 
-            buttonAdd;
-            
-        wrapper = document.createElement('div');   
-        button = document.createElement('div');                 
+    createSettingButton: function (field) {    
+        var button;
         
-        switch (type) {
-            case 'switch':                
-                button.className = "ue-settings-voice-switch";
-                wrapper = false;
-                break;
+        button = document.createElement('div');
+        button.className = 'ue-settings-button ue-settings-button-' + field.type;  
+        button.setAttribute('data-name', field.name);                   
+        
+        switch (field.type) {
             case 'stepper':                                        
-                buttonSubtract = document.createElement('span');                
-                buttonSubtract.setAttribute("data-step", "subtract");                
-                buttonAdd = document.createElement('span');                
-                buttonAdd.setAttribute("data-step", "add");                   
-                wrapper.appendChild(buttonSubtract);
-                wrapper.appendChild(buttonAdd); 
-                wrapper.className = "ue-settings-stepper";                
+                var buttonAdd = document.createElement('span'), 
+                    buttonSubtract = document.createElement('span');  
+                buttonAdd.setAttribute("data-step", "add");                                 
+                buttonSubtract.setAttribute("data-step", "subtract");                                                               
+                button.appendChild(buttonSubtract);
+                button.appendChild(buttonAdd);               
                 break;
-            case 'logger':                
-                button.className = "ue-logger-box";
-                wrapper.className = "ue-settings-logger";             
-                break;
-        }            
-        if(wrapper) {
-            wrapper.appendChild(button);
-        }                                                          
-        return wrapper || button; 
-    }    
+        }                                                                              
+        return button; 
+    },
+    
+    changeSettings: function () {
+        
+    }  
 });
