@@ -22,7 +22,7 @@ $.extend(Keller.prototype, {
                 'label': 'Font enhancer',
                 'type': 'stepper',
                 'name': 'font-enhancer',
-                'value': this.getSettings('font-enhancer') || 5
+                'value': this.getSettings('font-enhancer') || 10
             },
             {
                 'label': 'Event logger',
@@ -110,7 +110,7 @@ $.extend(Keller.prototype, {
         if (typeof newValue !== 'undefined') {
             el.setAttribute('data-value', newValue);        
             this.storeSettings(settingName, newValue);
-            this._triggerEvent(document, 'settings:' + settingName);         
+            this._triggerEvent(document, 'settings:' + settingName, { value: newValue });         
         }  
     },
     
@@ -122,8 +122,8 @@ $.extend(Keller.prototype, {
         return localStorage.getItem(item);
     },
     
-    changeFontSize: function () {
-        
+    changeFontSize: function (e) {
+        document.body.style.fontSize = parseInt(e.detail.value, 10)/10 + 'em';        
     },
     
     changeContrast: function () {

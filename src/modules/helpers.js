@@ -71,9 +71,9 @@ $.extend(Keller.prototype, {
     },
     
     _triggerEvent: function (el, eventName, options) {
-        var event;
+        var event;        
         if (window.CustomEvent) {
-            event = new CustomEvent(eventName, options);
+            event = new CustomEvent(eventName, { detail: options });
         } else {
             event = document.createEvent('CustomEvent');
             event.initCustomEvent(eventName, true, true, options);
