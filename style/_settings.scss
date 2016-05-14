@@ -47,43 +47,50 @@ right:0;
         border-radius:20px;
         float:right;
         position:relative;   
-        background-color:$primary-color-dark; 
-    }
-    .ue-settings-button-switch {
-        position:relative;
-        &:after {
-            position:absolute;
-            display:block;
-            width:26px;
-            height:26px;
-            background-color:#fff;
-            top:2px;
-            left:2px;
-            content:"";
-            border-radius:100%;
-        }
-        &.on:after {
-            left:auto;
-            right:2px;
-        }
-    }
-    .ue-settings-button-stepper {
-        display:table;
-        span {
-            display:table-cell;
-            width:50%;
-            height:30px;
-            vertical-align:middle;
-            cursor:pointer;
-            font-size:20px;
-            font-weight:600;
-            font-family:"Roboto";
-            top:-3px;
-            &:first-child {
-                border-right:1px solid #fff;
+        background-color:$primary-color-dark;
+        overflow:hidden; 
+        &[data-type="switch"] {
+            position:relative;
+            &:after {
+                position:absolute;
+                display:block;
+                width:26px;
+                height:26px;
+                background-color:#fff;
+                top:2px;
+                left:2px;
+                content:"";
+                border-radius:100%;
+            }
+            &[data-value="true"]:after {
+                left:auto;
+                right:2px;
             }
         }
+        &[data-type="stepper"] {
+            display:table;
+            span {
+                display:table-cell;
+                width:50%;
+                height:30px;
+                vertical-align:middle;
+                cursor:pointer;
+                font-size:20px;
+                font-weight:600;
+                font-family:"Roboto";
+                top:-3px;
+                color:#fff;
+                text-align:center;
+                &:active {
+                    background-color:darken($primary-color-dark, 10%); 
+                }               
+                &:first-child {
+                    border-right:1px solid #fff;
+                }
+            }
+        }        
     }
+
 }
 .ue-settings-media {
     font-size:250px;
