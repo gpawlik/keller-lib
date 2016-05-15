@@ -1,17 +1,25 @@
-.ue-sidebar-widgets {
-    color: $primary-color-dark;
-    height: 100%;
-    > li {
-        display: none;
-        height: 100%;
-        &.show {
-            display: block;
-        }
+#ue-sidebar {
+    background: $primary-color-light;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: -350px;
+    width: 350px;
+    z-index: 9999999;
+    @include transition(right .2s ease-out);
+    .reversed & {
+        background: $primary-color-dark;
+    }
+    &.active {
+        right: 0;
     }
 }
 .ui-sidebar-header {
     height: 80px;
     background-color: $primary-color-dark;
+    .reversed & {
+        background-color: $primary-color-light;
+    }
     .ui-sidebar-close {
         display: block;
         width: 80px;
@@ -22,6 +30,20 @@
         font-size: 30px;
         font-family: "Keller";
         cursor: pointer;
+        .reversed & {
+            background: darken($primary-color-light, 10%);
+        }
+    }
+}
+.ue-sidebar-widgets {
+    color: $primary-color-dark;
+    height: 100%;
+    > li {
+        display: none;
+        height: 100%;
+        &.show {
+            display: block;
+        }
     }
 }
 .ue-video,
