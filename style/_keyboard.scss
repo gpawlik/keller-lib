@@ -1,28 +1,32 @@
 .ue-keyboard {
-  margin:10px 5px;
-  ul {
-    list-style-type:none;
-    display:table;
-    width:100%;
-    padding:0;
-  }
-  li {
-    float:left;
-    width:75px;
-    width:75px;
-    margin:5px;
-    text-align:center;
-    text-transform:uppercase;
-    line-height:75px;
-    background-color:$primary-color-dark;
-    color:#fff;
-    border-radius:5px;
-    font-family:"Roboto";
-    font-weight:600;
-    font-size:40px;
-    &.active {
-      background:#222;
-      color:#fff;
+    margin: 10px 5px;
+    ul {
+        list-style-type: none;
+        display: table;
+        width: 100%;
+        padding: 0;
     }
-  }
+    li {
+        float: left;
+        width: 75px;
+        width: 75px;
+        margin: 5px;
+        text-align: center;
+        text-transform: uppercase;
+        line-height: 75px;
+        background-color: $primary-color-dark;
+        color: $primary-color-light;
+        border-radius: 5px;
+        font-family: "Roboto";
+        font-weight: 600;
+        font-size: 40px;
+        .reversed & {
+            background-color: $primary-color-light;
+            color: $primary-color-dark;            
+        }
+        &.active {
+            background: #222;
+            color: $primary-color-light;
+        }
+    }
 }

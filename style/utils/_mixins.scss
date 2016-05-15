@@ -9,3 +9,11 @@
     ::-moz-selection { @content; }
     ::selection { @content; }    
 }
+
+@mixin noselection {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;   
+    -moz-user-select: none;   
+    -ms-user-select: none;       
+    user-select: none;            
+}
