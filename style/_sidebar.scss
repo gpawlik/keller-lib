@@ -1,24 +1,67 @@
 .ue-sidebar-widgets {
-  color:$primary-color-dark;
-  > li {
-    display:none;
-    &.show {
-      display:block;
+    color: $primary-color-dark;
+    height: 100%;
+    > li {
+        display: none;
+        height: 100%;
+        &.show {
+            display: block;
+        }
     }
-  }
 }
 .ui-sidebar-header {
-  height: 80px;
-  background-color:$primary-color-dark;
-  .ui-sidebar-close {
-    display:block;
-    width:80px;
-    height:80px;
-    background:darken($primary-color-dark, 10%);
-    line-height:80px;
-    text-align:center;
-    font-size:30px;
-    font-family:"Keller";
-    cursor:pointer;
-  }
+    height: 80px;
+    background-color: $primary-color-dark;
+    .ui-sidebar-close {
+        display: block;
+        width: 80px;
+        height: 80px;
+        background: darken($primary-color-dark, 10%);
+        line-height: 80px;
+        text-align: center;
+        font-size: 30px;
+        font-family: "Keller";
+        cursor: pointer;
+    }
+}
+.ue-video,
+.ue-microphone,
+.ue-sound {    
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+.widget-icon {
+    font-size: 200px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    font-family: "Keller";
+    display: table-cell;
+    vertical-align: middle;
+    padding-top:45px;
+    &.voice-widget-icon {
+        font-size: 250px;
+    }
+    &.active:after {
+        height: 150px;
+        width: 150px;        
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: -1;
+        content: "";        
+        margin-top: -85px;
+        margin-left: -85px;
+        border: 10px solid #FD4646;
+        opacity: 0;
+        @include border-radius(90px);
+        @include animation(pulsate 1.5s ease-out infinite);        
+    }    
+}
+
+@include keyframes(pulsate) {
+    0% { @include transform(scale(0.1, 0.1)); opacity: 0.0; }
+    50% { opacity: 1.0; }
+    100% { @include transform(scale(1.2, 1.2)); opacity: 0.0; }
 }

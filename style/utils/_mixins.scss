@@ -1,19 +1,59 @@
-@mixin transition ($transition...) {
-    -moz-transition:    $transition;
-    -o-transition:      $transition;
-    -webkit-transition: $transition;
-    transition:         $transition;
+@mixin transition ($transition) {
+    -webkit-transition: #{$transition};
+    -moz-transition:    #{$transition};
+    -o-transition:      #{$transition};    
+    transition:         #{$transition};
+}
+
+@mixin transform($transforms) {
+    -webkit-transform: #{$transforms};
+	-moz-transform:    #{$transforms};
+    -ms-transform:     #{$transforms};
+	-o-transform:      #{$transforms};
+    transform:         #{$transforms};
+}
+
+@mixin border-radius ($radius) {    
+    -webkit-border-radius: $radius;
+    -moz-border-radius:    $radius;
+    -ms-border-radius:     $radius;
+    -o-border-radius:      $radius;
+    border-radius:         $radius;
+}
+
+@mixin animation ($str) {
+    -webkit-animation: #{$str}; 
+    -moz-animation:    #{$str};
+    -ms-animation:     #{$str};
+    -o-animation:      #{$str};
+    animation:         #{$str};      
+}
+
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+    @keyframes #{$animation-name} {
+        @content;
+    }
 }
 
 @mixin selection {
-    ::-moz-selection { @content; }
-    ::selection { @content; }    
+    ::-moz-selection { 
+        @content; 
+    }
+    ::selection { 
+        @content; 
+    }    
 }
 
 @mixin noselection {
     -webkit-touch-callout: none;
-    -webkit-user-select: none;   
-    -moz-user-select: none;   
-    -ms-user-select: none;       
-    user-select: none;            
+    -webkit-user-select:   none;   
+    -moz-user-select:      none;   
+    -ms-user-select:       none;       
+    user-select:           none;            
 }

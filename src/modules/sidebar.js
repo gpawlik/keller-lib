@@ -57,7 +57,16 @@ $.extend(Keller.prototype, {
                 break;
             case 'settings':
                 widget.appendChild(this.createSettings());
-                break;            
+                break; 
+            case 'video':
+                widget.appendChild(this.createVideoWidget());
+                break; 
+            case 'microphone':
+                widget.appendChild(this.createVoiceWidget());
+                break;  
+            case 'sound':
+                widget.appendChild(this.createSpeechWidget());
+                break;                                          
         }
         
         widgetHolder.appendChild(widget);

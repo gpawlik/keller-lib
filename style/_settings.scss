@@ -104,33 +104,4 @@
             }
         }        
     }
-
-}
-.ue-settings-media {
-    font-size: 250px;
-    padding: 220px 0;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-}
-.ue-big-icon {
-    font-family: "Keller";
-}
-.gps_ring {
-    border: 10px solid #FD4646;
-    -webkit-border-radius: 90px;
-    height: 150px;
-    width: 150px;
-    position: absolute;
-    left: 88px;
-    top: 300px;
-    -webkit-animation: pulsate 1.5s ease-out;
-    -webkit-animation-iteration-count: infinite;
-    opacity: 0.0;
-    z-index: -1
-}
-@-webkit-keyframes pulsate {
-    0% { -webkit-transform: scale(0.1, 0.1); opacity: 0.0; }
-    50% { opacity: 1.0; }
-    100% { -webkit-transform: scale(1.2, 1.2); opacity: 0.0; }
 }

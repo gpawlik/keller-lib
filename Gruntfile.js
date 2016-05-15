@@ -32,6 +32,7 @@ module.exports = function( grunt ) {
                     "src/modules/settings.js",                                         
                     "src/modules/gamepad.js",
                     "src/modules/voice.js",
+                    "src/modules/video.js",
                     "src/modules/speech.js",
                     "src/modules/keys.js",
                     "src/modules/inputs/dateselector.js",  

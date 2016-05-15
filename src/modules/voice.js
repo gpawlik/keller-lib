@@ -67,5 +67,14 @@ $.extend(Keller.prototype, {
         recognition.onnomatch = function () {
             console.log('Sorry! There was no match...');
         };                        
-    }    
+    },
+    
+    createVoiceWidget: function () {
+        var widget = document.createElement('div');        
+        this._addClass(widget, 'widget-icon');
+        this._addClass(widget, 'voice-widget-icon');
+        this._addClass(widget, 'active');
+        widget.innerHTML = '1';
+        return widget;
+    }  
 });    

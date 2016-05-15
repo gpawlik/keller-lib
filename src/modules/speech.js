@@ -45,5 +45,14 @@ $.extend(Keller.prototype, {
         };            
         
         window.speechSynthesis.speak(msg);
+    },
+    
+    createSpeechWidget: function () {
+        var widget = document.createElement('div');        
+        this._addClass(widget, 'widget-icon');
+        this._addClass(widget, 'speech-widget-icon');
+        this._addClass(widget, 'active');
+        widget.innerHTML = '3';
+        return widget;
     }            
 });        
