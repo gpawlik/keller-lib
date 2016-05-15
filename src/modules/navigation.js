@@ -71,10 +71,10 @@ $.extend(Keller.prototype, {
         else if (action === 'left') {
             nextControlId = ((currentControlId - 1) < 0) ? controls.length - 1 : currentControlId - 1;
         }
-        else if (action === 'enter') {                        
-            this.showSidebarWidget(currentControlName);            
+        else if (action === 'enter') {                                    
+            this._triggerEvent(document, 'controls:showwidget', { pageName: currentControlName });             
         }
-        
+                
         if (typeof nextControlId !== 'undefined') {
             for (var i = 0; i < controls.length; i++) {            
                 if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {

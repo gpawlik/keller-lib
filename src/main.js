@@ -50,7 +50,8 @@ $.extend(Keller.prototype, {
     
     eventListeners: function () {
         this._onEvent(document, 'settings:font-enhancer', this._bind(this.changeFontSize, this));
-        this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));        
+        this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));
+        this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));          
     },    
     
     navigateHandler: function (action, focus) {
@@ -163,10 +164,10 @@ $.extend(Keller.prototype, {
         else if (action === 'left') {
             nextControlId = ((currentControlId - 1) < 0) ? controls.length - 1 : currentControlId - 1;
         }
-        else if (action === 'enter') {                        
-            this.showSidebarWidget(currentControlName);            
+        else if (action === 'enter') {                                    
+            this._triggerEvent(document, 'controls:showwidget', { pageName: currentControlName });             
         }
-        
+                
         if (typeof nextControlId !== 'undefined') {
             for (var i = 0; i < controls.length; i++) {            
                 if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {
@@ -257,15 +258,19 @@ $.extend(Keller.prototype, {
         if (index === 0) {
             controlItem.classList.add('show');
         }
+        this._addEvent(controlItem, 'click', this._bind(this.showSidebarWidget, this));
         
         return controlItem;                             
     },
     
-    showSidebarWidget: function (page_name) {        
-        var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li');                
+    showSidebarWidget: function (e) { 
+        e.stopPropagation(); 
+               
+        var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li'),
+            pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');                
         
         for (var i = 0; i < sidebarWidgets.length; i++) {            
-            if(sidebarWidgets[i].getAttribute('data-widget-name') === page_name) {                
+            if(sidebarWidgets[i].getAttribute('data-widget-name') === pageName) {                
                 this._addClass(sidebarWidgets[i], 'show');
             }
             else {                 
@@ -273,7 +278,7 @@ $.extend(Keller.prototype, {
             }            
         }  
         // Temporary voice activation 
-        if(page_name === 'mic') {
+        if(pageName === 'mic') {
             this.voiceStart();
         }  
         else {

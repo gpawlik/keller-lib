@@ -75,15 +75,19 @@ $.extend(Keller.prototype, {
         if (index === 0) {
             controlItem.classList.add('show');
         }
+        this._addEvent(controlItem, 'click', this._bind(this.showSidebarWidget, this));
         
         return controlItem;                             
     },
     
-    showSidebarWidget: function (page_name) {        
-        var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li');                
+    showSidebarWidget: function (e) { 
+        e.stopPropagation(); 
+               
+        var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li'),
+            pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');                
         
         for (var i = 0; i < sidebarWidgets.length; i++) {            
-            if(sidebarWidgets[i].getAttribute('data-widget-name') === page_name) {                
+            if(sidebarWidgets[i].getAttribute('data-widget-name') === pageName) {                
                 this._addClass(sidebarWidgets[i], 'show');
             }
             else {                 
@@ -91,7 +95,7 @@ $.extend(Keller.prototype, {
             }            
         }  
         // Temporary voice activation 
-        if(page_name === 'mic') {
+        if(pageName === 'mic') {
             this.voiceStart();
         }  
         else {
