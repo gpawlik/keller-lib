@@ -4,3 +4,8 @@
     -webkit-transition: $transition;
     transition:         $transition;
 }
+
+@mixin selection {
+    ::-moz-selection { @content; }
+    ::selection { @content; }    
+}

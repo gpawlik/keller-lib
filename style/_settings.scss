@@ -1,129 +1,135 @@
 #ue-sidebar {
-    background:$primary-color-light;
-    position:fixed;
-    top:0;
-    bottom:0;
-    right:-350px;
-    width:350px;
-    z-index:9999999;
+    background: $primary-color-light;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: -350px;
+    width: 350px;
+    z-index: 9999999;
     .reversed & {
-        background:$primary-color-dark;
+        background: $primary-color-dark;
     }
     &.active {
-        right:0;
+        right: 0;
     }
 }
 
 .ue-settings {
     .ue-settings-row {
-        padding:25px 20px;
-        height:25px;
-        border-bottom:1px solid darken($primary-color-light, 5%);
-        background-image:linear-gradient(-180deg, #EAEFFA 0%, #FFFFFF 100%);
+        padding: 25px 20px;
+        height: 25px;
+        border-bottom: 1px solid darken($primary-color-light, 5%);
+        background-image: linear-gradient(-180deg, #EAEFFA 0%, #FFFFFF 100%);
         .reversed & {
-            background-image:linear-gradient(-180deg, $primary-color-dark 0%, lighten($primary-color-dark, 2%) 100%);
-            border-color:lighten($primary-color-dark, 5%);
+            background-image: linear-gradient(-180deg, $primary-color-dark 0%, lighten($primary-color-dark, 2%) 100%);
+            border-color: lighten($primary-color-dark, 5%);
         }
     }
     .ue-settings-label {
-        font-size:18px;
-        font-weight:600;
-        font-family:"Roboto";
-        color:$primary-color-dark;
-        display:inline-block;
-        vertical-align:top;
+        font-size: 18px;
+        font-weight: 600;
+        font-family: "Roboto";
+        color: $primary-color-dark;
+        display: inline-block;
+        vertical-align: top;
         .reversed & {
-            color:$primary-color-light;
+            color: $primary-color-light;
         }
     }
     .ue-settings-button {
-        display:block;
-        background:#ddd;
-        width:70px;
-        height:30px;
-        cursor:pointer;
-        border-radius:20px;
-        float:right;
-        position:relative;   
-        background-color:$primary-color-dark;
-        overflow:hidden; 
+        display: block;
+        background: #ddd;
+        width: 70px;
+        height: 30px;
+        cursor: pointer;
+        border-radius: 20px;
+        float: right;
+        position: relative;   
+        background-color: $primary-color-dark;
+        overflow: hidden; 
         .reversed & {
-            background-color:$primary-color-light;
+            background-color: $primary-color-light;
         }        
         &[data-type="switch"] {
-            position:relative;            
+            position: relative;            
             &:after {
-                position:absolute;
-                display:block;
-                width:26px;
-                height:26px;
-                background-color:$primary-color-light;
-                top:2px;
-                left:2px;
-                content:"";
-                border-radius:100%;
+                position: absolute;
+                display: block;
+                width: 26px;
+                height: 26px;
+                background-color: $primary-color-light;
+                top: 2px;
+                left: 2px;
+                content: "";
+                border-radius: 100%;
                 @include transition(left .1s ease);
                 .reversed & {
-                    background-color:$primary-color-dark
+                    background-color: $primary-color-dark
                 }
             }
             &[data-value="true"]:after {
-                left:42px;
+                left: 42px;
             }
         }
         &[data-type="stepper"] {
-            display:table;
+            display: table;
             span {
-                display:table-cell;
-                width:50%;
-                height:30px;
-                vertical-align:middle;
-                cursor:pointer;
-                font-size:20px;
-                font-weight:600;
-                font-family:"Roboto";
-                top:-3px;
-                color:$primary-color-light;
-                text-align:center;
-                .reversed & {
-                    color:$primary-color-dark;
-                }
+                display: table-cell;
+                width: 50%;
+                height: 30px;
+                vertical-align: middle;
+                cursor: pointer;
+                font-size: 20px;
+                font-weight: 600;
+                font-family: "Roboto";
+                top: -3px;
+                color: $primary-color-light;
+                text-align: center;
                 &:active {
-                    background-color:darken($primary-color-dark, 10%); 
+                    background-color: darken($primary-color-dark, 10%); 
                 }               
                 &:first-child {
-                    border-right:1px solid #fff;
+                    border-right: 1px solid $primary-color-light;
                 }
+                .reversed & {
+                    color: $primary-color-dark;
+                    &:active {
+                        background-color: darken($primary-color-light, 10%); 
+                    }               
+                    &:first-child {
+                        border-color: $primary-color-dark;
+                    }                    
+                }                
             }
         }        
     }
 
 }
 .ue-settings-media {
-    font-size:250px;
-    padding:220px 0;
-    margin:0 auto;
-    text-align:center;
-    position:relative;
+    font-size: 250px;
+    padding: 220px 0;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
 }
 .ue-big-icon {
-    font-family:"Keller";
+    font-family: "Keller";
 }
 .gps_ring {
     border: 10px solid #FD4646;
     -webkit-border-radius: 90px;
     height: 150px;
-    width:150px;
+    width: 150px;
     position: absolute;
-    left:88px;
-    top:300px;
+    left: 88px;
+    top: 300px;
     -webkit-animation: pulsate 1.5s ease-out;
     -webkit-animation-iteration-count: infinite;
     opacity: 0.0;
-    z-index:-1
+    z-index: -1
 }
 @-webkit-keyframes pulsate {
-    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
-    50% {opacity: 1.0;}
-    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+    0% { -webkit-transform: scale(0.1, 0.1); opacity: 0.0; }
+    50% { opacity: 1.0; }
+    100% { -webkit-transform: scale(1.2, 1.2); opacity: 0.0; }
 }

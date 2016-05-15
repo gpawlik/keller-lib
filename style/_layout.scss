@@ -1,11 +1,19 @@
 body {
-  background-color: $primary-color-dark;
-  color: $primary-color-light;
-  padding-right: $controls-width + 80;  
-  &.reversed {
-      background-color: $primary-color-light;
-      color: $primary-color-dark;
-  }
+    background-color: $primary-color-dark;
+    color: $primary-color-light;
+    padding-right: $controls-width + 80; 
+    @include selection {
+        background: $primary-color-light;
+        color: $primary-color-dark;      
+    } 
+    &.reversed {
+        background-color: $primary-color-light;
+        color: $primary-color-dark;
+        @include selection {
+            background: $primary-color-dark;
+            color: $primary-color-light;      
+        }        
+    }
 }
 
 .ue-module {

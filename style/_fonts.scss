@@ -8,6 +8,27 @@
     font-style: normal;
 }
 
+::selection {
+    background: $primary-color-light;
+    color: $primary-color-dark;
+}
+::-moz-selection {
+    background: $primary-color-light;
+    color: $primary-color-dark;
+}
+
+.reversed {
+    ::selection {
+        background: $primary-color-dark;
+        color: $primary-color-light;
+    }
+    ::-moz-selection {
+        background: $primary-color-dark;
+        color: $primary-color-light;
+    }
+}    
+
+
 h1, h2, h3, h4, h5 {
     font-family: Arial, Verdana, sans-serif;
     margin-bottom: 20px;
