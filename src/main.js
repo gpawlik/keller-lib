@@ -51,7 +51,8 @@ $.extend(Keller.prototype, {
     eventListeners: function () {
         this._onEvent(document, 'settings:font-enhancer', this._bind(this.changeFontSize, this));
         this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));
-        this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));          
+        this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));
+        this._onEvent(document, 'keyboard:writetext', this._bind(this.writeText, this));           
     },    
     
     navigateHandler: function (action, focus) {
@@ -96,22 +97,25 @@ $.extend(Keller.prototype, {
     navigateKeyboard: function (action) {
         var keyboard = this.element.querySelector('.ue-keyboard'),            
             activeItem = keyboard.querySelector('li.active'),
-            currentItem = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
+            currentItemId = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
+            currentItemValue = keyboard.querySelector('li[data-id="' + currentItemId + '"]').innerHTML,
             allItemsLength = keyboard.querySelectorAll('li').length,
-            nextItem;        
+            nextItemId;        
 
         if (action === 'right') {
-            nextItem = ((currentItem + 1) > allItemsLength) ? 0 : currentItem + 1;
+            nextItemId = ((currentItemId + 1) > allItemsLength) ? 0 : currentItemId + 1;
         }
         else if (action === 'left') {
-            nextItem = ((currentItem - 1) < 0) ? allItemsLength - 1 : currentItem - 1;
+            nextItemId = ((currentItemId - 1) < 0) ? allItemsLength - 1 : currentItemId - 1;
         }
         else if (action === 'enter') {
-            this.writeText();
-            nextItem = currentItem;
+            this._triggerEvent(document, 'keyboard:writetext', { keyValue: currentItemValue });  
         }
-        this._removeClass(keyboard.querySelectorAll('li'), 'active');   
-        this._addClass(keyboard.querySelector('li[data-id="' + nextItem + '"]'), 'active');              
+        
+        if (typeof nextItemId !== 'undefined') {
+            this._removeClass(keyboard.querySelectorAll('li'), 'active');   
+            this._addClass(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');                   
+        }           
     },
 
     navigateModules: function (action) {
@@ -314,7 +318,9 @@ $.extend(Keller.prototype, {
             currentNumber.setAttribute('data-type', 'number');
             currentNumber.innerHTML = j;    
             template.appendChild(currentNumber);  
-        }                 
+        } 
+        this._addEvent(template, 'click', this._bind(this.writeText, this));
+                        
         return template;
     }
     
@@ -337,7 +343,7 @@ $.extend(Keller.prototype, {
                 'label': 'Letter spacing',
                 'type': 'switch',
                 'name': 'letter-spacing',
-                'value': this.getSettings('letter-spacing') || false
+                'value': this.getSettings('letter-spacing') || 10
             },
             {
                 'label': 'Font enhancer',
@@ -445,7 +451,7 @@ $.extend(Keller.prototype, {
     
     changeFontSize: function (e) {
         document.body.style.fontSize = parseInt(e.detail.value, 10)/10 + 'em';        
-    },
+    },    
     
     changeContrast: function () {
         this._toggleClass(document.body, 'reversed');        
@@ -733,10 +739,13 @@ $.extend(Keller.prototype, {
 });
 $.extend(Keller.prototype, {
         
-    writeText: function () {
-        var currentInputValue = this.getCurrentModule().querySelector('input[type="text"]').value,
-            currentChar = this.element.querySelector('.ue-keyboard li.active').innerHTML.toLowerCase();
-        this.fillOutInput(currentInputValue + currentChar);
+    writeText: function (e) {
+        this._stopPropagation(e);
+        
+        var currentInput = this.getCurrentModule().querySelector('input[type="text"]'),
+            currentChar = e.constructor === CustomEvent ? e.detail.keyValue : e.target.innerHTML;
+            
+        currentInput.value = currentInput.value + currentChar.toLowerCase();
     },
 
     removeText: function () {
@@ -795,8 +804,19 @@ $.extend(Keller.prototype, {
             elements.classList.toggle(className);
         }
     },
+    
+    _stopPropagation: function (event) {
+        event = event || window.event;
         
-    _addEvent: function(element, type, callback, bubble) { 
+        if (event.stopPropagation) {
+            event.stopPropagation();
+        }
+        else {
+            event.cancelBubble = true;
+        }
+    },
+        
+    _addEvent: function (element, type, callback, bubble) { 
         if(document.addEventListener) { 
             return element.addEventListener(type, callback, bubble || false); 
         }
@@ -804,7 +824,7 @@ $.extend(Keller.prototype, {
         return element.attachEvent('on' + type, callback); 
     },
     
-    _onEvent: function(element, type, callback, bubble) { 
+    _onEvent: function (element, type, callback, bubble) { 
         if(document.addEventListener) { 
             document.addEventListener(type, function(event){ 
                 if(event.target === element || event.target.id === element) { 
@@ -832,7 +852,7 @@ $.extend(Keller.prototype, {
         el.dispatchEvent(event); 
     },
 
-    _bind: function(func, thisValue) {
+    _bind: function (func, thisValue) {
         if (typeof func !== "function") {
             // closest thing possible to the ECMAScript 5 internal IsCallable function
             throw new TypeError("bind - what is trying to be bound is not callable");
@@ -842,7 +862,7 @@ $.extend(Keller.prototype, {
         }
     },
     
-    _contains: function(obj, item) {        
+    _contains: function (obj, item) {        
         return obj.indexOf(item) >= 0;
     }  
     

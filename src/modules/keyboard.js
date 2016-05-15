@@ -25,7 +25,9 @@ $.extend(Keller.prototype, {
             currentNumber.setAttribute('data-type', 'number');
             currentNumber.innerHTML = j;    
             template.appendChild(currentNumber);  
-        }                 
+        } 
+        this._addEvent(template, 'click', this._bind(this.writeText, this));
+                        
         return template;
     }
     

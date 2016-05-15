@@ -20,10 +20,12 @@
         font-family: "Roboto";
         font-weight: 600;
         font-size: 40px;
+        cursor:pointer;
         .reversed & {
             background-color: $primary-color-light;
             color: $primary-color-dark;            
         }
+        &:hover,
         &.active {
             background: #222;
             color: $primary-color-light;

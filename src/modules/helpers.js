@@ -44,8 +44,19 @@ $.extend(Keller.prototype, {
             elements.classList.toggle(className);
         }
     },
+    
+    _stopPropagation: function (event) {
+        event = event || window.event;
         
-    _addEvent: function(element, type, callback, bubble) { 
+        if (event.stopPropagation) {
+            event.stopPropagation();
+        }
+        else {
+            event.cancelBubble = true;
+        }
+    },
+        
+    _addEvent: function (element, type, callback, bubble) { 
         if(document.addEventListener) { 
             return element.addEventListener(type, callback, bubble || false); 
         }
@@ -53,7 +64,7 @@ $.extend(Keller.prototype, {
         return element.attachEvent('on' + type, callback); 
     },
     
-    _onEvent: function(element, type, callback, bubble) { 
+    _onEvent: function (element, type, callback, bubble) { 
         if(document.addEventListener) { 
             document.addEventListener(type, function(event){ 
                 if(event.target === element || event.target.id === element) { 
@@ -81,7 +92,7 @@ $.extend(Keller.prototype, {
         el.dispatchEvent(event); 
     },
 
-    _bind: function(func, thisValue) {
+    _bind: function (func, thisValue) {
         if (typeof func !== "function") {
             // closest thing possible to the ECMAScript 5 internal IsCallable function
             throw new TypeError("bind - what is trying to be bound is not callable");
@@ -91,7 +102,7 @@ $.extend(Keller.prototype, {
         }
     },
     
-    _contains: function(obj, item) {        
+    _contains: function (obj, item) {        
         return obj.indexOf(item) >= 0;
     }  
     

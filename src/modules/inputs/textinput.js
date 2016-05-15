@@ -1,9 +1,12 @@
 $.extend(Keller.prototype, {
         
-    writeText: function () {
-        var currentInputValue = this.getCurrentModule().querySelector('input[type="text"]').value,
-            currentChar = this.element.querySelector('.ue-keyboard li.active').innerHTML.toLowerCase();
-        this.fillOutInput(currentInputValue + currentChar);
+    writeText: function (e) {
+        this._stopPropagation(e);
+        
+        var currentInput = this.getCurrentModule().querySelector('input[type="text"]'),
+            currentChar = e.constructor === CustomEvent ? e.detail.keyValue : e.target.innerHTML;
+            
+        currentInput.value = currentInput.value + currentChar.toLowerCase();
     },
 
     removeText: function () {

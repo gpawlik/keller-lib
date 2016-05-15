@@ -3,22 +3,25 @@ $.extend(Keller.prototype, {
     navigateKeyboard: function (action) {
         var keyboard = this.element.querySelector('.ue-keyboard'),            
             activeItem = keyboard.querySelector('li.active'),
-            currentItem = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
+            currentItemId = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
+            currentItemValue = keyboard.querySelector('li[data-id="' + currentItemId + '"]').innerHTML,
             allItemsLength = keyboard.querySelectorAll('li').length,
-            nextItem;        
+            nextItemId;        
 
         if (action === 'right') {
-            nextItem = ((currentItem + 1) > allItemsLength) ? 0 : currentItem + 1;
+            nextItemId = ((currentItemId + 1) > allItemsLength) ? 0 : currentItemId + 1;
         }
         else if (action === 'left') {
-            nextItem = ((currentItem - 1) < 0) ? allItemsLength - 1 : currentItem - 1;
+            nextItemId = ((currentItemId - 1) < 0) ? allItemsLength - 1 : currentItemId - 1;
         }
         else if (action === 'enter') {
-            this.writeText();
-            nextItem = currentItem;
+            this._triggerEvent(document, 'keyboard:writetext', { keyValue: currentItemValue });  
         }
-        this._removeClass(keyboard.querySelectorAll('li'), 'active');   
-        this._addClass(keyboard.querySelector('li[data-id="' + nextItem + '"]'), 'active');              
+        
+        if (typeof nextItemId !== 'undefined') {
+            this._removeClass(keyboard.querySelectorAll('li'), 'active');   
+            this._addClass(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');                   
+        }           
     },
 
     navigateModules: function (action) {
