@@ -1,7 +1,8 @@
 $.extend(Keller.prototype, {
     
     showSidebar: function () {        
-        this.element.appendChild(this.createSidebar());   
+        this.element.appendChild(this.createSidebar());  
+        this.element.classList.add('show-sidebar'); 
     },
     
     createSidebar: function () {
@@ -126,17 +127,16 @@ $.extend(Keller.prototype, {
     },
     
     toggleSidebar: function (show) {
-        var sidebar = this.element.querySelector('#ue-sidebar'),
-            activeClass = 'active';
+        var activeClass = 'show-sidebar';
         
         if (show === true) {
-            this._addClass(sidebar, activeClass); 
+            this._addClass(this.element, activeClass); 
         }
         else if (show === false) {
-            this._removeClass(sidebar, activeClass); 
+            this._removeClass(this.element, activeClass); 
         } 
         else {
-            this._toggleClass(sidebar, activeClass);    
+            this._toggleClass(this.element, activeClass);    
         }        
     }
     

@@ -10,7 +10,7 @@
     .reversed & {
         background: $primary-color-dark;
     }
-    &.active {
+    .show-sidebar & {
         right: 0;
     }
 }
@@ -62,6 +62,9 @@
     display: table-cell;
     vertical-align: middle;
     padding-top:45px;
+    .reversed & {
+        color: $primary-color-light;
+    }
     &.voice-widget-icon {
         font-size: 250px;
     }

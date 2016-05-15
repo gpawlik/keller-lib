@@ -1,11 +1,14 @@
 body {
     background-color: $primary-color-dark;
     color: $primary-color-light;
-    padding-right: $controls-width + 80; 
+    padding-right: 80px; 
     @include selection {
         background: $primary-color-light;
         color: $primary-color-dark;      
     } 
+    &.show-sidebar {
+        padding-right: $controls-width + 80;
+    }    
     &.reversed {
         background-color: $primary-color-light;
         color: $primary-color-dark;
