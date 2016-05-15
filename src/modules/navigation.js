@@ -4,7 +4,7 @@ $.extend(Keller.prototype, {
         var keyboard = this.element.querySelector('.ue-keyboard'),            
             activeItem = keyboard.querySelector('li.active'),
             currentItemId = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
-            currentItemValue = keyboard.querySelector('li[data-id="' + currentItemId + '"]').innerHTML,
+            currentItem = keyboard.querySelector('li[data-id="' + currentItemId + '"]'),
             allItemsLength = keyboard.querySelectorAll('li').length,
             nextItemId;        
 
@@ -15,12 +15,11 @@ $.extend(Keller.prototype, {
             nextItemId = ((currentItemId - 1) < 0) ? allItemsLength - 1 : currentItemId - 1;
         }
         else if (action === 'enter') {
-            this._triggerEvent(document, 'keyboard:writetext', { keyValue: currentItemValue });  
+            this._triggerEvent(document, 'keyboard:writetext', { key: currentItem });  
         }
         
         if (typeof nextItemId !== 'undefined') {
-            this._removeClass(keyboard.querySelectorAll('li'), 'active');   
-            this._addClass(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');                   
+            this.activateKey(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');                
         }           
     },
 

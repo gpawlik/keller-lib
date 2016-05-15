@@ -1,12 +1,16 @@
 $.extend(Keller.prototype, {
+       
+    selectKey: function (e) {
+        this._stopPropagation(e);        
+        var key = e.constructor === CustomEvent ? e.detail.key : e.target;
         
-    writeText: function (e) {
-        this._stopPropagation(e);
-        
-        var currentInput = this.getCurrentModule().querySelector('input[type="text"]'),
-            currentChar = e.constructor === CustomEvent ? e.detail.keyValue : e.target.innerHTML;
-            
-        currentInput.value = currentInput.value + currentChar.toLowerCase();
+        this.activateKey(key, 'active');
+        this.writeText(key);
+    },  
+      
+    writeText: function (key) {        
+        var currentInput = this.getCurrentModule().querySelector('input[type="text"]');            
+        currentInput.value = currentInput.value + key.innerHTML.toLowerCase();        
     },
 
     removeText: function () {

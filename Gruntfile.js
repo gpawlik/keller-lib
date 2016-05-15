@@ -39,14 +39,14 @@ module.exports = function( grunt ) {
                     "src/modules/helpers.js",                    
                     "src/modules/plugin.js",
                 ],
-				dest: "src/main.js"
+				dest: "dist/js/keller-lib.js"
 			}
 		},
         
         // Wrap final file
         wrap: {
             modules: {
-                src: [ "src/main.js" ],
+                src: [ "dist/js/keller-lib.js" ],
                 dest: "dist/js/keller-lib.js",
                 options: {
                     wrapper: [';(function($, window, undefined) {\n"use strict"\n', '\n}(jQuery, window));']    

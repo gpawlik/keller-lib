@@ -26,9 +26,15 @@ $.extend(Keller.prototype, {
             currentNumber.innerHTML = j;    
             template.appendChild(currentNumber);  
         } 
-        this._addEvent(template, 'click', this._bind(this.writeText, this));
+        this._addEvent(template, 'click', this._bind(this.selectKey, this));
                         
         return template;
+    },
+    
+    activateKey: function (key, className) {
+       var keyboard = this.element.querySelector('.ue-keyboard');
+       this._removeClass(keyboard.querySelectorAll('li'), className);   
+       this._addClass(key, className);           
     }
     
 });        
