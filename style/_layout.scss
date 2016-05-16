@@ -29,6 +29,13 @@ body {
 
 .ue-content {
     padding: 1.5em 0;
+    img {
+        max-width: 100%;
+        margin-bottom: 1em;        
+        .hide-images & {
+            display: none;
+        }
+    }
     p {
         font-size: 1.25em;
         margin-bottom: 1em;

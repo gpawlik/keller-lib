@@ -7,9 +7,10 @@ $.extend(Keller.prototype, {
     },
     
     eventListeners: function () {
-        this._onEvent(document, 'settings:font-enhancer', this._bind(this.changeFontSize, this));
+        this._onEvent(document, 'settings:font-size', this._bind(this.changeFontSize, this));
         this._onEvent(document, 'settings:letter-spacing', this._bind(this.changeLetterSpacing, this));
         this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));
+        this._onEvent(document, 'settings:show-images', this._bind(this.changeShowImages, this));
         this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));
         this._onEvent(document, 'keyboard:writetext', this._bind(this.selectKey, this));           
     },    

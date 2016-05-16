@@ -13,16 +13,22 @@ $.extend(Keller.prototype, {
                 'value': this.getSettings('contrast') || true
             },
             {
+                'label': 'Font size',
+                'type': 'stepper',
+                'name': 'font-size',
+                'value': this.getSettings('font-size') || 10
+            },            
+            {
                 'label': 'Letter spacing',
                 'type': 'stepper',
                 'name': 'letter-spacing',
                 'value': this.getSettings('letter-spacing') || 10
             },
             {
-                'label': 'Font enhancer',
-                'type': 'stepper',
-                'name': 'font-enhancer',
-                'value': this.getSettings('font-enhancer') || 10
+                'label': 'Show images',
+                'type': 'switch',
+                'name': 'show-images',
+                'value': this.getSettings('show-images') || false
             },
             {
                 'label': 'Event logger',
@@ -129,6 +135,10 @@ $.extend(Keller.prototype, {
     changeLetterSpacing: function (e) {
         document.body.style.letterSpacing = parseInt(e.detail.value, 10)/10 + 'px';        
     },   
+    
+    changeShowImages: function (e) {
+        this._toggleClass(document.body, 'hide-images');
+    },
     
     changeContrast: function () {
         this._toggleClass(document.body, 'reversed');        
