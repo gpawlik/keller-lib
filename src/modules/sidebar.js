@@ -109,13 +109,8 @@ $.extend(Keller.prototype, {
         var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li'),
             pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');                
         
-        for (var i = 0; i < sidebarWidgets.length; i++) {            
-            if(sidebarWidgets[i].getAttribute('data-widget-name') === pageName) {                
-                this._addClass(sidebarWidgets[i], 'show');
-            }
-            else {                 
-                this._removeClass(sidebarWidgets[i], 'show');  
-            }            
+        for (var i = 0; i < sidebarWidgets.length; i++) {  
+            this._toggleClass(sidebarWidgets[i], 'show', sidebarWidgets[i].getAttribute('data-widget-name') === pageName);                   
         }  
         // Temporary voice activation 
         if(pageName === 'mic') {
@@ -127,17 +122,7 @@ $.extend(Keller.prototype, {
     },
     
     toggleSidebar: function (show) {
-        var activeClass = 'show-sidebar';
-        
-        if (show === true) {
-            this._addClass(this.element, activeClass); 
-        }
-        else if (show === false) {
-            this._removeClass(this.element, activeClass); 
-        } 
-        else {
-            this._toggleClass(this.element, activeClass);    
-        }        
+        this._toggleClass(this.element, 'show-sidebar', show);      
     }
     
 });        

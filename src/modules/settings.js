@@ -148,13 +148,8 @@ $.extend(Keller.prototype, {
         return cachedSetting;                  
     },
     
-    changeContrast: function (e) {       
-        if (!e.detail.value) {
-            this._removeClass(document.body, 'reversed');            
-        }
-        else {
-            this._addClass(document.body, 'reversed');     
-        }               
+    changeContrast: function (e) {  
+        this._toggleClass(document.body, 'reversed', e.detail.value);               
     },
     
     changeFontSize: function (e) {
@@ -169,13 +164,8 @@ $.extend(Keller.prototype, {
         document.body.style.lineHeight = 100 + parseInt(e.detail.value, 10)*10 + '%'; 
     },  
     
-    changeShowImages: function (e) {        
-        if (!e.detail.value) {
-            this._addClass(document.body, 'hide-images');            
-        }
-        else {
-            this._removeClass(document.body, 'hide-images');    
-        }        
+    changeShowImages: function (e) {
+        this._toggleClass(document.body, 'hide-images', !e.detail.value);               
     }
         
 });

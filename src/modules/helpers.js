@@ -34,14 +34,22 @@ $.extend(Keller.prototype, {
         }
     },
     
-    _toggleClass: function (elements, className) {
-        if(elements && elements.constructor === NodeList) {
-            for(var i = 0; i < elements.length; i++) {
-                elements[i].classList.toggle(className);
-            }             
+    _toggleClass: function (elements, className, force) {
+        if (force === true) {
+            this._addClass(elements, className);
+        }
+        else if (force === false) {
+            this._removeClass(elements, className);
         }
         else {
-            elements.classList.toggle(className);
+            if(elements && elements.constructor === NodeList) {
+                for(var i = 0; i < elements.length; i++) {
+                    elements[i].classList.toggle(className);
+                }             
+            }
+            else {
+                elements.classList.toggle(className);
+            }            
         }
     },
     

@@ -35,13 +35,8 @@ $.extend(Keller.prototype, {
             nextItem = ((currentItem - 1) < 0) ? modules.length - 1 : currentItem - 1;                      
         }                     
 
-        for (var i = 0; i < modules.length; i++) {            
-            if (parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem) {
-                this._addClass(modules[i], 'active');                
-            }
-            else {
-                this._removeClass(modules[i], 'active');
-            }
+        for (var i = 0; i < modules.length; i++) { 
+            this._toggleClass(modules[i], 'active', parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem);           
         }
 
         this.currentModuleId = nextItem;        
@@ -78,13 +73,8 @@ $.extend(Keller.prototype, {
         }
                 
         if (typeof nextControlId !== 'undefined') {
-            for (var i = 0; i < controls.length; i++) {            
-                if (parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId) {
-                    this._addClass(controls[i], 'show');                
-                }
-                else {
-                    this._removeClass(controls[i], 'show');
-                }
+            for (var i = 0; i < controls.length; i++) { 
+                this._toggleClass(controls[i], 'show', parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId);
             }
         }
     }
