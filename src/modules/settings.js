@@ -3,44 +3,44 @@ $.extend(Keller.prototype, {
                 
     createSettings: function () {
         var settingsFields,
-            settings;                        
+            settings;                                             
             
         settingsFields = [
             {
                 'label': 'Contrast',
                 'type': 'switch',
                 'name': 'contrast',
-                'value': this.getSettings('contrast') || true
+                'value': true
             },
             {
                 'label': 'Font size',
                 'type': 'stepper',
                 'name': 'font-size',
-                'value': this.getSettings('font-size') || 10
+                'value': 10
             },            
             {
                 'label': 'Letter spacing',
                 'type': 'stepper',
                 'name': 'letter-spacing',
-                'value': this.getSettings('letter-spacing') || 10
+                'value': 0
             },
             {
                 'label': 'Line height',
                 'type': 'stepper',
                 'name': 'line-height',
-                'value': this.getSettings('line-height') || 1
+                'value': 5
             },
             {
                 'label': 'Show images',
                 'type': 'switch',
                 'name': 'show-images',
-                'value': this.getSettings('show-images') || false
+                'value': true
             }
         ];
         
         settings = document.createElement('div');        
-        for (var i = 0; i < settingsFields.length; i++) {
-            settings.appendChild(this.createSetting(settingsFields[i]));
+        for (var i = 0; i < settingsFields.length; i++) {                     
+            settings.appendChild(this.createSetting(settingsFields[i]));                        
         }
         return settings;
     },
@@ -62,19 +62,21 @@ $.extend(Keller.prototype, {
         button = this.createSettingButton(field);
         wrapper.appendChild(button);
         
-        this._addEvent(button, 'click', this._bind(this.changeSettings, this));
+        this._addEvent(button, 'click', this._bind(this.changeSettings, this));                
                                 
         return wrapper;
     },
     
     createSettingButton: function (field) {    
-        var button;
+        var cachedValue = this.loadSettings(field),
+            settingvalue = (cachedValue !== null) ? cachedValue : field.value,
+            button;                  
         
         button = document.createElement('div');
         button.className = 'ue-settings-button';  
         button.setAttribute('data-name', field.name);
         button.setAttribute('data-type', field.type);
-        button.setAttribute('data-value', field.value);                     
+        button.setAttribute('data-value', settingvalue);                     
         
         switch (field.type) {
             case 'stepper':                                        
@@ -87,7 +89,9 @@ $.extend(Keller.prototype, {
                 button.appendChild(buttonSubtract);
                 button.appendChild(buttonAdd);               
                 break;
-        }                                                                              
+        }           
+        this._triggerEvent(document, 'settings:' + field.name, { value: settingvalue }); 
+                                                                                   
         return button; 
     },
     
@@ -128,8 +132,29 @@ $.extend(Keller.prototype, {
         return localStorage.getItem(item);
     },
     
-    changeContrast: function () {
-        this._toggleClass(document.body, 'reversed');        
+    loadSettings: function (setting) {
+        var cachedSetting = this.getSettings(setting.name);
+            
+        if (cachedSetting !== null) {
+            switch (typeof setting.value) {
+                case 'number':
+                    cachedSetting = parseInt(cachedSetting, 10);
+                    break;
+                case 'boolean':
+                    cachedSetting = JSON.parse(cachedSetting);
+                    break;            
+            }                                      
+        } 
+        return cachedSetting;                  
+    },
+    
+    changeContrast: function (e) {       
+        if (!e.detail.value) {
+            this._removeClass(document.body, 'reversed');            
+        }
+        else {
+            this._addClass(document.body, 'reversed');     
+        }               
     },
     
     changeFontSize: function (e) {
@@ -137,15 +162,20 @@ $.extend(Keller.prototype, {
     }, 
     
     changeLetterSpacing: function (e) {
-        document.body.style.letterSpacing = parseInt(e.detail.value, 10)/10 + 'px';        
+        document.body.style.letterSpacing = parseInt(e.detail.value, 10)/10 + 'px';               
     }, 
     
     changeLineHeight: function (e) {
         document.body.style.lineHeight = 100 + parseInt(e.detail.value, 10)*10 + '%'; 
     },  
     
-    changeShowImages: function (e) {
-        this._toggleClass(document.body, 'hide-images');
+    changeShowImages: function (e) {        
+        if (!e.detail.value) {
+            this._addClass(document.body, 'hide-images');            
+        }
+        else {
+            this._removeClass(document.body, 'hide-images');    
+        }        
     }
         
 });

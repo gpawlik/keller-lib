@@ -25,10 +25,10 @@ function Keller (element, options) {
 }
 
 $.extend(Keller.prototype, {
-    init: function() {        
-        this.showSidebar();
+    init: function() {     
         this.eventHandlers();
-        this.eventListeners();
+        this.eventListeners();           
+        this.showSidebar();
         this.initSpeechSynthesis();
         this.initVoiceRecognition();
     }
