@@ -10,7 +10,7 @@ $.extend(Keller.prototype, {
 
     getCurrentModule: function () {        
         return document.querySelector('[data-ue-module="' + this.currentModuleId + '"]');
-    },
+    },    
     
     _removeClass: function (elements, className) {
         if(elements && elements.constructor === NodeList) {
@@ -52,6 +52,12 @@ $.extend(Keller.prototype, {
             }            
         }
     },
+    
+    _activateItem: function (elements, id, value, className) {        
+        for (var i = 0; i < elements.length; i++) { 
+            this._toggleClass(elements[i], className, elements[i].getAttribute(id) === value.toString());
+        }         
+    },    
     
     _stopPropagation: function (event) {
         event = event || window.event;

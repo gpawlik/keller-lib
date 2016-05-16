@@ -102,16 +102,15 @@ $.extend(Keller.prototype, {
     },
     
     showSidebarWidget: function (e) { 
-        e.stopPropagation(); 
-        
-        this.toggleSidebar(true);
-               
+        e.stopPropagation();                                
         var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li'),
+            controls = this.element.querySelectorAll('.ue-sidebar-controls li'),
             pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');                
         
-        for (var i = 0; i < sidebarWidgets.length; i++) {  
-            this._toggleClass(sidebarWidgets[i], 'show', sidebarWidgets[i].getAttribute('data-widget-name') === pageName);                   
-        }  
+        this.toggleSidebar(true);                 
+        this._activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
+        this._activateItem(controls, 'data-ue-control-name', pageName, 'show');
+        
         // Temporary voice activation 
         if(pageName === 'mic') {
             this.voiceStart();

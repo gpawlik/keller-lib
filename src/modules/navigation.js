@@ -73,10 +73,10 @@ $.extend(Keller.prototype, {
         }
                 
         if (typeof nextControlId !== 'undefined') {
-            for (var i = 0; i < controls.length; i++) { 
-                this._toggleClass(controls[i], 'show', parseInt(controls[i].getAttribute('data-ue-control-id'), 10) === nextControlId);
-            }
+            this._activateItem(controls, 'data-ue-control-id', nextControlId, 'show');
         }
-    }
+    },
+    
+
     
 });        
