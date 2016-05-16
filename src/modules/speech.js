@@ -48,11 +48,17 @@ $.extend(Keller.prototype, {
     },
     
     createSpeechWidget: function () {
-        var widget = document.createElement('div');        
+        var widget = document.createElement('div');   
+        this._addEvent(widget, 'click', this._bind(this.activateSpeechOption, this));     
         this._addClass(widget, 'widget-icon');
-        this._addClass(widget, 'speech-widget-icon');
-        this._addClass(widget, 'active');
+        this._addClass(widget, 'speech-widget-icon');        
         widget.innerHTML = '3';
         return widget;
-    }            
+    },
+    
+    activateSpeechOption: function (e) {
+        this.settings.enableAudio = !this.settings.enableAudio;        
+        this._toggleClass(e.currentTarget, 'active', this.settings.enableAudio);
+    } 
+                
 });        

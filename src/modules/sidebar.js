@@ -109,15 +109,7 @@ $.extend(Keller.prototype, {
         
         this.toggleSidebar(true);                 
         this._activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
-        this._activateItem(controls, 'data-ue-control-name', pageName, 'show');
-        
-        // Temporary voice activation 
-        if(pageName === 'mic') {
-            this.voiceStart();
-        }  
-        else {
-            this.voiceStop();
-        }                   
+        this._activateItem(controls, 'data-ue-control-name', pageName, 'show');                          
     },
     
     toggleSidebar: function (show) {

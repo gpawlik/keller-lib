@@ -22,7 +22,7 @@ $.extend(Keller.prototype, {
     voiceStop: function () {        
         if (this.voiceRecognition) {
             this.voiceRecognition.stop();            
-        }        
+        }       
     },
     
     processRecognizedText: function (recognition) { 
@@ -70,11 +70,24 @@ $.extend(Keller.prototype, {
     },
     
     createVoiceWidget: function () {
-        var widget = document.createElement('div');        
+        var widget = document.createElement('div');  
+        this._addEvent(widget, 'click', this._bind(this.activateVoiceOption, this));       
         this._addClass(widget, 'widget-icon');
-        this._addClass(widget, 'voice-widget-icon');
-        this._addClass(widget, 'active');
+        this._addClass(widget, 'voice-widget-icon');        
         widget.innerHTML = '1';
         return widget;
-    }  
+    },
+    
+    activateVoiceOption: function (e) {
+        this.isVoiceOn = !this.isVoiceOn;
+        this._toggleClass(e.currentTarget, 'active', this.isVoiceOn);
+        
+        if (this.isVoiceOn) {
+            this.voiceStart();
+        }
+        else {
+            this.voiceStop();
+        }
+    } 
+     
 });    

@@ -65,23 +65,31 @@
     display: table-cell;
     vertical-align: middle;
     padding-top:45px;
+    cursor:pointer;
     .reversed & {
         color: $primary-color-light;
     }
     &.voice-widget-icon {
         font-size: 250px;
     }
+    &:after {
+        position: absolute;
+        content: "";
+        left: 80px;
+        top: 50%;
+        right: 80px;
+        border: 5px solid #FD4646;
+        @include transform(rotate(-45deg));     
+    }
     &.active:after {
         height: 150px;
         width: 150px;        
-        position: absolute;
         left: 50%;
         top: 50%;
-        z-index: -1;
-        content: "";        
+        z-index: -1;      
         margin-top: -85px;
         margin-left: -85px;
-        border: 10px solid #FD4646;
+        border-width: 10px;
         opacity: 0;
         @include border-radius(90px);
         @include animation(pulsate 1.5s ease-out infinite);        
