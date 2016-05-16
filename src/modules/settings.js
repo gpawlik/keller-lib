@@ -14,7 +14,7 @@ $.extend(Keller.prototype, {
             },
             {
                 'label': 'Letter spacing',
-                'type': 'switch',
+                'type': 'stepper',
                 'name': 'letter-spacing',
                 'value': this.getSettings('letter-spacing') || 10
             },
@@ -124,7 +124,11 @@ $.extend(Keller.prototype, {
     
     changeFontSize: function (e) {
         document.body.style.fontSize = parseInt(e.detail.value, 10)/10 + 'em';        
-    },    
+    }, 
+    
+    changeLetterSpacing: function (e) {
+        document.body.style.letterSpacing = parseInt(e.detail.value, 10)/10 + 'px';        
+    },   
     
     changeContrast: function () {
         this._toggleClass(document.body, 'reversed');        
