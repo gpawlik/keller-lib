@@ -2,6 +2,7 @@
     .ue-settings-row {
         padding: 25px 20px;
         height: 25px;
+        line-height: 25px;
         border-bottom: 1px solid darken($primary-color-light, 5%);
         background-image: linear-gradient(-180deg, #EAEFFA 0%, #FFFFFF 100%);
         .reversed & {

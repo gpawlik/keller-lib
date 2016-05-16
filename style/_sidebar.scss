@@ -6,6 +6,8 @@
     right: -350px;
     width: 350px;
     z-index: 9999999;
+    line-height: 100%;
+    letter-spacing: 0;    
     @include transition(right .2s ease-out);
     .reversed & {
         background: $primary-color-dark;

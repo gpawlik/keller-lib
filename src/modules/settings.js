@@ -25,16 +25,16 @@ $.extend(Keller.prototype, {
                 'value': this.getSettings('letter-spacing') || 10
             },
             {
+                'label': 'Line height',
+                'type': 'stepper',
+                'name': 'line-height',
+                'value': this.getSettings('line-height') || 1
+            },
+            {
                 'label': 'Show images',
                 'type': 'switch',
                 'name': 'show-images',
                 'value': this.getSettings('show-images') || false
-            },
-            {
-                'label': 'Event logger',
-                'type': 'logger',
-                'name': 'event-logger',
-                'value': this.getSettings('event-logger') || 2
             }
         ];
         
@@ -128,19 +128,24 @@ $.extend(Keller.prototype, {
         return localStorage.getItem(item);
     },
     
+    changeContrast: function () {
+        this._toggleClass(document.body, 'reversed');        
+    },
+    
     changeFontSize: function (e) {
         document.body.style.fontSize = parseInt(e.detail.value, 10)/10 + 'em';        
     }, 
     
     changeLetterSpacing: function (e) {
         document.body.style.letterSpacing = parseInt(e.detail.value, 10)/10 + 'px';        
-    },   
+    }, 
+    
+    changeLineHeight: function (e) {
+        document.body.style.lineHeight = 100 + parseInt(e.detail.value, 10)*10 + '%'; 
+    },  
     
     changeShowImages: function (e) {
         this._toggleClass(document.body, 'hide-images');
-    },
-    
-    changeContrast: function () {
-        this._toggleClass(document.body, 'reversed');        
     }
+        
 });
