@@ -1,7 +1,7 @@
 $.extend(Keller.prototype, {
 
     readText: function (text) { 
-        if (this.settings.enableAudio) {
+        if (this.options.enableAudio) {
             this.speak(text);
         }               
     },
@@ -21,7 +21,7 @@ $.extend(Keller.prototype, {
         } 
         // "onvoiceschanged" event fires when voices are ready                       
         window.speechSynthesis.onvoiceschanged = this._bind(function() {
-            this.cachedVoice = this.loadVoice(this.settings.speech.voice)
+            this.cachedVoice = this.loadVoice(this.options.speech.voice)
         }, this);     
     },
     
@@ -34,10 +34,10 @@ $.extend(Keller.prototype, {
     speak: function (text) { 
         // TODO: check character limit, split long texts into chunks 
         var msg = new SpeechSynthesisUtterance();                   
-        msg.volume = this.settings.speech.volume;
-        msg.rate = this.settings.speech.rate;
-        msg.pitch = this.settings.speech.pitch;
-        msg.voice = this.cachedVoice || this.loadVoice(this.settings.speech.voice);
+        msg.volume = this.options.speech.volume;
+        msg.rate = this.options.speech.rate;
+        msg.pitch = this.options.speech.pitch;
+        msg.voice = this.cachedVoice || this.loadVoice(this.options.speech.voice);
         msg.text = text;                 
                         
         msg.onerror = function () {
@@ -57,8 +57,8 @@ $.extend(Keller.prototype, {
     },
     
     activateSpeechOption: function (e) {
-        this.settings.enableAudio = !this.settings.enableAudio;        
-        this._toggleClass(e.currentTarget, 'active', this.settings.enableAudio);
+        this.options.enableAudio = !this.options.enableAudio;        
+        this._toggleClass(e.currentTarget, 'active', this.options.enableAudio);
     } 
                 
 });        

@@ -5,7 +5,7 @@ $.extend(Keller.prototype, {
     },
 
     setFocus: function (idx) {
-        this.currentFocus = this.settings.focusAreas[idx];
+        this.currentFocus = this.options.focusAreas[idx];
     },
 
     getCurrentModule: function () {        

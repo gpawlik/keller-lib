@@ -13,14 +13,14 @@ var pluginName = "keller",
     };
 
 // The actual plugin constructor
-function Keller (element, options) {
+function Keller (element, opts) {
     this.element = element;
-    this.settings = $.extend({}, defaults, options);
+    this.options = $.extend({}, defaults, opts);
     this._defaults = defaults;
     this._name = pluginName;
     this.currentModuleId = 0;
     this.focusOnModule = 1;
-    this.currentFocus = this.settings.focusAreas[0];
+    this.currentFocus = this.options.focusAreas[0];
     this.init();
 }
 

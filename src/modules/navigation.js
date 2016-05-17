@@ -44,7 +44,7 @@ $.extend(Keller.prototype, {
     },
 
     navigateFocusAreas: function (action) {
-        var focusAreas = this.settings.focusAreas,
+        var focusAreas = this.options.focusAreas,
             currentFocusIndex = focusAreas.indexOf(this.getFocus());
 
         if (action === 'up' && ((currentFocusIndex + 1) < focusAreas.length)) {
