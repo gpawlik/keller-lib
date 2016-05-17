@@ -9,8 +9,10 @@ $.extend(Keller.prototype, {
     },  
       
     writeText: function (key) {        
-        var currentInput = this.getCurrentModule().querySelector('input[type="text"]');            
-        currentInput.value = currentInput.value + key.innerHTML.toLowerCase();        
+        var currentInput = this.getCurrentModule().querySelector('input[type="text"]');   
+        if (currentInput) {
+            currentInput.value = currentInput.value + key.innerHTML.toLowerCase();
+        }                         
     },
 
     removeText: function () {
