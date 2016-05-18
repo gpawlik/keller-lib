@@ -1,5 +1,13 @@
 {
-  "preset": "jquery",
+  "preset": "airbnb",
   "requireCapitalizedComments": null,
-  "excludeFiles": [ "node_modules" ]
+  "maximumLineLength": {
+    "value": 120,
+    "allExcept": ["urlComments"]
+  },
+  "validateIndentation": 4,
+  "disallowTrailingWhitespace": false,
+  "requireTrailingComma": false,
+  "requirePaddingNewLinesAfterBlocks": false,
+  "excludeFiles": [ "node_modules", "dist" ]
 }

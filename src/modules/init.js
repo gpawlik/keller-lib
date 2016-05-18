@@ -13,7 +13,7 @@ var pluginName = "keller",
     };
 
 // The actual plugin constructor
-function Keller (element, opts) {
+function Keller(element, opts) {
     this.element = element;
     this.options = $.extend({}, defaults, opts);
     this._defaults = defaults;

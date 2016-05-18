@@ -33,8 +33,7 @@ $.extend(Keller.prototype, {
                     this.navigateKeyboard(action);
                     break;
             }
-        }
-        else if ((action === 'up') || (action === 'down')) {
+        } else if ((action === 'up') || (action === 'down')) {
             if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
                 this.navigateDates(focus, action);
             } else {
@@ -52,4 +51,5 @@ $.extend(Keller.prototype, {
         }
     }
     
-});           
+});
+           

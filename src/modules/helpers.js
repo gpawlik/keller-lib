@@ -13,23 +13,21 @@ $.extend(Keller.prototype, {
     },    
     
     _removeClass: function (elements, className) {
-        if(elements && elements.constructor === NodeList) {
-            for(var i = 0; i < elements.length; i++) {
+        if (elements && elements.constructor === NodeList) {
+            for (var i = 0; i < elements.length; i++) {
                 elements[i].classList.remove(className);
             }             
-        }
-        else {
+        } else {
             elements.classList.remove(className);
         }
     },
     
     _addClass: function (elements, className) {
-        if(elements && elements.constructor === NodeList) {
-            for(var i = 0; i < elements.length; i++) {
+        if (elements && elements.constructor === NodeList) {
+            for (var i = 0; i < elements.length; i++) {
                 elements[i].classList.add(className);
             }             
-        }
-        else {
+        } else {
             elements.classList.add(className);
         }
     },
@@ -42,12 +40,11 @@ $.extend(Keller.prototype, {
             this._removeClass(elements, className);
         }
         else {
-            if(elements && elements.constructor === NodeList) {
-                for(var i = 0; i < elements.length; i++) {
+            if (elements && elements.constructor === NodeList) {
+                for (var i = 0; i < elements.length; i++) {
                     elements[i].classList.toggle(className);
                 }             
-            }
-            else {
+            } else {
                 elements.classList.toggle(className);
             }            
         }
@@ -64,14 +61,13 @@ $.extend(Keller.prototype, {
         
         if (event.stopPropagation) {
             event.stopPropagation();
-        }
-        else {
+        } else {
             event.cancelBubble = true;
         }
     },
         
     _addEvent: function (element, type, callback, bubble) { 
-        if(document.addEventListener) { 
+        if (document.addEventListener) { 
             return element.addEventListener(type, callback, bubble || false); 
         }
         // fallback for <IE8
@@ -81,14 +77,14 @@ $.extend(Keller.prototype, {
     _onEvent: function (element, type, callback, bubble) { 
         if(document.addEventListener) { 
             document.addEventListener(type, function(event){ 
-                if(event.target === element || event.target.id === element) { 
+                if (event.target === element || event.target.id === element) { 
                     callback.apply(event.target, [event]); 
                 }
             }, bubble || false);
         } else {
             // fallback for <IE8
             document.attachEvent('on' + type, function(event){  
-                if(event.srcElement === element || event.srcElement.id === element) { 
+                if (event.srcElement === element || event.srcElement.id === element) { 
                     callback.apply(event.target, [event]); 
                 }
             });
