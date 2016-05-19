@@ -1,13 +1,8 @@
 {
-  "preset": "airbnb",
-  "requireCapitalizedComments": null,
-  "maximumLineLength": {
-    "value": 120,
-    "allExcept": ["urlComments"]
-  },
-  "validateIndentation": 4,
-  "disallowTrailingWhitespace": false,
-  "requireTrailingComma": false,
-  "requirePaddingNewLinesAfterBlocks": false,
-  "excludeFiles": [ "node_modules", "dist" ]
+    "preset": "google",
+    "validateIndentation": 4,
+    "maximumLineLength": 180,
+    "disallowMultipleVarDecl": false,
+    "disallowSpacesInsideObjectBrackets": false,
+    "requireCapitalizedConstructors": false
 }

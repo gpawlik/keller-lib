@@ -1,10 +1,10 @@
 $.extend(Keller.prototype, {
-    
-    modifyDates: function (action, focus) {
+
+    modifyDates: function(action, focus) {
         var $moduleWithFocus = this.element.querySelector('[data-ue-module="' + this.currentModuleId + '"]');
         console.log('focus on module', this.focusOnModule);
         switch (this.focusOnModule) {
-            case 1:            
+            case 1:
                 var valueDay = parseInt($moduleWithFocus.querySelector('input[data-day]').getAttribute('data-day'), 10);
                 this.changeDay(valueDay, action, $moduleWithFocus);
                 break;
@@ -13,10 +13,10 @@ $.extend(Keller.prototype, {
                 var valueYear = parseInt($moduleWithFocus.querySelector('input[data-year]').getAttribute('data-year'), 10);
                 this.changeMonth(valueMonth, valueYear, action, $moduleWithFocus);
                 break;
-        }        
+        }
     },
 
-    changeMonth: function (valueMonth, valueYear, action, module) {
+    changeMonth: function(valueMonth, valueYear, action, module) {
         if (action === 'right') {
             if (valueMonth === 12) {
                 valueMonth = 1;
@@ -26,7 +26,7 @@ $.extend(Keller.prototype, {
             }
         } else {
             if (valueMonth === 1) {
-                valueMonth = 12; 
+                valueMonth = 12;
                 valueYear -= 1;
             } else {
                 valueMonth -= 1;
@@ -42,7 +42,7 @@ $.extend(Keller.prototype, {
         return months[valueMonth - 1];
     },
 
-    changeDay: function (valueDay, action, module) {
+    changeDay: function(valueDay, action, module) {
         if (action === 'right') {
             if (valueDay < 31) {
                 valueDay += 1;
@@ -51,12 +51,12 @@ $.extend(Keller.prototype, {
             if (valueDay > 1) {
                 valueDay -= 1;
             }
-        }        
+        }
         module.querySelector('input[data-day]').setAttribute('data-day', valueDay);
         module.querySelector('[data-ue-focus="1"]').value = valueDay;
     },
 
-    navigateDates: function (focus, action) {
+    navigateDates: function(focus, action) {
         if (action === 'up') {
             switch (this.focusOnModule) {
             case 1:
@@ -72,18 +72,18 @@ $.extend(Keller.prototype, {
         }
     },
 
-    errorValidate: function (moduleWithFocus) {
+    errorValidate: function(moduleWithFocus) {
 
     },
 
-    validateDates: function (moduleWithFocus) {
+    validateDates: function(moduleWithFocus) {
         var valueDay = parseInt(moduleWithFocus.querySelector('input[data-day]').getAttribute('data-day'), 10),
             valueMonth = parseInt(moduleWithFocus.querySelector('input[data-month]').getAttribute('data-month'), 10),
             valueYear = parseInt(moduleWithFocus.querySelector('input[data-year]').getAttribute('data-year'), 10);
 
-        var dateToValidate = new Date (valueYear, valueMonth - 1, valueDay);
+        var dateToValidate = new Date(valueYear, valueMonth - 1, valueDay);
         var validator = (!dateToValidate || dateToValidate.getFullYear() === valueYear && dateToValidate.getMonth() === (valueMonth - 1) && dateToValidate.getDate() === valueDay);
         return validator;
     }
-    
+
 });

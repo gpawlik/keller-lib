@@ -1,7 +1,7 @@
 $.extend(Keller.prototype, {
 
-    getKeyEvent: function (e) {            
-            //  direction;
+    getKeyEvent: function(e) {
+        //  direction;
         e.preventDefault();
         switch (e.keyCode) {
             case 13:
@@ -30,7 +30,6 @@ $.extend(Keller.prototype, {
                 this.navigateHandler('down');
                 break;
         }
-
     }
-    
-});        
+
+});

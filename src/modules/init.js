@@ -1,15 +1,15 @@
 // Create the defaults once
-var pluginName = "keller",
+var pluginName = 'keller',
     defaults = {
-        propertyName: "value",
+        propertyName: 'value',
         focusAreas: ['input', 'controls', 'settings'],
         enableAudio: false,
         speech: {
-            voice: "Google UK English Male",
+            voice: 'Google UK English Male',
             volume: 1,
             pitch: 1,
-            rate: 1            
-        }            
+            rate: 1
+        }
     };
 
 // The actual plugin constructor
@@ -25,9 +25,9 @@ function Keller(element, opts) {
 }
 
 $.extend(Keller.prototype, {
-    init: function() {     
+    init: function() {
         this.eventHandlers();
-        this.eventListeners();           
+        this.eventListeners();
         this.showSidebar();
         this.initSpeechSynthesis();
         this.initVoiceRecognition();

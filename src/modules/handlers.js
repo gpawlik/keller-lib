@@ -1,26 +1,26 @@
 $.extend(Keller.prototype, {
 
-    eventHandlers: function () {        
-        this._addEvent(document, 'keydown', this._bind(this.getKeyEvent, this));        
-        this._addEvent(window, 'gamepadconnected', this._bind(this.gamepadConnected, this));        
+    eventHandlers: function() {
+        this._addEvent(document, 'keydown', this._bind(this.getKeyEvent, this));
+        this._addEvent(window, 'gamepadconnected', this._bind(this.gamepadConnected, this));
         this._addEvent(window, 'gamepaddisconnected', this._bind(this.gamepadDisconnected, this));
     },
-    
-    eventListeners: function () {
+
+    eventListeners: function() {
         this._onEvent(document, 'settings:font-size', this._bind(this.changeFontSize, this));
         this._onEvent(document, 'settings:letter-spacing', this._bind(this.changeLetterSpacing, this));
         this._onEvent(document, 'settings:line-height', this._bind(this.changeLineHeight, this));
         this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));
         this._onEvent(document, 'settings:show-images', this._bind(this.changeShowImages, this));
         this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));
-        this._onEvent(document, 'keyboard:writetext', this._bind(this.selectKey, this));           
-    },    
-    
-    navigateHandler: function (action, focus) {
+        this._onEvent(document, 'keyboard:writetext', this._bind(this.selectKey, this));
+    },
+
+    navigateHandler: function(action, focus) {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) { 
+                    if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
                         this.modifyDates(action, focus);
                     } else {
                         this.navigateModules(action);
@@ -50,6 +50,5 @@ $.extend(Keller.prototype, {
             }
         }
     }
-    
+
 });
-           

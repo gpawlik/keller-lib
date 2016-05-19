@@ -1,36 +1,35 @@
 $.extend(Keller.prototype, {
 
-    initVoiceRecognition: function () {
-        if(!('webkitSpeechRecognition' in window)) {            
+    initVoiceRecognition: function() {
+        if (!('webkitSpeechRecognition' in window)) {
             this.voiceRecognition = false;
             console.log('Speech recognition not supported');
-        }
-        else {
+        } else {
             this.voiceRecognition = new webkitSpeechRecognition();
             this.voiceRecognition.continuous = true;
-            this.voiceRecognition.interimResults = true;  
-            this.processRecognizedText(this.voiceRecognition);                   
+            this.voiceRecognition.interimResults = true;
+            this.processRecognizedText(this.voiceRecognition);
         }
     },
 
-    voiceStart: function () {
+    voiceStart: function() {
         if (this.voiceRecognition) {
-            this.voiceRecognition.start();            
+            this.voiceRecognition.start();
         }
     },
-    
-    voiceStop: function () {        
+
+    voiceStop: function() {
         if (this.voiceRecognition) {
-            this.voiceRecognition.stop();            
-        }       
+            this.voiceRecognition.stop();
+        }
     },
-    
-    processRecognizedText: function (recognition) { 
-            
+
+    processRecognizedText: function(recognition) {
+
         recognition.onresult = function(event) {
-            var final_transcript = '',
-                interim_transcript = '';
-                            
+            var finalTranscript = '',
+                interimTranscript = '';
+
             if (typeof(event.results) === 'undefined') {
                 recognition.stop();
                 console.log('There was a problem receiving results');
@@ -38,56 +37,55 @@ $.extend(Keller.prototype, {
             }
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
+                    finalTranscript += event.results[i][0].transcript;
                 } else {
-                    interim_transcript += event.results[i][0].transcript;
+                    interimTranscript += event.results[i][0].transcript;
                 }
             }
-            console.log('final transcript', final_transcript);
-            console.log('iterim transcript', interim_transcript);
-        }; 
+            console.log('final transcript', finalTranscript);
+            console.log('iterim transcript', interimTranscript);
+        };
         recognition.onerror = function(event) {
             if (event.error == 'no-speech') {
-                console.log('Speech recognition error: no speech.');                
+                console.log('Speech recognition error: no speech.');
             }
             if (event.error == 'audio-capture') {
-                console.log('Speech recognition error: no microphone.');                
+                console.log('Speech recognition error: no microphone.');
             }
-            if (event.error == 'not-allowed') {              
-                console.log('Speech recognition not allowed.');           
+            if (event.error == 'not-allowed') {
+                console.log('Speech recognition not allowed.');
             }
         };
-        recognition.onstart = function () {
-            console.log('Speech recognition started, speak now!');            
+        recognition.onstart = function() {
+            console.log('Speech recognition started, speak now!');
         };
-        recognition.onend = function () {
+        recognition.onend = function() {
             console.log('Speech recognition ended!');
-            //recognition.start(); // TODO: allow continuous listening        
-        }; 
-        recognition.onnomatch = function () {
+            //recognition.start(); // TODO: allow continuous listening
+        };
+        recognition.onnomatch = function() {
             console.log('Sorry! There was no match...');
-        };                        
+        };
     },
-    
-    createVoiceWidget: function () {
-        var widget = document.createElement('div');  
-        this._addEvent(widget, 'click', this._bind(this.activateVoiceOption, this));       
+
+    createVoiceWidget: function() {
+        var widget = document.createElement('div');
+        this._addEvent(widget, 'click', this._bind(this.activateVoiceOption, this));
         this._addClass(widget, 'widget-icon');
-        this._addClass(widget, 'voice-widget-icon');        
+        this._addClass(widget, 'voice-widget-icon');
         widget.innerHTML = '1';
         return widget;
     },
-    
-    activateVoiceOption: function (e) {
+
+    activateVoiceOption: function(e) {
         this.isVoiceOn = !this.isVoiceOn;
         this._toggleClass(e.currentTarget, 'active', this.isVoiceOn);
-        
+
         if (this.isVoiceOn) {
             this.voiceStart();
-        }
-        else {
+        } else {
             this.voiceStop();
         }
-    } 
-     
-});    
+    }
+
+});
