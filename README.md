@@ -31,3 +31,11 @@ Currently developed navigation options:
 ## Browser support
 
 Chrome 33+, Firefox 44+, IE 9+, Safari 5.1+
+
+## Background idea
+
+In 2016 285 million people are estimated to be visually impaired worldwide: 39 million are blind and 246 have low vision. Despite their visual impairments, many of those people use the Internet every day, just like you and me. Further, as more and more people over the age of 50 become comfortable with technology, Internet usage among this demographic will only increase in coming years.
+
+The web is full of tips on how to design websites for blind users, most of which are geared toward making your website accessible to screen readers. But as you can tell by looking at the numbers above, there is a large middle ground. The vast majority of individuals with visual impairments, even those considered legally blind, don't need or use screen-reading software. However, the web can still be a difficult and cumbersome place to navigate when one can't quite see it clearly.
+
+The idea behind this project is to develop a free and easy to install tool that will help the beforementioned people to access as much of the internet content as possible.
