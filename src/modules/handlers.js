@@ -12,7 +12,7 @@ $.extend(Keller.prototype, {
         this._onEvent(document, 'settings:line-height', this._bind(this.changeLineHeight, this));
         this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));
         this._onEvent(document, 'settings:show-images', this._bind(this.changeShowImages, this));
-        this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));
+        //this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));
         this._onEvent(document, 'keyboard:writetext', this._bind(this.selectKey, this));
     },
 

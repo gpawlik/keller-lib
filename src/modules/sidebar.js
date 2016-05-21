@@ -1,11 +1,13 @@
-$.extend(Keller.prototype, {
-
-    showSidebar: function() {
-        this.element.appendChild(this.createSidebar());
-        this.element.classList.add('show-sidebar');
-    },
-
-    createSidebar: function() {
+Keller.prototype.sidebar = function() {
+    var _this = this,
+        $el = _this.element;
+           
+    var showSidebar = function () {
+        $el.appendChild(createSidebar());
+        $el.classList.add('show-sidebar');        
+    };
+    
+    var createSidebar = function() {
         var sidebar,
             sidebarHeader,
             sidebarHeaderClose,
@@ -21,8 +23,7 @@ $.extend(Keller.prototype, {
         sidebarHeader.className = 'ui-sidebar-header';
         sidebarHeaderClose = document.createElement('div');
         sidebarHeaderClose.className = 'ui-sidebar-close';
-        sidebarHeaderClose.innerHTML = 'r';
-        this._addEvent(sidebarHeaderClose, 'click', this._bind(this.toggleSidebar, this));
+        sidebarHeaderClose.innerHTML = 'r';        
         sidebarHeader.appendChild(sidebarHeaderClose);
 
         sidebarWidgets = document.createElement('ul');
@@ -40,18 +41,20 @@ $.extend(Keller.prototype, {
         ];
 
         for (var i = 0; i < widgets.length; i++) {
-            sidebarWidgets.appendChild(this.createSidebarWidget(widgets[i].name, widgets[i].alias, i));
-            sidebarControls.appendChild(this.createSidebarControls(widgets[i].alias, widgets[i].icon, i));
+            sidebarWidgets.appendChild(createSidebarWidget(widgets[i].name, widgets[i].alias, i));
+            sidebarControls.appendChild(createSidebarControls(widgets[i].alias, widgets[i].icon, i));
         }
+        
+        _this._addEvent(sidebarHeaderClose, 'click', _this._bind(toggleSidebar, _this));
 
         sidebar.appendChild(sidebarHeader);
         sidebar.appendChild(sidebarWidgets);
         sidebar.appendChild(sidebarControls);
 
         return sidebar;
-    },
+    };
 
-    createSidebarWidget: function(name, alias, index) {
+    var createSidebarWidget = function(name, alias, index) {
         var widgetHolder, widget;
 
         widgetHolder = document.createElement('li');
@@ -65,28 +68,28 @@ $.extend(Keller.prototype, {
 
         switch (name) {
             case 'keyboard':
-                widget.appendChild(this.createAlphabet());
+                widget.appendChild(_this.createAlphabet());
                 break;
             case 'settings':
-                widget.appendChild(this.createSettings());
+                widget.appendChild(_this.createSettings());
                 break;
             case 'video':
-                widget.appendChild(this.createVideoWidget());
+                widget.appendChild(_this.createVideoWidget());
                 break;
             case 'microphone':
-                widget.appendChild(this.createVoiceWidget());
+                widget.appendChild(_this.createVoiceWidget());
                 break;
             case 'sound':
-                widget.appendChild(this.createSpeechWidget());
+                widget.appendChild(_this.createSpeechWidget());
                 break;
         }
 
         widgetHolder.appendChild(widget);
 
         return widgetHolder;
-    },
+    };
 
-    createSidebarControls: function(alias, icon, index) {
+    var createSidebarControls = function(alias, icon, index) {
         var controlItem = document.createElement('li');
 
         controlItem.setAttribute('data-ue-control-id', index);
@@ -96,24 +99,28 @@ $.extend(Keller.prototype, {
         if (index === 0) {
             controlItem.classList.add('show');
         }
-        this._addEvent(controlItem, 'click', this._bind(this.showSidebarWidget, this));
+        _this._addEvent(controlItem, 'click', _this._bind(showSidebarWidget, _this));
 
         return controlItem;
-    },
+    };
 
-    showSidebarWidget: function(e) {
+    var showSidebarWidget = function(e) {
         e.stopPropagation();
-        var sidebarWidgets = this.element.querySelectorAll('.ue-sidebar-widgets > li'),
-            controls = this.element.querySelectorAll('.ue-sidebar-controls li'),
+        var sidebarWidgets = $el.querySelectorAll('.ue-sidebar-widgets > li'),
+            controls = $el.querySelectorAll('.ue-sidebar-controls li'),
             pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');
 
-        this.toggleSidebar(true);
-        this._activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
-        this._activateItem(controls, 'data-ue-control-name', pageName, 'show');
-    },
+        toggleSidebar(true);
+        _this._activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
+        _this._activateItem(controls, 'data-ue-control-name', pageName, 'show');
+    };
 
-    toggleSidebar: function(show) {
-        this._toggleClass(this.element, 'show-sidebar', show);
+    var toggleSidebar = function(show) {
+        _this._toggleClass($el, 'show-sidebar', show);
     }
-
-});
+    
+    return {
+        show: showSidebar
+    };
+       
+};

@@ -24,12 +24,10 @@ function Keller(element, opts) {
     this.init();
 }
 
-$.extend(Keller.prototype, {
-    init: function() {
-        this.eventHandlers();
-        this.eventListeners();
-        this.showSidebar();
-        this.initSpeechSynthesis();
-        this.initVoiceRecognition();
-    }
-});
+Keller.prototype.init = function() {
+    this.eventHandlers();
+    this.eventListeners();
+    this.sidebar().show();
+    this.initSpeechSynthesis();
+    this.initVoiceRecognition();                
+};
