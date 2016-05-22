@@ -1,7 +1,7 @@
 Keller.prototype.sidebar = function() {
     var _this = this,
         $el = _this.element,
-        utils = _this.utils.call(_this);
+        _ = _this.utils();
            
     var showSidebar = function () {
         $el.appendChild(createSidebar());
@@ -46,7 +46,7 @@ Keller.prototype.sidebar = function() {
             sidebarControls.appendChild(createSidebarControls(widgets[i].alias, widgets[i].icon, i));
         }
         
-        utils._addEvent(sidebarHeaderClose, 'click', utils._bind(toggleSidebar, _this));
+        _.addEvent(sidebarHeaderClose, 'click', _.bind(toggleSidebar, _this));
 
         sidebar.appendChild(sidebarHeader);
         sidebar.appendChild(sidebarWidgets);
@@ -100,7 +100,7 @@ Keller.prototype.sidebar = function() {
         if (index === 0) {
             controlItem.classList.add('show');
         }
-        utils._addEvent(controlItem, 'click', utils._bind(showSidebarWidget, _this));
+        _.addEvent(controlItem, 'click', _.bind(showSidebarWidget, _this));
 
         return controlItem;
     };
@@ -112,12 +112,12 @@ Keller.prototype.sidebar = function() {
             pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');
 
         toggleSidebar(true);
-        utils._activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
-        utils._activateItem(controls, 'data-ue-control-name', pageName, 'show');
+        _.activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
+        _.activateItem(controls, 'data-ue-control-name', pageName, 'show');
     };
 
     var toggleSidebar = function(show) {
-        utils._toggleClass($el, 'show-sidebar', show);
+        _.toggleClass($el, 'show-sidebar', show);
     }
     
     return {

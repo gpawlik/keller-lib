@@ -1,31 +1,31 @@
 Keller.prototype.handlers = function() {
 
     var _this = this,
-        navigation = _this.navigation.call(_this),
-        settings = _this.settings.call(_this),
-        utils = _this.utils.call(_this);
+        navigation = _this.navigation(),
+        settings = _this.settings(),
+        _ = _this.utils();
 
     var eventHandlers = function() {
-        utils._addEvent(document, 'keydown', utils._bind(_this.keys().getEvent, _this));
-        utils._addEvent(window, 'gamepadconnected', utils._bind(_this.gamepad().isConnected, _this));
-        utils._addEvent(window, 'gamepaddisconnected', utils._bind(_this.gamepad().isDisconnected, _this));
+        _.addEvent(document, 'keydown', _.bind(_this.keys().getEvent, _this));
+        _.addEvent(window, 'gamepadconnected', _.bind(_this.gamepad().isConnected, _this));
+        _.addEvent(window, 'gamepaddisconnected', _.bind(_this.gamepad().isDisconnected, _this));
     };
 
     var eventListeners = function() {
-        utils._onEvent(document, 'settings:font-size', utils._bind(settings.changeFontSize, _this));
-        utils._onEvent(document, 'settings:letter-spacing', utils._bind(settings.changeLetterSpacing, _this));
-        utils._onEvent(document, 'settings:line-height', utils._bind(settings.changeLineHeight, _this));
-        utils._onEvent(document, 'settings:contrast', utils._bind(settings.changeContrast, _this));
-        utils._onEvent(document, 'settings:show-images', utils._bind(settings.changeShowImages, _this));
-        //utils._onEvent(document, 'controls:showwidget', utils._bind(this.showSidebarWidget, this));
-        utils._onEvent(document, 'keyboard:writetext', utils._bind(_this.textinput().selectKey, _this));
+        _.onEvent(document, 'settings:font-size', _.bind(settings.changeFontSize, _this));
+        _.onEvent(document, 'settings:letter-spacing', _.bind(settings.changeLetterSpacing, _this));
+        _.onEvent(document, 'settings:line-height', _.bind(settings.changeLineHeight, _this));
+        _.onEvent(document, 'settings:contrast', _.bind(settings.changeContrast, _this));
+        _.onEvent(document, 'settings:show-images', _.bind(settings.changeShowImages, _this));
+        //_.onEvent(document, 'controls:showwidget', _.bind(this.showSidebarWidget, this));
+        _.onEvent(document, 'keyboard:writetext', _.bind(_this.textinput().selectKey, _this));
     };
 
     var navigateHandler = function(action, focus) {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (utils.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+                    if (_.getCurrentModule().hasAttribute('data-ue-dateselector')) {
                         _this.dateinput().modify(action, focus);
                     } else {
                         navigation.modules(action);
@@ -39,7 +39,7 @@ Keller.prototype.handlers = function() {
                     break;
             }
         } else if ((action === 'up') || (action === 'down')) {
-            if (utils.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+            if (_.getCurrentModule().hasAttribute('data-ue-dateselector')) {
                 _this.dateinput().navigate(focus, action);
             } else {
                 navigation.focusAreas(action);

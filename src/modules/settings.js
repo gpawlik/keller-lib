@@ -2,7 +2,7 @@ Keller.prototype.settings = function() {
 
     var _this = this,
         settingsFields,
-        utils = _this.utils.call(_this);
+        _ = _this.utils();
 
     settingsFields = [
         {
@@ -62,7 +62,7 @@ Keller.prototype.settings = function() {
         button = createSettingButton(field);
         wrapper.appendChild(button);
 
-        utils._addEvent(button, 'click', utils._bind(changeSettings, _this));
+        _.addEvent(button, 'click', _.bind(changeSettings, _this));
 
         return wrapper;
     };
@@ -90,7 +90,7 @@ Keller.prototype.settings = function() {
                 button.appendChild(buttonAdd);
                 break;
         }
-        utils._triggerEvent(document, 'settings:' + field.name, { value: settingvalue });
+        _.triggerEvent(document, 'settings:' + field.name, { value: settingvalue });
 
         return button;
     };
@@ -119,7 +119,7 @@ Keller.prototype.settings = function() {
         if (typeof newValue !== 'undefined') {
             el.setAttribute('data-value', newValue);
             storeSettings(settingName, newValue);
-            utils._triggerEvent(document, 'settings:' + settingName, { value: newValue });
+            _.triggerEvent(document, 'settings:' + settingName, { value: newValue });
         }
     };
 
@@ -148,7 +148,7 @@ Keller.prototype.settings = function() {
     };
 
     var changeContrast = function(e) {
-        utils._toggleClass(document.body, 'reversed', e.detail.value);
+        _.toggleClass(document.body, 'reversed', e.detail.value);
     };
 
     var changeFontSize = function(e) {
@@ -164,7 +164,7 @@ Keller.prototype.settings = function() {
     };
 
     var changeShowImages = function(e) {
-        utils._toggleClass(document.body, 'hide-images', !e.detail.value);
+        _.toggleClass(document.body, 'hide-images', !e.detail.value);
     };
 
     return {

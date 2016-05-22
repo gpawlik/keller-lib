@@ -16,7 +16,7 @@ Keller.prototype.utils = function() {
             return document.querySelector('[data-ue-module="' + _this.currentModuleId + '"]');
         },
 
-        _removeClass: function(elements, className) {
+        removeClass: function(elements, className) {
             if (elements && elements.constructor === NodeList) {
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].classList.remove(className);
@@ -26,7 +26,7 @@ Keller.prototype.utils = function() {
             }
         },
 
-        _addClass: function(elements, className) {
+        addClass: function(elements, className) {
             if (elements && elements.constructor === NodeList) {
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].classList.add(className);
@@ -36,11 +36,11 @@ Keller.prototype.utils = function() {
             }
         },
 
-        _toggleClass: function(elements, className, force) {
+        toggleClass: function(elements, className, force) {
             if (force === true) {
-                this._addClass(elements, className);
+                this.addClass(elements, className);
             } else if (force === false) {
-                this._removeClass(elements, className);
+                this.removeClass(elements, className);
             } else {
                 if (elements && elements.constructor === NodeList) {
                     for (var i = 0; i < elements.length; i++) {
@@ -52,13 +52,13 @@ Keller.prototype.utils = function() {
             }
         },
 
-        _activateItem: function(elements, id, value, className) {
+        activateItem: function(elements, id, value, className) {
             for (var i = 0; i < elements.length; i++) {
-                this._toggleClass(elements[i], className, elements[i].getAttribute(id) === value.toString());
+                this.toggleClass(elements[i], className, elements[i].getAttribute(id) === value.toString());
             }
         },
 
-        _stopPropagation: function(event) {
+        stopPropagation: function(event) {
             event = event || window.event;
 
             if (event.stopPropagation) {
@@ -68,7 +68,7 @@ Keller.prototype.utils = function() {
             }
         },
 
-        _addEvent: function(element, type, callback, bubble) {
+        addEvent: function(element, type, callback, bubble) {
             if (document.addEventListener) {
                 return element.addEventListener(type, callback, bubble || false);
             }
@@ -76,7 +76,7 @@ Keller.prototype.utils = function() {
             return element.attachEvent('on' + type, callback);
         },
 
-        _onEvent: function(element, type, callback, bubble) {
+        onEvent: function(element, type, callback, bubble) {
             if (document.addEventListener) {
                 document.addEventListener(type, function(event) {
                     if (event.target === element || event.target.id === element) {
@@ -93,7 +93,7 @@ Keller.prototype.utils = function() {
             }
         },
 
-        _triggerEvent: function(el, eventName, options) {
+        triggerEvent: function(el, eventName, options) {
             var event;
             if (window.CustomEvent) {
                 event = new CustomEvent(eventName, { detail: options });
@@ -104,7 +104,7 @@ Keller.prototype.utils = function() {
             el.dispatchEvent(event);
         },
 
-        _bind: function(func, thisValue) {
+        bind: function(func, thisValue) {
             if (typeof func !== 'function') {
                 // closest thing possible to the ECMAScript 5 internal IsCallable function
                 throw new TypeError('bind - what is trying to be bound is not callable');
@@ -114,9 +114,8 @@ Keller.prototype.utils = function() {
             };
         },
 
-        _contains: function(obj, item) {
+        contains: function(obj, item) {
             return obj.indexOf(item) >= 0;
-        }
-    
+        }    
     }
 };

@@ -2,7 +2,7 @@ Keller.prototype.navigation = function() {
 
     var _this = this,
         $elem = _this.element,
-        utils = _this.utils.call(_this);
+        _ = _this.utils();
 
     var navigateKeyboard = function(action) {
         var keyboard = $elem.querySelector('.ue-keyboard'),
@@ -17,7 +17,7 @@ Keller.prototype.navigation = function() {
         } else if (action === 'left') {
             nextItemId = ((currentItemId - 1) < 0) ? allItemsLength - 1 : currentItemId - 1;
         } else if (action === 'enter') {
-            utils._triggerEvent(document, 'keyboard:writetext', { key: currentItem });
+            _.triggerEvent(document, 'keyboard:writetext', { key: currentItem });
         }
 
         if (typeof nextItemId !== 'undefined') {
@@ -37,7 +37,7 @@ Keller.prototype.navigation = function() {
         }
 
         for (var i = 0; i < modules.length; i++) {
-            utils._toggleClass(modules[i], 'active', parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem);
+            _.toggleClass(modules[i], 'active', parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem);
         }
 
         _this.currentModuleId = nextItem;
@@ -46,12 +46,12 @@ Keller.prototype.navigation = function() {
 
     var navigateFocusAreas = function(action) {
         var focusAreas = _this.options.focusAreas,
-            currentFocusIndex = focusAreas.indexOf(utils.getFocus());
+            currentFocusIndex = focusAreas.indexOf(_.getFocus());
 
         if (action === 'up' && ((currentFocusIndex + 1) < focusAreas.length)) {
-            utils.setFocus(currentFocusIndex + 1);
+            _.setFocus(currentFocusIndex + 1);
         } else if (action === 'down' && ((currentFocusIndex - 1) >= 0)) {
-            utils.setFocus(currentFocusIndex - 1);
+            _.setFocus(currentFocusIndex - 1);
         }
     };
 
@@ -67,11 +67,11 @@ Keller.prototype.navigation = function() {
         } else if (action === 'left') {
             nextControlId = ((currentControlId - 1) < 0) ? controls.length - 1 : currentControlId - 1;
         } else if (action === 'enter') {
-            utils._triggerEvent(document, 'controls:showwidget', { pageName: currentControlName });
+            _.triggerEvent(document, 'controls:showwidget', { pageName: currentControlName });
         }
 
         if (typeof nextControlId !== 'undefined') {
-            utils._activateItem(controls, 'data-ue-control-id', nextControlId, 'show');
+            _.activateItem(controls, 'data-ue-control-id', nextControlId, 'show');
         }
     };
     

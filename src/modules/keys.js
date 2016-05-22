@@ -1,15 +1,15 @@
 Keller.prototype.keys = function() {
 
     var _this = this,
-        utils = _this.utils.call(_this);
+        _ = _this.utils();
 
     var getKeyEvent = function(e) {
         //  direction;
         e.preventDefault();
         switch (e.keyCode) {
             case 13:
-                if (utils.getCurrentModule().hasAttribute('data-ue-dateselector')) {
-                    var $moduleWithFocus = utils.getCurrentModule();
+                if (_.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+                    var $moduleWithFocus = _.getCurrentModule();
                     if (_this.dateinput().validate($moduleWithFocus)) {
                         _this.focusOnModule = 1;
                         _this.navigation().modules('right');
