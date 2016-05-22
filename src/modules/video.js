@@ -13,7 +13,7 @@ Keller.prototype.video = function() {
     };
 
     var activateVideoOption = function(e) {
-        _.toggleClass(e.currentTarget, 'active');
+        _.toggleClass(e.currentTarget, 'active'); 
     };
     
     return {

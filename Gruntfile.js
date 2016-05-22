@@ -37,23 +37,22 @@ module.exports = function( grunt ) {
                     "src/modules/keys.js",
                     "src/modules/inputs/dateselector.js",  
                     "src/modules/inputs/textinput.js",                     
-                    "src/modules/helpers.js",                    
-                    "src/modules/plugin.js",
+                    "src/modules/helpers.js"
                 ],
 				dest: "dist/js/keller-lib.js"
 			}
 		},
-        
-        // Wrap final file
-        wrap: {
-            modules: {
-                src: [ "dist/js/keller-lib.js" ],
-                dest: "dist/js/keller-lib.js",
+    
+        umd: {
+            all: {
                 options: {
-                    wrapper: [';(function($, window, undefined) {\n"use strict"\n', '\n}(jQuery, window));']    
-                }                
+                    src: 'dist/js/keller-lib.js',
+                    dest: 'dist/js/keller-lib.js',
+                    objectToExport: 'Keller', 
+                    globalAlias: 'Keller'
+                }
             }
-        },
+        },        
         
 		// Lint definitions
 		jshint: {
@@ -123,7 +122,7 @@ module.exports = function( grunt ) {
 
 	grunt.loadNpmTasks( "grunt-contrib-concat" );
 	grunt.loadNpmTasks( "grunt-contrib-jshint" );
-    grunt.loadNpmTasks( "grunt-wrap" );
+    grunt.loadNpmTasks( "grunt-umd" );
 	grunt.loadNpmTasks( "grunt-jscs" );
 	grunt.loadNpmTasks( "grunt-contrib-uglify" );
 	grunt.loadNpmTasks( "grunt-contrib-coffee" );
@@ -134,6 +133,6 @@ module.exports = function( grunt ) {
 
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
-	grunt.registerTask( "build", [ "concat", "wrap:modules", "uglify" ] );
+	grunt.registerTask( "build", [ "concat", "umd:all", "uglify" ] );
 	grunt.registerTask( "default", [ "jshint", "sass", "build" ] );
 };
