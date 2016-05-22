@@ -17,7 +17,7 @@ $.extend(Keller.prototype, {
         }
 
         if (typeof nextItemId !== 'undefined') {
-            this.activateKey(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');
+            this.keyboard().activateKey(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');
         }
     },
 

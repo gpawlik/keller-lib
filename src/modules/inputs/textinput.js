@@ -4,7 +4,7 @@ $.extend(Keller.prototype, {
         this._stopPropagation(e);
         var key = e.constructor === CustomEvent ? e.detail.key : e.target;
 
-        this.activateKey(key, 'active');
+        this.keyboard().activateKey(key, 'active');
         this.writeText(key);
     },
 

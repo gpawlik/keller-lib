@@ -68,19 +68,19 @@ Keller.prototype.sidebar = function() {
 
         switch (name) {
             case 'keyboard':
-                widget.appendChild(_this.createAlphabet());
+                widget.appendChild(_this.keyboard().createAlphabet());
                 break;
             case 'settings':
                 widget.appendChild(_this.createSettings());
                 break;
             case 'video':
-                widget.appendChild(_this.createVideoWidget());
+                widget.appendChild(_this.video().createWidget());
                 break;
             case 'microphone':
-                widget.appendChild(_this.createVoiceWidget());
+                widget.appendChild(_this.voice().createWidget());
                 break;
             case 'sound':
-                widget.appendChild(_this.createSpeechWidget());
+                widget.appendChild(_this.speech().createWidget());
                 break;
         }
 
@@ -120,7 +120,7 @@ Keller.prototype.sidebar = function() {
     }
     
     return {
-        show: showSidebar
+        init: showSidebar
     };
        
 };

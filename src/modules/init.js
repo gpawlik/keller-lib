@@ -27,7 +27,7 @@ function Keller(element, opts) {
 Keller.prototype.init = function() {
     this.eventHandlers();
     this.eventListeners();
-    this.sidebar().show();
-    this.initSpeechSynthesis();
-    this.initVoiceRecognition();                
+    this.sidebar().init();
+    this.speech().init();
+    this.voice().init();                
 };

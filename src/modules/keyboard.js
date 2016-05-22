@@ -1,6 +1,9 @@
-$.extend(Keller.prototype, {
+Keller.prototype.keyboard = function() {
 
-    createAlphabet: function() {
+    var _this = this,
+        $elem = _this.element;
+
+    var createAlphabet = function() {
         var template = document.createElement('ul'),
             firstCharCode = 'a'.charCodeAt(0),
             lastCharCode = 'z'.charCodeAt(0),
@@ -26,15 +29,19 @@ $.extend(Keller.prototype, {
             currentNumber.innerHTML = j;
             template.appendChild(currentNumber);
         }
-        this._addEvent(template, 'click', this._bind(this.selectKey, this));
+        _this._addEvent(template, 'click', _this._bind(_this.selectKey, _this));
 
         return template;
-    },
+    };
 
-    activateKey: function(key, className) {
-        var keyboard = this.element.querySelector('.ue-keyboard');
-        this._removeClass(keyboard.querySelectorAll('li'), className);
-        this._addClass(key, className);
+    var activateKey = function(key, className) {
+        var keyboard = $elem.querySelector('.ue-keyboard');
+        _this._removeClass(keyboard.querySelectorAll('li'), className);
+        _this._addClass(key, className);
     }
-
-});
+    
+    return {
+        createAlphabet: createAlphabet,
+        activateKey: activateKey
+    }
+};
