@@ -1,7 +1,8 @@
 Keller.prototype.keyboard = function() {
 
     var _this = this,
-        $elem = _this.element;
+        $elem = _this.element,
+        utils = _this.utils.call(_this);
 
     var createAlphabet = function() {
         var template = document.createElement('ul'),
@@ -29,15 +30,15 @@ Keller.prototype.keyboard = function() {
             currentNumber.innerHTML = j;
             template.appendChild(currentNumber);
         }
-        _this._addEvent(template, 'click', _this._bind(_this.selectKey, _this));
+        utils._addEvent(template, 'click', utils._bind(_this.textinput().selectKey, _this));
 
         return template;
     };
 
     var activateKey = function(key, className) {
         var keyboard = $elem.querySelector('.ue-keyboard');
-        _this._removeClass(keyboard.querySelectorAll('li'), className);
-        _this._addClass(key, className);
+        utils._removeClass(keyboard.querySelectorAll('li'), className);
+        utils._addClass(key, className);
     }
     
     return {

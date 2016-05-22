@@ -1,31 +1,38 @@
-$.extend(Keller.prototype, {
+Keller.prototype.gamepad = function() {
 
-    gamepadConnected: function() {
+    var _this = this,
+        utils = _this.utils.call(_this);
+
+    var gamepadConnected = function() {
         // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
         // http://gamedevelopment.tutsplus.com/tutorials/using-the-html5-gamepad-api-to-add-controller-support-to-browser-games--cms-21345
         console.log('Gamepad connected.');
-        var repGP = window.setInterval(this._bind(this.checkGamepad, this), 200);
-    },
+        var repGP = window.setInterval(utils._bind(checkGamepad, _this), 200);
+    };
 
-    gamepadDisconnected: function() {
+    var gamepadDisconnected = function() {
         console.log('Gamepad disconnected!');
-    },
+    };
 
-    checkGamepad: function() {
+    var checkGamepad = function() {
         var gp = navigator.getGamepads()[0];
 
         if (gp.buttons[1].pressed) {
-            this.navigateKeyboard('right');
+            _this.navigation().keyboard('right');
         }
         if (gp.buttons[2].pressed) {
-            this.navigateKeyboard('left');
+            _this.navigation().keyboard('left');
         }
         if (gp.buttons[4].pressed) {
-            this.removeText();
+            _this.textinput().removeText();
         }
         if (gp.buttons[5].pressed) {
-            this.writeText();
+            _this.textinput().writeText();
         }
-    }
+    };
 
-});
+    return {
+        isConnected: gamepadConnected,
+        isDisconnected: gamepadDisconnected
+    }
+};

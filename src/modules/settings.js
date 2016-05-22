@@ -1,51 +1,51 @@
-/* global ; */
-$.extend(Keller.prototype, {
+Keller.prototype.settings = function() {
 
-    createSettings: function() {
-        var settingsFields,
-            settings;
+    var _this = this,
+        settingsFields,
+        utils = _this.utils.call(_this);
 
-        settingsFields = [
-            {
-                'label': 'Contrast',
-                'type': 'switch',
-                'name': 'contrast',
-                'value': true
-            },
-            {
-                'label': 'Font size',
-                'type': 'stepper',
-                'name': 'font-size',
-                'value': 10
-            },
-            {
-                'label': 'Letter spacing',
-                'type': 'stepper',
-                'name': 'letter-spacing',
-                'value': 0
-            },
-            {
-                'label': 'Line height',
-                'type': 'stepper',
-                'name': 'line-height',
-                'value': 5
-            },
-            {
-                'label': 'Show images',
-                'type': 'switch',
-                'name': 'show-images',
-                'value': true
-            }
-        ];
+    settingsFields = [
+        {
+            'label': 'Contrast',
+            'type': 'switch',
+            'name': 'contrast',
+            'value': true
+        },
+        {
+            'label': 'Font size',
+            'type': 'stepper',
+            'name': 'font-size',
+            'value': 10
+        },
+        {
+            'label': 'Letter spacing',
+            'type': 'stepper',
+            'name': 'letter-spacing',
+            'value': 0
+        },
+        {
+            'label': 'Line height',
+            'type': 'stepper',
+            'name': 'line-height',
+            'value': 5
+        },
+        {
+            'label': 'Show images',
+            'type': 'switch',
+            'name': 'show-images',
+            'value': true
+        }
+    ];
 
-        settings = document.createElement('div');
+    var createSettings = function() {
+        var settings = document.createElement('div');
         for (var i = 0; i < settingsFields.length; i++) {
-            settings.appendChild(this.createSetting(settingsFields[i]));
+            settings.appendChild(createSetting(settingsFields[i]));
         }
         return settings;
-    },
+    };
 
-    createSetting: function(field) {
+    var createSetting = function(field) {
         var wrapper,
             labelbox,
             button;
@@ -59,16 +59,16 @@ $.extend(Keller.prototype, {
 
         wrapper.appendChild(labelbox);
 
-        button = this.createSettingButton(field);
+        button = createSettingButton(field);
         wrapper.appendChild(button);
 
-        this._addEvent(button, 'click', this._bind(this.changeSettings, this));
+        utils._addEvent(button, 'click', utils._bind(changeSettings, _this));
 
         return wrapper;
-    },
+    };
 
-    createSettingButton: function(field) {
-        var cachedValue = this.loadSettings(field),
+    var createSettingButton = function(field) {
+        var cachedValue = loadSettings(field),
             settingvalue = (cachedValue !== null) ? cachedValue : field.value,
             button;
 
@@ -90,12 +90,12 @@ $.extend(Keller.prototype, {
                 button.appendChild(buttonAdd);
                 break;
         }
-        this._triggerEvent(document, 'settings:' + field.name, { value: settingvalue });
+        utils._triggerEvent(document, 'settings:' + field.name, { value: settingvalue });
 
         return button;
-    },
+    };
 
-    changeSettings: function(e) {
+    var changeSettings = function(e) {
         e.stopPropagation();
 
         var el = e.currentTarget,
@@ -118,21 +118,21 @@ $.extend(Keller.prototype, {
         }
         if (typeof newValue !== 'undefined') {
             el.setAttribute('data-value', newValue);
-            this.storeSettings(settingName, newValue);
-            this._triggerEvent(document, 'settings:' + settingName, { value: newValue });
+            storeSettings(settingName, newValue);
+            utils._triggerEvent(document, 'settings:' + settingName, { value: newValue });
         }
-    },
+    };
 
-    storeSettings: function(item, value) {
+    var storeSettings = function(item, value) {
         localStorage.setItem(item, value);
-    },
+    };
 
-    getSettings: function(item) {
+    var getSettings = function(item) {
         return localStorage.getItem(item);
-    },
+    };
 
-    loadSettings: function(setting) {
-        var cachedSetting = this.getSettings(setting.name);
+    var loadSettings = function(setting) {
+        var cachedSetting = getSettings(setting.name);
 
         if (cachedSetting !== null) {
             switch (typeof setting.value) {
@@ -145,26 +145,34 @@ $.extend(Keller.prototype, {
             }
         }
         return cachedSetting;
-    },
+    };
 
-    changeContrast: function(e) {
-        this._toggleClass(document.body, 'reversed', e.detail.value);
-    },
+    var changeContrast = function(e) {
+        utils._toggleClass(document.body, 'reversed', e.detail.value);
+    };
 
-    changeFontSize: function(e) {
+    var changeFontSize = function(e) {
         document.body.style.fontSize = parseInt(e.detail.value, 10) / 10 + 'em';
-    },
+    };
 
-    changeLetterSpacing: function(e) {
+    var changeLetterSpacing = function(e) {
         document.body.style.letterSpacing = parseInt(e.detail.value, 10) / 10 + 'px';
-    },
+    };
 
-    changeLineHeight: function(e) {
+    var changeLineHeight = function(e) {
         document.body.style.lineHeight = 100 + parseInt(e.detail.value, 10) * 10 + '%';
-    },
+    };
 
-    changeShowImages: function(e) {
-        this._toggleClass(document.body, 'hide-images', !e.detail.value);
+    var changeShowImages = function(e) {
+        utils._toggleClass(document.body, 'hide-images', !e.detail.value);
+    };
+
+    return {
+        create: createSettings,
+        changeContrast: changeContrast,
+        changeFontSize: changeFontSize,
+        changeLetterSpacing: changeLetterSpacing,
+        changeLineHeight: changeLineHeight,
+        changeShowImages: changeShowImages
     }
-
-});
+};

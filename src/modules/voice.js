@@ -1,6 +1,7 @@
 Keller.prototype.voice = function() {
 
-    var _this = this;
+    var _this = this,
+        utils = _this.utils.call(_this);
 
     var initVoiceRecognition = function() {
         if (!('webkitSpeechRecognition' in window)) {
@@ -72,16 +73,16 @@ Keller.prototype.voice = function() {
 
     var createVoiceWidget = function() {
         var widget = document.createElement('div');
-        _this._addEvent(widget, 'click', _this._bind(activateVoiceOption, _this));
-        _this._addClass(widget, 'widget-icon');
-        _this._addClass(widget, 'voice-widget-icon');
+        utils._addEvent(widget, 'click', utils._bind(activateVoiceOption, _this));
+        utils._addClass(widget, 'widget-icon');
+        utils._addClass(widget, 'voice-widget-icon');
         widget.innerHTML = '1';
         return widget;
     };
 
     var activateVoiceOption = function(e) {
         _this.isVoiceOn = !_this.isVoiceOn;
-        _this._toggleClass(e.currentTarget, 'active', _this.isVoiceOn);
+        utils._toggleClass(e.currentTarget, 'active', _this.isVoiceOn);
 
         if (_this.isVoiceOn) {
             voiceStart();

@@ -1,18 +1,19 @@
 Keller.prototype.video = function() {
 
-    var _this = this;
+    var _this = this,
+        utils = _this.utils.call(_this);
 
     var createVideoWidget = function() {
         var widget = document.createElement('div');
-        _this._addEvent(widget, 'click', _this._bind(activateVideoOption, _this));
-        _this._addClass(widget, 'widget-icon');
-        _this._addClass(widget, 'video-widget-icon');
+        utils._addEvent(widget, 'click', utils._bind(activateVideoOption, _this));
+        utils._addClass(widget, 'widget-icon');
+        utils._addClass(widget, 'video-widget-icon');
         widget.innerHTML = '0';
         return widget;
     };
 
     var activateVideoOption = function(e) {
-        _this._toggleClass(e.currentTarget, 'active');
+        utils._toggleClass(e.currentTarget, 'active');
     };
     
     return {

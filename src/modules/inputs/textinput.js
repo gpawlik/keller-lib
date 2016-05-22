@@ -1,27 +1,35 @@
-$.extend(Keller.prototype, {
+Keller.prototype.textinput = function() {
 
-    selectKey: function(e) {
-        this._stopPropagation(e);
+    var _this = this,
+        utils = _this.utils.call(_this);
+
+    var selectKey = function(e) {
+        utils._stopPropagation(e);
         var key = e.constructor === CustomEvent ? e.detail.key : e.target;
 
-        this.keyboard().activateKey(key, 'active');
-        this.writeText(key);
-    },
+        _this.keyboard().activateKey(key, 'active');
+        writeText(key);
+    };
 
-    writeText: function(key) {
-        var currentInput = this.getCurrentModule().querySelector('input[type="text"]');
+    var writeText = function(key) {
+        var currentInput = utils.getCurrentModule().querySelector('input[type="text"]');
         if (currentInput) {
             currentInput.value = currentInput.value + key.innerHTML.toLowerCase();
         }
-    },
+    };
 
-    removeText: function() {
-        var currentInputValue = this.getCurrentModule().querySelector('input[type="text"]').value;
-        this.fillOutInput(currentInputValue.slice(0, -1));
-    },
+    var removeText = function() {
+        var currentInputValue = utils.getCurrentModule().querySelector('input[type="text"]').value;
+        fillOutInput(currentInputValue.slice(0, -1));
+    };
 
-    fillOutInput: function(text) {
-        this.getCurrentModule().querySelector('input').value = text;
+    var fillOutInput = function(text) {
+        utils.getCurrentModule().querySelector('input').value = text;
+    };
+
+    return {
+        selectKey: selectKey,
+        writeText: writeText,
+        removeText: removeText
     }
-
-});
+};

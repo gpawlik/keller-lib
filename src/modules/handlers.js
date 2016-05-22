@@ -1,54 +1,64 @@
-$.extend(Keller.prototype, {
+Keller.prototype.handlers = function() {
 
-    eventHandlers: function() {
-        this._addEvent(document, 'keydown', this._bind(this.getKeyEvent, this));
-        this._addEvent(window, 'gamepadconnected', this._bind(this.gamepadConnected, this));
-        this._addEvent(window, 'gamepaddisconnected', this._bind(this.gamepadDisconnected, this));
-    },
+    var _this = this,
+        navigation = _this.navigation.call(_this),
+        settings = _this.settings.call(_this),
+        utils = _this.utils.call(_this);
 
-    eventListeners: function() {
-        this._onEvent(document, 'settings:font-size', this._bind(this.changeFontSize, this));
-        this._onEvent(document, 'settings:letter-spacing', this._bind(this.changeLetterSpacing, this));
-        this._onEvent(document, 'settings:line-height', this._bind(this.changeLineHeight, this));
-        this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));
-        this._onEvent(document, 'settings:show-images', this._bind(this.changeShowImages, this));
-        //this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));
-        this._onEvent(document, 'keyboard:writetext', this._bind(this.selectKey, this));
-    },
+    var eventHandlers = function() {
+        utils._addEvent(document, 'keydown', utils._bind(_this.keys().getEvent, _this));
+        utils._addEvent(window, 'gamepadconnected', utils._bind(_this.gamepad().isConnected, _this));
+        utils._addEvent(window, 'gamepaddisconnected', utils._bind(_this.gamepad().isDisconnected, _this));
+    };
 
-    navigateHandler: function(action, focus) {
+    var eventListeners = function() {
+        utils._onEvent(document, 'settings:font-size', utils._bind(settings.changeFontSize, _this));
+        utils._onEvent(document, 'settings:letter-spacing', utils._bind(settings.changeLetterSpacing, _this));
+        utils._onEvent(document, 'settings:line-height', utils._bind(settings.changeLineHeight, _this));
+        utils._onEvent(document, 'settings:contrast', utils._bind(settings.changeContrast, _this));
+        utils._onEvent(document, 'settings:show-images', utils._bind(settings.changeShowImages, _this));
+        //utils._onEvent(document, 'controls:showwidget', utils._bind(this.showSidebarWidget, this));
+        utils._onEvent(document, 'keyboard:writetext', utils._bind(_this.textinput().selectKey, _this));
+    };
+
+    var navigateHandler = function(action, focus) {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
-                        this.modifyDates(action, focus);
+                    if (utils.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+                        _this.dateinput().modify(action, focus);
                     } else {
-                        this.navigateModules(action);
+                        navigation.modules(action);
                     }
                     break;
                 case 'controls':
-                    this.navigateControls(action);
+                    navigation.controls(action);
                     break;
                 case 'settings':
-                    this.navigateKeyboard(action);
+                    navigation.keyboard(action);
                     break;
             }
         } else if ((action === 'up') || (action === 'down')) {
-            if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
-                this.navigateDates(focus, action);
+            if (utils.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+                _this.dateinput().navigate(focus, action);
             } else {
-                this.navigateFocusAreas(action);
+                navigation.focusAreas(action);
             }
         } else if (action === 'enter') {
             switch (focus) {
                 case 'controls':
-                    this.navigateControls(action);
+                    navigation.controls(action);
                     break;
                 case 'settings':
-                    this.navigateKeyboard(action);
+                    navigation.keyboard(action);
                     break;
             }
         }
-    }
+    };
 
-});
+    return {
+        eventHandlers: eventHandlers,
+        eventListeners: eventListeners,
+        navigateHandler: navigateHandler
+    }
+};

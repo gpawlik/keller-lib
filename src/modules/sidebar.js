@@ -1,6 +1,7 @@
 Keller.prototype.sidebar = function() {
     var _this = this,
-        $el = _this.element;
+        $el = _this.element,
+        utils = _this.utils.call(_this);
            
     var showSidebar = function () {
         $el.appendChild(createSidebar());
@@ -45,7 +46,7 @@ Keller.prototype.sidebar = function() {
             sidebarControls.appendChild(createSidebarControls(widgets[i].alias, widgets[i].icon, i));
         }
         
-        _this._addEvent(sidebarHeaderClose, 'click', _this._bind(toggleSidebar, _this));
+        utils._addEvent(sidebarHeaderClose, 'click', utils._bind(toggleSidebar, _this));
 
         sidebar.appendChild(sidebarHeader);
         sidebar.appendChild(sidebarWidgets);
@@ -71,7 +72,7 @@ Keller.prototype.sidebar = function() {
                 widget.appendChild(_this.keyboard().createAlphabet());
                 break;
             case 'settings':
-                widget.appendChild(_this.createSettings());
+                widget.appendChild(_this.settings().create());
                 break;
             case 'video':
                 widget.appendChild(_this.video().createWidget());
@@ -99,7 +100,7 @@ Keller.prototype.sidebar = function() {
         if (index === 0) {
             controlItem.classList.add('show');
         }
-        _this._addEvent(controlItem, 'click', _this._bind(showSidebarWidget, _this));
+        utils._addEvent(controlItem, 'click', utils._bind(showSidebarWidget, _this));
 
         return controlItem;
     };
@@ -111,12 +112,12 @@ Keller.prototype.sidebar = function() {
             pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');
 
         toggleSidebar(true);
-        _this._activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
-        _this._activateItem(controls, 'data-ue-control-name', pageName, 'show');
+        utils._activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
+        utils._activateItem(controls, 'data-ue-control-name', pageName, 'show');
     };
 
     var toggleSidebar = function(show) {
-        _this._toggleClass($el, 'show-sidebar', show);
+        utils._toggleClass($el, 'show-sidebar', show);
     }
     
     return {

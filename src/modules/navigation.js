@@ -1,7 +1,11 @@
-$.extend(Keller.prototype, {
+Keller.prototype.navigation = function() {
 
-    navigateKeyboard: function(action) {
-        var keyboard = this.element.querySelector('.ue-keyboard'),
+    var _this = this,
+        $elem = _this.element,
+        utils = _this.utils.call(_this);
+
+    var navigateKeyboard = function(action) {
+        var keyboard = $elem.querySelector('.ue-keyboard'),
             activeItem = keyboard.querySelector('li.active'),
             currentItemId = activeItem ? parseInt(activeItem.getAttribute('data-id'), 10) : 0,
             currentItem = keyboard.querySelector('li[data-id="' + currentItemId + '"]'),
@@ -13,17 +17,17 @@ $.extend(Keller.prototype, {
         } else if (action === 'left') {
             nextItemId = ((currentItemId - 1) < 0) ? allItemsLength - 1 : currentItemId - 1;
         } else if (action === 'enter') {
-            this._triggerEvent(document, 'keyboard:writetext', { key: currentItem });
+            utils._triggerEvent(document, 'keyboard:writetext', { key: currentItem });
         }
 
         if (typeof nextItemId !== 'undefined') {
-            this.keyboard().activateKey(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');
+            _this.keyboard().activateKey(keyboard.querySelector('li[data-id="' + nextItemId + '"]'), 'active');
         }
-    },
+    };
 
-    navigateModules: function(action) {
-        var modules = this.element.querySelectorAll('.ue-module'),
-            currentItem = this.currentModuleId || 0,
+    var navigateModules = function(action) {
+        var modules = $elem.querySelectorAll('.ue-module'),
+            currentItem = _this.currentModuleId || 0,
             nextItem;
 
         if (action === 'right') {
@@ -33,27 +37,27 @@ $.extend(Keller.prototype, {
         }
 
         for (var i = 0; i < modules.length; i++) {
-            this._toggleClass(modules[i], 'active', parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem);
+            utils._toggleClass(modules[i], 'active', parseInt(modules[i].getAttribute('data-ue-module'), 10) === nextItem);
         }
 
-        this.currentModuleId = nextItem;
-        this.readModuleHeaders();
-    },
+        _this.currentModuleId = nextItem;
+        _this.speech().readModuleHeaders();
+    };
 
-    navigateFocusAreas: function(action) {
-        var focusAreas = this.options.focusAreas,
-            currentFocusIndex = focusAreas.indexOf(this.getFocus());
+    var navigateFocusAreas = function(action) {
+        var focusAreas = _this.options.focusAreas,
+            currentFocusIndex = focusAreas.indexOf(utils.getFocus());
 
         if (action === 'up' && ((currentFocusIndex + 1) < focusAreas.length)) {
-            this.setFocus(currentFocusIndex + 1);
+            utils.setFocus(currentFocusIndex + 1);
         } else if (action === 'down' && ((currentFocusIndex - 1) >= 0)) {
-            this.setFocus(currentFocusIndex - 1);
+            utils.setFocus(currentFocusIndex - 1);
         }
-    },
+    };
 
-    navigateControls: function(action) {
-        var controls = this.element.querySelectorAll('.ue-sidebar-controls li'),
-            currentControl = this.element.querySelector('.ue-sidebar-controls li.show'),
+    var navigateControls = function(action) {
+        var controls = $elem.querySelectorAll('.ue-sidebar-controls li'),
+            currentControl = $elem.querySelector('.ue-sidebar-controls li.show'),
             currentControlName = currentControl.getAttribute('data-ue-control-name') || 'key',
             currentControlId = parseInt(currentControl.getAttribute('data-ue-control-id'), 10) || 0,
             nextControlId;
@@ -63,12 +67,18 @@ $.extend(Keller.prototype, {
         } else if (action === 'left') {
             nextControlId = ((currentControlId - 1) < 0) ? controls.length - 1 : currentControlId - 1;
         } else if (action === 'enter') {
-            this._triggerEvent(document, 'controls:showwidget', { pageName: currentControlName });
+            utils._triggerEvent(document, 'controls:showwidget', { pageName: currentControlName });
         }
 
         if (typeof nextControlId !== 'undefined') {
-            this._activateItem(controls, 'data-ue-control-id', nextControlId, 'show');
+            utils._activateItem(controls, 'data-ue-control-id', nextControlId, 'show');
         }
+    };
+    
+    return {
+        keyboard: navigateKeyboard,
+        modules: navigateModules,
+        focusAreas: navigateFocusAreas,
+        controls: navigateControls
     }
-
-});
+};

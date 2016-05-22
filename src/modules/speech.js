@@ -1,6 +1,7 @@
 Keller.prototype.speech = function() {
 
-    var _this = this;
+    var _this = this,
+        utils = _this.utils.call(_this);
 
     var initSpeechSynthesis = function() {
         if (!('speechSynthesis' in window)) {
@@ -8,13 +9,13 @@ Keller.prototype.speech = function() {
             return false;
         }
         // "onvoiceschanged" event fires when voices are ready
-        window.speechSynthesis.onvoiceschanged = _this._bind(function() {
+        window.speechSynthesis.onvoiceschanged = utils._bind(function() {
             _this.cachedVoice = loadVoice(_this.options.speech.voice);
         }, _this);
     };
 
     var readModuleHeaders = function() {
-        var moduleHeaders = _this.getCurrentModule().querySelectorAll('[data-ue-speech]');
+        var moduleHeaders = utils.getCurrentModule().querySelectorAll('[data-ue-speech]');
 
         for (var i = 0; i < moduleHeaders.length; i++) {
             readText(moduleHeaders[i].getAttribute('data-ue-speech'));
@@ -51,16 +52,16 @@ Keller.prototype.speech = function() {
 
     var createSpeechWidget = function() {
         var widget = document.createElement('div');
-        _this._addEvent(widget, 'click', _this._bind(activateSpeechOption, _this));
-        _this._addClass(widget, 'widget-icon');
-        _this._addClass(widget, 'speech-widget-icon');
+        utils._addEvent(widget, 'click', utils._bind(activateSpeechOption, _this));
+        utils._addClass(widget, 'widget-icon');
+        utils._addClass(widget, 'speech-widget-icon');
         widget.innerHTML = '3';
         return widget;
     };
 
     var activateSpeechOption = function(e) {
         _this.options.enableAudio = !_this.options.enableAudio;
-        _this._toggleClass(e.currentTarget, 'active', _this.options.enableAudio);
+        utils._toggleClass(e.currentTarget, 'active', _this.options.enableAudio);
     };
     
     return {
