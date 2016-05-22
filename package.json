@@ -15,9 +15,6 @@
     "jscs": "jscs src",
     "test": "npm run jscs && grunt travis --verbose"
   },
-  "dependencies": {
-    "jquery": ">=1.5.1"
-  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-coffee": "^0.13.0",
