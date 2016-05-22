@@ -1,54 +1,64 @@
-$.extend(Keller.prototype, {
+Keller.prototype.handlers = function() {
 
-    eventHandlers: function() {
-        this._addEvent(document, 'keydown', this._bind(this.getKeyEvent, this));
-        this._addEvent(window, 'gamepadconnected', this._bind(this.gamepadConnected, this));
-        this._addEvent(window, 'gamepaddisconnected', this._bind(this.gamepadDisconnected, this));
-    },
+    var _this = this,
+        navigation = _this.navigation(),
+        settings = _this.settings(),
+        _ = _this.utils();
 
-    eventListeners: function() {
-        this._onEvent(document, 'settings:font-size', this._bind(this.changeFontSize, this));
-        this._onEvent(document, 'settings:letter-spacing', this._bind(this.changeLetterSpacing, this));
-        this._onEvent(document, 'settings:line-height', this._bind(this.changeLineHeight, this));
-        this._onEvent(document, 'settings:contrast', this._bind(this.changeContrast, this));
-        this._onEvent(document, 'settings:show-images', this._bind(this.changeShowImages, this));
-        this._onEvent(document, 'controls:showwidget', this._bind(this.showSidebarWidget, this));
-        this._onEvent(document, 'keyboard:writetext', this._bind(this.selectKey, this));
-    },
+    var eventHandlers = function() {
+        _.addEvent(document, 'keydown', _.bind(_this.keys().getEvent, _this));
+        _.addEvent(window, 'gamepadconnected', _.bind(_this.gamepad().isConnected, _this));
+        _.addEvent(window, 'gamepaddisconnected', _.bind(_this.gamepad().isDisconnected, _this));
+    };
 
-    navigateHandler: function(action, focus) {
+    var eventListeners = function() {
+        _.onEvent(document, 'settings:font-size', _.bind(settings.changeFontSize, _this));
+        _.onEvent(document, 'settings:letter-spacing', _.bind(settings.changeLetterSpacing, _this));
+        _.onEvent(document, 'settings:line-height', _.bind(settings.changeLineHeight, _this));
+        _.onEvent(document, 'settings:contrast', _.bind(settings.changeContrast, _this));
+        _.onEvent(document, 'settings:show-images', _.bind(settings.changeShowImages, _this));
+        //_.onEvent(document, 'controls:showwidget', _.bind(this.showSidebarWidget, this));
+        _.onEvent(document, 'keyboard:writetext', _.bind(_this.textinput().selectKey, _this));
+    };
+
+    var navigateHandler = function(action, focus) {
         if ((action === 'right') || (action === 'left')) {
             switch (focus) {
                 case 'input':
-                    if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
-                        this.modifyDates(action, focus);
+                    if (_.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+                        _this.dateinput().modify(action, focus);
                     } else {
-                        this.navigateModules(action);
+                        navigation.modules(action);
                     }
                     break;
                 case 'controls':
-                    this.navigateControls(action);
+                    navigation.controls(action);
                     break;
                 case 'settings':
-                    this.navigateKeyboard(action);
+                    navigation.keyboard(action);
                     break;
             }
         } else if ((action === 'up') || (action === 'down')) {
-            if (this.getCurrentModule().hasAttribute('data-ue-dateselector')) {
-                this.navigateDates(focus, action);
+            if (_.getCurrentModule().hasAttribute('data-ue-dateselector')) {
+                _this.dateinput().navigate(focus, action);
             } else {
-                this.navigateFocusAreas(action);
+                navigation.focusAreas(action);
             }
         } else if (action === 'enter') {
             switch (focus) {
                 case 'controls':
-                    this.navigateControls(action);
+                    navigation.controls(action);
                     break;
                 case 'settings':
-                    this.navigateKeyboard(action);
+                    navigation.keyboard(action);
                     break;
             }
         }
-    }
+    };
 
-});
+    return {
+        eventHandlers: eventHandlers,
+        eventListeners: eventListeners,
+        navigateHandler: navigateHandler
+    }
+};

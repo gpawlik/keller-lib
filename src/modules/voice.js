@@ -1,30 +1,33 @@
-$.extend(Keller.prototype, {
+Keller.prototype.voice = function() {
 
-    initVoiceRecognition: function() {
+    var _this = this,
+        _ = _this.utils();
+
+    var initVoiceRecognition = function() {
         if (!('webkitSpeechRecognition' in window)) {
-            this.voiceRecognition = false;
+            _this.voiceRecognition = false;
             console.log('Speech recognition not supported');
         } else {
-            this.voiceRecognition = new webkitSpeechRecognition();
-            this.voiceRecognition.continuous = true;
-            this.voiceRecognition.interimResults = true;
-            this.processRecognizedText(this.voiceRecognition);
+            _this.voiceRecognition = new webkitSpeechRecognition();
+            _this.voiceRecognition.continuous = true;
+            _this.voiceRecognition.interimResults = true;
+            processRecognizedText(_this.voiceRecognition);
         }
-    },
+    };
 
-    voiceStart: function() {
-        if (this.voiceRecognition) {
-            this.voiceRecognition.start();
+    var voiceStart = function() {
+        if (_this.voiceRecognition) {
+            _this.voiceRecognition.start();
         }
-    },
+    };
 
-    voiceStop: function() {
-        if (this.voiceRecognition) {
-            this.voiceRecognition.stop();
+    var voiceStop = function() {
+        if (_this.voiceRecognition) {
+            _this.voiceRecognition.stop();
         }
-    },
+    };
 
-    processRecognizedText: function(recognition) {
+    var processRecognizedText = function(recognition) {
 
         recognition.onresult = function(event) {
             var finalTranscript = '',
@@ -66,26 +69,30 @@ $.extend(Keller.prototype, {
         recognition.onnomatch = function() {
             console.log('Sorry! There was no match...');
         };
-    },
+    };
 
-    createVoiceWidget: function() {
+    var createVoiceWidget = function() {
         var widget = document.createElement('div');
-        this._addEvent(widget, 'click', this._bind(this.activateVoiceOption, this));
-        this._addClass(widget, 'widget-icon');
-        this._addClass(widget, 'voice-widget-icon');
+        _.addEvent(widget, 'click', _.bind(activateVoiceOption, _this));
+        _.addClass(widget, 'widget-icon');
+        _.addClass(widget, 'voice-widget-icon');
         widget.innerHTML = '1';
         return widget;
-    },
+    };
 
-    activateVoiceOption: function(e) {
-        this.isVoiceOn = !this.isVoiceOn;
-        this._toggleClass(e.currentTarget, 'active', this.isVoiceOn);
+    var activateVoiceOption = function(e) {
+        _this.isVoiceOn = !_this.isVoiceOn;
+        _.toggleClass(e.currentTarget, 'active', _this.isVoiceOn);
 
-        if (this.isVoiceOn) {
-            this.voiceStart();
+        if (_this.isVoiceOn) {
+            voiceStart();
         } else {
-            this.voiceStop();
+            voiceStop();
         }
+    };
+    
+    return {
+        init: initVoiceRecognition,
+        createWidget: createVoiceWidget
     }
-
-});
+};
