@@ -13,9 +13,10 @@
   },
   "scripts": {
     "jscs": "jscs src",
-    "test": "npm run jscs && grunt travis --verbose"
+    "test": "mocha-phantomjs test/test.html"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "grunt": "^0.4.5",
     "grunt-contrib-coffee": "^0.13.0",
     "grunt-contrib-concat": "^0.5.1",
@@ -32,6 +33,8 @@
     "karma-firefox-launcher": "^0.1.6",
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-qunit": "^0.1.5",
+    "mocha": "^2.5.1",
+    "mocha-phantomjs": "^4.0.2",
     "phantomjs": "^1.9.18",
     "qunitjs": "^1.19.0",
     "requirejs": "^2.2.0",
