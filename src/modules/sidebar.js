@@ -21,9 +21,9 @@ Keller.prototype.sidebar = function() {
         sidebar.className = 'active';
 
         sidebarHeader = document.createElement('div');
-        sidebarHeader.className = 'ui-sidebar-header';
+        sidebarHeader.className = 'ue-sidebar-header';
         sidebarHeaderClose = document.createElement('div');
-        sidebarHeaderClose.className = 'ui-sidebar-close';
+        sidebarHeaderClose.className = 'ue-sidebar-close';
         sidebarHeaderClose.innerHTML = 'r';        
         sidebarHeader.appendChild(sidebarHeaderClose);
 

@@ -3,23 +3,40 @@ var expect = chai.expect,
 
 describe('DOM tests', function() {
     var sidebar = document.getElementById('ue-sidebar'),
-        controls = document.querySelector('.ue-sidebar-controls'),
-        widgets = document.querySelector('.ue-sidebar-widgets');
+        sidebar_header = document.querySelector('.ue-sidebar-header'),
+        controls_area = document.querySelector('.ue-sidebar-controls'),
+        widgets_area = document.querySelector('.ue-sidebar-widgets');
     
     it("sidebar is in the DOM", function () {
-        expect(sidebar).to.not.equal(null);
+        expect(sidebar).to.not.be.null;
     });   
     
     it("sidebar is a child of the body", function () {
         expect(sidebar.parentElement).to.equal(document.body);
     });
+        
+    it("sidebar contains a header", function () {
+        expect(sidebar_header.parentElement).to.equal(sidebar);
+    });
     
     it("sidebar contains controls", function () {
-        expect(controls.parentElement).to.equal(sidebar);
+        expect(controls_area.parentElement).to.equal(sidebar);
     });
     
     it("sidebar contains widgets", function () {
-        expect(widgets.parentElement).to.equal(sidebar);
+        expect(widgets_area.parentElement).to.equal(sidebar);
+    });
+    
+    it("controls area should contain at least one control", function() {
+        expect(controls_area.childNodes.length).to.not.be.null;
+    });
+    
+    it("widgets area should contain at least one widget", function() {
+        expect(widgets_area.childNodes.length).to.not.be.null;
+    });
+    
+    it("number of controls should equal number of widgets", function() {
+        expect(controls_area.childNodes.length).to.equal(widgets_area.childNodes.length);
     });
   
 });

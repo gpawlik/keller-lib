@@ -16,13 +16,13 @@
         right: 0;
     }
 }
-.ui-sidebar-header {
+.ue-sidebar-header {
     height: 80px;
     background-color: $primary-color-dark;
     .reversed & {
         background-color: $primary-color-light;
     }
-    .ui-sidebar-close {
+    .ue-sidebar-close {
         display: block;
         width: 80px;
         height: 80px;
