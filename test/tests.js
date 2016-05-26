@@ -38,5 +38,13 @@ describe('DOM tests', function() {
     it("number of controls should equal number of widgets", function() {
         expect(controls_area.childNodes.length).to.equal(widgets_area.childNodes.length);
     });
+    
+    it("only one control should be active", function() {
+        expect(controls_area.querySelectorAll(".show[data-ue-control-name]").length).to.equal(1);
+    });
+    
+    it("only one widget should be active", function() {
+        expect(widgets_area.querySelectorAll(".show[data-widget-name]").length).to.equal(1);
+    });
   
 });
