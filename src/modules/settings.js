@@ -174,5 +174,5 @@ Keller.prototype.settings = function() {
         changeLetterSpacing: changeLetterSpacing,
         changeLineHeight: changeLineHeight,
         changeShowImages: changeShowImages
-    }
+    };
 };

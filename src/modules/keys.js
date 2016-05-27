@@ -37,5 +37,5 @@ Keller.prototype.keys = function() {
     
     return {
         getEvent: getKeyEvent
-    }
+    };
 };

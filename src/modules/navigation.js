@@ -80,5 +80,5 @@ Keller.prototype.navigation = function() {
         modules: navigateModules,
         focusAreas: navigateFocusAreas,
         controls: navigateControls
-    }
+    };
 };

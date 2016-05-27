@@ -134,5 +134,5 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "umd:all", "uglify" ] );
-	grunt.registerTask( "default", [ "sass", "build" ] ); // jshint bug not showing file names
+	grunt.registerTask( "default", [ "jshint", "sass", "build" ] ); // jshint bug not showing file names
 };

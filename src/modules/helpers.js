@@ -143,5 +143,5 @@ Keller.prototype.utils = function() {
         contains: function(obj, item) {
             return obj.indexOf(item) >= 0;
         }    
-    }
+    };
 };

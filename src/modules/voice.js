@@ -94,5 +94,5 @@ Keller.prototype.voice = function() {
     return {
         init: initVoiceRecognition,
         createWidget: createVoiceWidget
-    }
+    };
 };

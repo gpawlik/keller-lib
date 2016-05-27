@@ -18,5 +18,5 @@ Keller.prototype.video = function() {
     
     return {
         createWidget: createVideoWidget
-    }
+    };
 };

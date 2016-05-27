@@ -68,5 +68,5 @@ Keller.prototype.speech = function() {
         init: initSpeechSynthesis,
         readModuleHeaders: readModuleHeaders,
         createWidget: createSpeechWidget
-    }
+    };
 };

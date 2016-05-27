@@ -60,5 +60,5 @@ Keller.prototype.handlers = function() {
         eventHandlers: eventHandlers,
         eventListeners: eventListeners,
         navigateHandler: navigateHandler
-    }
+    };
 };

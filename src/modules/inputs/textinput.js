@@ -31,5 +31,5 @@ Keller.prototype.textinput = function() {
         selectKey: selectKey,
         writeText: writeText,
         removeText: removeText
-    }
+    };
 };

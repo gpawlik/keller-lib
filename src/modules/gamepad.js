@@ -34,5 +34,5 @@ Keller.prototype.gamepad = function() {
     return {
         isConnected: gamepadConnected,
         isDisconnected: gamepadDisconnected
-    }
+    };
 };

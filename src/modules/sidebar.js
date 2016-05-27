@@ -118,7 +118,7 @@ Keller.prototype.sidebar = function() {
 
     var toggleSidebar = function(show) {
         _.toggleClass($el, 'show-sidebar', show);
-    }
+    };
     
     return {
         init: showSidebar

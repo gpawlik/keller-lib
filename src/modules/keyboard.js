@@ -39,10 +39,10 @@ Keller.prototype.keyboard = function() {
         var keyboard = $elem.querySelector('.ue-keyboard');
         _.removeClass(keyboard.querySelectorAll('li'), className);
         _.addClass(key, className);
-    }
+    };
     
     return {
         createAlphabet: createAlphabet,
         activateKey: activateKey
-    }
+    };
 };

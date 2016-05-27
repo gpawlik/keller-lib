@@ -94,5 +94,5 @@ Keller.prototype.dateinput = function() {
         navigate: navigateDates,
         validate: validateDates,
         errorValidate: errorValidate
-    }
+    };
 };
