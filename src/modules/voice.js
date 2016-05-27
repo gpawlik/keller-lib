@@ -49,13 +49,13 @@ Keller.prototype.voice = function() {
             console.log('iterim transcript', interimTranscript);
         };
         recognition.onerror = function(event) {
-            if (event.error == 'no-speech') {
+            if (event.error === 'no-speech') {
                 console.log('Speech recognition error: no speech.');
             }
-            if (event.error == 'audio-capture') {
+            if (event.error === 'audio-capture') {
                 console.log('Speech recognition error: no microphone.');
             }
-            if (event.error == 'not-allowed') {
+            if (event.error === 'not-allowed') {
                 console.log('Speech recognition not allowed.');
             }
         };

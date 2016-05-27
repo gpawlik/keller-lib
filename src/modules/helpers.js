@@ -17,7 +17,10 @@ Keller.prototype.utils = function() {
         },
 
         removeClass: function(elements, className) {
-            if (elements && elements.constructor === NodeList) {
+            if (!elements) {  
+                return;
+            }            
+            if (elements.constructor === NodeList) {
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].classList.remove(className);
                 }
@@ -27,7 +30,10 @@ Keller.prototype.utils = function() {
         },
 
         addClass: function(elements, className) {
-            if (elements && elements.constructor === NodeList) {
+            if (!elements) { 
+                return;
+            }
+            if (elements.constructor === NodeList) {
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].classList.add(className);
                 }
@@ -115,12 +121,13 @@ Keller.prototype.utils = function() {
         },
         
         extend: function() {
-            for(var i = 1; i < arguments.length; i++)
+            for(var i = 1; i < arguments.length; i++) {
                 for(var key in arguments[i]) {
                     if(arguments[i].hasOwnProperty(key)) {
                         arguments[0][key] = arguments[i][key];
                     }
                 }
+            }
             return arguments[0];
         },
 

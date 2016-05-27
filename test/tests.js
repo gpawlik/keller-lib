@@ -37,7 +37,7 @@ describe('DOM tests', function() {
     
     it("number of controls should equal number of widgets", function() {
         expect(controls_area.childNodes.length).to.equal(widgets_area.childNodes.length);
-    });
+    }); 
     
     it("only one control should be active", function() {
         expect(controls_area.querySelectorAll(".show[data-ue-control-name]").length).to.equal(1);
@@ -48,3 +48,65 @@ describe('DOM tests', function() {
     });
   
 });
+
+describe('Utils tests', function() {
+    
+    var utils = keller.utils();   
+    
+    it("getFocus is a function", function() {
+        expect(utils.getFocus).to.be.a.function;
+    }); 
+    
+    it("setFocus is a function", function() {
+        expect(utils.setFocus).to.be.a.function;
+    });
+    
+    it("getCurrentModule is a function", function() {
+        expect(utils.getCurrentModule).to.be.a.function;
+    });
+    
+    it("removeClass is a function", function() {
+        expect(utils.removeClass).to.be.a.function;
+    });
+    
+    it("addClass is a function", function() {
+        expect(utils.addClass).to.be.a.function;
+    });
+    
+    it("toggleClass is a function", function() {
+        expect(utils.toggleClass).to.be.a.function;
+    });
+    
+    it("activateItem is a function", function() {
+        expect(utils.activateItem).to.be.a.function;
+    });
+    
+    it("stopPropagation is a function", function() {
+        expect(utils.stopPropagation).to.be.a.function;
+    });
+    
+    it("addEvent is a function", function() {
+        expect(utils.addEvent).to.be.a.function;
+    });
+    
+    it("onEvent is a function", function() {
+        expect(utils.onEvent).to.be.a.function;
+    });
+    
+    it("triggerEvent is a function", function() {
+        expect(utils.triggerEvent).to.be.a.function;
+    });
+    
+    it("bind is a function", function() {
+        expect(utils.bind).to.be.a.function;
+    });
+    
+    it("extend is a function", function() {
+        expect(utils.extend).to.be.a.function;
+    });
+    
+    it("contains is a function", function() {
+        expect(utils.contains).to.be.a.function;
+    });
+        
+});    
