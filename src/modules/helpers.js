@@ -59,6 +59,9 @@ Keller.prototype.utils = function() {
         },
 
         activateItem: function(elements, id, value, className) {
+            if (!elements) { 
+                return;
+            }            
             for (var i = 0; i < elements.length; i++) {
                 this.toggleClass(elements[i], className, elements[i].getAttribute(id) === value.toString());
             }
@@ -75,6 +78,9 @@ Keller.prototype.utils = function() {
         },
 
         addEvent: function(element, type, callback, bubble) {
+            if (!element) { 
+                return;
+            }            
             if (document.addEventListener) {
                 return element.addEventListener(type, callback, bubble || false);
             }
@@ -83,6 +89,9 @@ Keller.prototype.utils = function() {
         },
 
         onEvent: function(element, type, callback, bubble) {
+            if (!element) { 
+                return;
+            }               
             if (document.addEventListener) {
                 document.addEventListener(type, function(event) {
                     if (event.target === element || event.target.id === element) {
