@@ -56,7 +56,7 @@ module.exports = function( grunt ) {
         
 		// Lint definitions
 		jshint: {
-			files: [ "src/keller-lib.js", "test/**/*" ],
+			files: [ "src/modules/*.js", "test/tests.js" ],
 			options: {
 				jshintrc: ".jshintrc"
 			}
@@ -134,5 +134,5 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "umd:all", "uglify" ] );
-	grunt.registerTask( "default", [ "jshint", "sass", "build" ] );
+	grunt.registerTask( "default", [ "sass", "build" ] ); // jshint bug not showing file names
 };
