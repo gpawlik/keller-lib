@@ -105,8 +105,22 @@ describe('Utils tests', function() {
         expect(utils.extend).to.be.a.function;
     });
     
+    it("extend method works correctly", function() {
+        var obj1 = { foo: "bar" },
+            obj2 = { bar: "baz" }
+        expect(utils.extend(obj1, obj2)).to.deep.equal({ foo: "bar", bar: "baz" });
+    });
+    
     it("contains is a function", function() {
         expect(utils.contains).to.be.a.function;
+    });
+    
+    it("contains method works correctly", function() {
+        var foo = [0,3,5,9],
+            bar = 3,
+            baz = 4
+        expect(utils.contains(foo, bar)).to.be.true;
+        expect(utils.contains(foo, baz)).to.be.false;
     });
         
 });    
