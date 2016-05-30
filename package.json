@@ -13,9 +13,11 @@
   },
   "scripts": {
     "jscs": "jscs src",
-    "test": "mocha-phantomjs test/test.html"
+    "test": "mocha-casperjs test/tests.js"
   },
   "devDependencies": {
+    "casper-chai": "^0.3.0",
+    "casperjs": "^1.1.1",
     "chai": "^3.5.0",
     "grunt": "^0.4.5",
     "grunt-contrib-coffee": "^0.13.0",
@@ -34,6 +36,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-qunit": "^0.1.5",
     "mocha": "^2.5.1",
+    "mocha-casperjs": "^0.5.7",
     "mocha-phantomjs": "^4.0.2",
     "phantomjs": "^1.9.18",
     "qunitjs": "^1.19.0",

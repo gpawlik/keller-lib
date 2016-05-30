@@ -1,16 +1,15 @@
-var expect = chai.expect,
-    keller = new Keller('body');
+describe('Sidebar elements', function() {
+ 	before(function() {
+		casper.start('http://localhost:9000/demo/index.html');
+	});
 
-describe('DOM tests', function() {
-    var sidebar = document.getElementById('ue-sidebar'),
-        sidebar_header = document.querySelector('.ue-sidebar-header'),
-        controls_area = document.querySelector('.ue-sidebar-controls'),
-        widgets_area = document.querySelector('.ue-sidebar-widgets');
+    it('sidebar should exist in DOM', function() {
+		casper.waitForSelector('#ue-sidebar', function(sidebar) {
+			expect('#ue-sidebar').to.be.inDOM;
+		});
+	});      
     
-    it("sidebar is in the DOM", function () {
-        expect(sidebar).to.not.be.null;
-    });   
-    
+    /*
     it("sidebar is a child of the body", function () {
         expect(sidebar.parentElement).to.equal(document.body);
     });
@@ -45,13 +44,10 @@ describe('DOM tests', function() {
     
     it("only one widget should be active", function() {
         expect(widgets_area.querySelectorAll(".show[data-widget-name]").length).to.equal(1);
-    });
-  
+    });*/
 });
 
 describe('Utils tests', function() {
-    
-    var utils = keller.utils();   
     
     it("getFocus is a function", function() {
         expect(utils.getFocus).to.be.a.function;
@@ -123,4 +119,4 @@ describe('Utils tests', function() {
         expect(utils.contains(foo, baz)).to.be.false;
     });
         
-});    
+});  
