@@ -1,3 +1,6 @@
+var Keller = require("../dist/js/keller-lib"),
+    keller = new Keller("body");
+
 describe('Sidebar elements', function() {
  	before(function() {
 		casper.start('http://localhost:9000/demo/index.html');
@@ -49,6 +52,8 @@ describe('Sidebar elements', function() {
 
 describe('Utils tests', function() {
     
+    var utils = keller.utils();
+    
     it("getFocus is a function", function() {
         expect(utils.getFocus).to.be.a.function;
     }); 
@@ -97,11 +102,11 @@ describe('Utils tests', function() {
         expect(utils.bind).to.be.a.function;
     });
     
-    it("extend is a function", function() {
+    it("extend is a function", function() {        
         expect(utils.extend).to.be.a.function;
     });
     
-    it("extend method works correctly", function() {
+    it("extend method works correctly", function() {        
         var obj1 = { foo: "bar" },
             obj2 = { bar: "baz" }
         expect(utils.extend(obj1, obj2)).to.deep.equal({ foo: "bar", bar: "baz" });
