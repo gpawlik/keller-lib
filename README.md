@@ -19,6 +19,7 @@ Run `$ grunt --serve` and open `http://localhost:9000/demo/index.hmtl` in the br
 | `watch`      | Starts a live server and watches all assets (default port 9000).     |
 | `lint`       | Runs code checks on JS files.                                        |
 | `build`      | Minifies all the assets.                                             |
+| `test`       | Runs unit and functional tests                                       |
 
 ## Navigation options
 

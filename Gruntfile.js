@@ -124,8 +124,7 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( "grunt-contrib-jshint" );
     grunt.loadNpmTasks( "grunt-umd" );
 	grunt.loadNpmTasks( "grunt-jscs" );
-	grunt.loadNpmTasks( "grunt-contrib-uglify" );
-	grunt.loadNpmTasks( "grunt-contrib-coffee" );
+	grunt.loadNpmTasks( "grunt-contrib-uglify" );	
 	grunt.loadNpmTasks( "grunt-contrib-watch" );
     grunt.loadNpmTasks( "grunt-contrib-sass" );    
 	grunt.loadNpmTasks( "grunt-karma" );
@@ -134,5 +133,5 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "umd:all", "uglify" ] );
-	grunt.registerTask( "default", [ "jshint", "sass", "build" ] ); // jshint bug not showing file names
+	grunt.registerTask( "default", [ "jshint", "sass", "build" ] );
 };
