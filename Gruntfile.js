@@ -101,6 +101,14 @@ module.exports = function( grunt ) {
 				browsers: [ "PhantomJS" ]
 			}
 		},
+		
+		mocha_casperjs: {
+			files: {
+				src: [
+					'test/**/*.js'
+				]
+			}
+		},		
 
         sass: {
             dist: {
@@ -122,6 +130,7 @@ module.exports = function( grunt ) {
 
 	grunt.loadNpmTasks( "grunt-contrib-concat" );
 	grunt.loadNpmTasks( "grunt-contrib-jshint" );
+	grunt.loadNpmTasks( "grunt-mocha-casperjs" );
     grunt.loadNpmTasks( "grunt-umd" );
 	grunt.loadNpmTasks( "grunt-jscs" );
 	grunt.loadNpmTasks( "grunt-contrib-uglify" );	
@@ -131,6 +140,7 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( "grunt-serve" );
 
 	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
+	grunt.registerTask( "test", [ "mocha_casperjs:files" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "umd:all", "uglify" ] );
 	grunt.registerTask( "default", [ "jshint", "sass", "build" ] );

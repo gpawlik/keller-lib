@@ -1,5 +1,4 @@
-var Keller = require("../dist/js/keller-lib"),
-    keller = new Keller("body");
+var Keller = require("../dist/js/keller-lib");
 
 describe('Sidebar elements', function() {
  	before(function() {
@@ -10,7 +9,19 @@ describe('Sidebar elements', function() {
 		casper.waitForSelector('#ue-sidebar', function(sidebar) {
 			expect('#ue-sidebar').to.be.inDOM;
 		});
-	});      
+	});     
+    
+    it('changes widgets', function() {
+        casper.then(function() { 
+            '.ue-sidebar-widgets li:nth-child(2)'.should.be.not.visible 
+        })
+        .wait(150)
+        .thenClick('.ue-sidebar-widgets li:nth-child(2)')
+        .wait(150)
+        .then(function() { 
+            '.ue-sidebar-widgets li:nth-child(2)'.should.be.visible 
+        });
+    }); 
     
     /*
     it("sidebar is a child of the body", function () {
@@ -52,7 +63,8 @@ describe('Sidebar elements', function() {
 
 describe('Utils tests', function() {
     
-    var utils = keller.utils();
+    var keller = new Keller("body"),
+        utils = keller.utils();
     
     it("getFocus is a function", function() {
         expect(utils.getFocus).to.be.a.function;

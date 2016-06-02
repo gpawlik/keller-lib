@@ -23,7 +23,7 @@
     "casper-chai": "^0.3.0",
     "casperjs": "^1.1.1",
     "chai": "^3.5.0",
-    "grunt": "^0.4.5",    
+    "grunt": "^0.4.5",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-sass": "^1.0.0",
@@ -31,18 +31,19 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-jscs": "^2.7.0",
     "grunt-karma": "^0.12.0",
+    "grunt-mocha-casperjs": "^1.4.4",
     "grunt-serve": "^0.1.6",
     "grunt-umd": "^2.3.5",
     "jscs": "^2.10.1",
     "karma": "^0.13.21",
     "karma-firefox-launcher": "^0.1.6",
-    "karma-phantomjs-launcher": "^0.2.1",    
+    "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.5.1",
     "mocha-casperjs": "^0.5.7",
     "mocha-phantomjs": "^4.0.2",
-    "phantomjs": "^1.9.18",    
+    "phantomjs": "^1.9.18",
     "requirejs": "^2.2.0",
     "underscore": "^1.8.3"
   },
-  "optionalDependencies": {}
+  "optionalDependencies": {} 
 }
