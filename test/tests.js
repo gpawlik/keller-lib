@@ -13,13 +13,27 @@ describe('Sidebar elements', function() {
     
     it('changes widgets', function() {
         casper.then(function() { 
-            '.ue-sidebar-widgets li:nth-child(2)'.should.be.not.visible 
+            expect('[data-widget-name="vid"]').to.be.not.visible 
         })
         .wait(150)
-        .thenClick('.ue-sidebar-widgets li:nth-child(2)')
+        .thenClick('.control-icon-vid', function(e) {
+            this.captureSelector('test_widget.png', '[data-widget-name="vid"]');
+        })
         .wait(150)
         .then(function() { 
-            '.ue-sidebar-widgets li:nth-child(2)'.should.be.visible 
+            expect('[data-widget-name="vid"]').to.be.visible 
+        });
+    }); 
+    
+    it('changes contrast', function() {
+        casper.then(function() { 
+            expect('body').to.have.attr('class').and.include('reversed');            
+        })
+        .wait(150)
+        .thenClick('.ue-settings-button[data-name="contrast"]')
+        .wait(150)
+        .then(function() { 
+            expect('body').to.have.attr('class').and.not.include('reversed') 
         });
     }); 
     
