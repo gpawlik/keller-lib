@@ -105,7 +105,8 @@ module.exports = function( grunt ) {
 		mocha_casperjs: {
             options: {
                 width: 900,
-                height: 900
+                height: 900,
+                verbose: true
             },
 			files: {
 				src: [

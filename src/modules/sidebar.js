@@ -107,9 +107,10 @@ Keller.prototype.sidebar = function() {
 
     var showSidebarWidget = function(e) {
         e.stopPropagation();
+        console.log("testing");
         var sidebarWidgets = $el.querySelectorAll('.ue-sidebar-widgets > li'),
             controls = $el.querySelectorAll('.ue-sidebar-controls li'),
-            pageName = e.constructor === CustomEvent ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');
+            pageName = (window.CustomEvent && (e.constructor === CustomEvent)) ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');
 
         toggleSidebar(true);
         _.activateItem(sidebarWidgets, 'data-widget-name', pageName, 'show');
@@ -121,7 +122,8 @@ Keller.prototype.sidebar = function() {
     };
     
     return {
-        init: showSidebar
+        init: showSidebar,
+        showWidget: showSidebarWidget
     };
        
 };

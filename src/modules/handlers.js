@@ -17,7 +17,7 @@ Keller.prototype.handlers = function() {
         _.onEvent(document, 'settings:line-height', _.bind(settings.changeLineHeight, _this));
         _.onEvent(document, 'settings:contrast', _.bind(settings.changeContrast, _this));
         _.onEvent(document, 'settings:show-images', _.bind(settings.changeShowImages, _this));
-        //_.onEvent(document, 'controls:showwidget', _.bind(this.showSidebarWidget, this));
+        _.onEvent(document, 'controls:showwidget', _.bind(_this.sidebar().showWidget, this));
         _.onEvent(document, 'keyboard:writetext', _.bind(_this.textinput().selectKey, _this));
     };
 

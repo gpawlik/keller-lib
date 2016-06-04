@@ -1,4 +1,5 @@
-var Keller = require("../dist/js/keller-lib");
+var Keller = require('../dist/js/keller-lib'),
+    screenshots_path = 'test/screenshots/';
 
 describe('Sidebar elements', function() {
  	before(function() {
@@ -12,28 +13,47 @@ describe('Sidebar elements', function() {
 	});     
     
     it('changes widgets', function() {
-        casper.then(function() { 
-            expect('[data-widget-name="vid"]').to.be.not.visible 
+        casper.then(function() {
+            expect('[data-widget-name="set"]').to.be.visible; 
+            expect('[data-widget-name="vid"]').to.be.not.visible;                        
         })
         .wait(150)
-        .thenClick('.control-icon-vid', function(e) {
-            this.captureSelector('test_widget.png', '[data-widget-name="vid"]');
+        .thenClick('[data-ue-control-name="vid"]')
+        .wait(150)
+        .then(function() {
+            expect('[data-widget-name="set"]').to.be.not.visible;          
+            expect('[data-widget-name="vid"]').to.be.visible;
         })
         .wait(150)
-        .then(function() { 
-            expect('[data-widget-name="vid"]').to.be.visible 
+        .thenClick('[data-ue-control-name="mic"]')
+        .wait(150)
+        .then(function() {            
+            expect('[data-widget-name="mic"]').to.be.visible;
+            expect('[data-widget-name="vid"]').to.be.not.visible;
         });
     }); 
     
     it('changes contrast', function() {
         casper.then(function() { 
-            expect('body').to.have.attr('class').and.include('reversed');            
+            expect(this.getElementAttribute('body', 'class')).to.not.include('reversed');            
         })
         .wait(150)
         .thenClick('.ue-settings-button[data-name="contrast"]')
         .wait(150)
         .then(function() { 
-            expect('body').to.have.attr('class').and.not.include('reversed') 
+            expect(this.getElementAttribute('body', 'class')).to.include('reversed');
+        });
+    }); 
+    
+    it('hides sidebar', function() {
+        casper.then(function() { 
+            expect(this.getElementAttribute('body', 'class')).to.include('show-sidebar');          
+        })
+        .wait(150)
+        .thenClick('.ue-sidebar-close')
+        .wait(150)
+        .then(function() {             
+            expect(this.getElementAttribute('body', 'class')).to.not.include('show-sidebar');    
         });
     }); 
     
@@ -74,7 +94,7 @@ describe('Sidebar elements', function() {
         expect(widgets_area.querySelectorAll(".show[data-widget-name]").length).to.equal(1);
     });*/
 });
-
+/*
 describe('Utils tests', function() {
     
     var keller = new Keller("body"),
@@ -150,4 +170,4 @@ describe('Utils tests', function() {
         expect(utils.contains(foo, baz)).to.be.false;
     });
         
-});  
+});  */
