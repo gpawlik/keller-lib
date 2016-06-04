@@ -22,12 +22,31 @@ module.exports = function () {
             expect(utils.removeClass).to.be.a.function;
         });
         
+        it("removeClass removes class of the element", function() {
+            document.body.classList.add('foo');
+            expect(document.body.className).to.contain('foo');
+            utils.removeClass(document.body, 'foo');
+            expect(document.body.className).to.not.contain('foo');
+        });        
+        
         it("addClass is a function", function() {
             expect(utils.addClass).to.be.a.function;
         });
         
+        it("addClass adds class to the element", function() {
+            utils.addClass(document.body, 'bar');
+            expect(document.body.className).to.contain('bar');
+        });
+        
         it("toggleClass is a function", function() {
             expect(utils.toggleClass).to.be.a.function;
+        });
+        
+        it("toggleClass toggles class of the element", function() {
+            document.body.classList.add('foo');
+            expect(document.body.className).to.contain('foo');
+            utils.toggleClass(document.body, 'foo');
+            expect(document.body.className).to.not.contain('foo');
         });
         
         it("activateItem is a function", function() {
