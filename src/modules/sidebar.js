@@ -2,12 +2,12 @@ Keller.prototype.sidebar = function() {
     var _this = this,
         $el = _this.element,
         _ = _this.utils();
-           
-    var showSidebar = function () {
+
+    var showSidebar = function() {
         $el.appendChild(createSidebar());
-        $el.classList.add('show-sidebar');        
+        $el.classList.add('show-sidebar');
     };
-    
+
     var createSidebar = function() {
         var sidebar,
             sidebarHeader,
@@ -24,7 +24,7 @@ Keller.prototype.sidebar = function() {
         sidebarHeader.className = 'ue-sidebar-header';
         sidebarHeaderClose = document.createElement('div');
         sidebarHeaderClose.className = 'ue-sidebar-close';
-        sidebarHeaderClose.innerHTML = 'r';        
+        sidebarHeaderClose.innerHTML = 'r';
         sidebarHeader.appendChild(sidebarHeaderClose);
 
         sidebarWidgets = document.createElement('ul');
@@ -45,7 +45,7 @@ Keller.prototype.sidebar = function() {
             sidebarWidgets.appendChild(createSidebarWidget(widgets[i].name, widgets[i].alias, i));
             sidebarControls.appendChild(createSidebarControls(widgets[i].alias, widgets[i].icon, i));
         }
-        
+
         _.addEvent(sidebarHeaderClose, 'click', _.bind(toggleSidebar, _this));
 
         sidebar.appendChild(sidebarHeader);
@@ -107,7 +107,6 @@ Keller.prototype.sidebar = function() {
 
     var showSidebarWidget = function(e) {
         e.stopPropagation();
-        console.log("testing");
         var sidebarWidgets = $el.querySelectorAll('.ue-sidebar-widgets > li'),
             controls = $el.querySelectorAll('.ue-sidebar-controls li'),
             pageName = (window.CustomEvent && (e.constructor === CustomEvent)) ? e.detail.pageName : e.currentTarget.getAttribute('data-ue-control-name');
@@ -120,10 +119,10 @@ Keller.prototype.sidebar = function() {
     var toggleSidebar = function(show) {
         _.toggleClass($el, 'show-sidebar', show);
     };
-    
+
     return {
         init: showSidebar,
         showWidget: showSidebarWidget
     };
-       
+
 };

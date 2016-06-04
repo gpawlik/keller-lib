@@ -15,7 +15,7 @@ module.exports = function () {
                 expect(this.getElementAttribute('body', 'class')).to.not.include('reversed');
             });
         });
-        
+
         it("number of controls should equal number of widgets", function() {
             expect(utils.getElement('controls_area').childNodes.length).to.equal(utils.getElement('widgets_area').childNodes.length);
         }); 

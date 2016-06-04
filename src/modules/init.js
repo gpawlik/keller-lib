@@ -27,5 +27,5 @@ Keller.prototype.init = function() {
     this.handlers().eventListeners();
     this.sidebar().init();
     this.speech().init();
-    this.voice().init();                
+    this.voice().init();
 };

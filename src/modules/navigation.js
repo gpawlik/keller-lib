@@ -74,7 +74,7 @@ Keller.prototype.navigation = function() {
             _.activateItem(controls, 'data-ue-control-id', nextControlId, 'show');
         }
     };
-    
+
     return {
         keyboard: navigateKeyboard,
         modules: navigateModules,

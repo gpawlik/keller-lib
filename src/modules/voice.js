@@ -90,7 +90,7 @@ Keller.prototype.voice = function() {
             voiceStop();
         }
     };
-    
+
     return {
         init: initVoiceRecognition,
         createWidget: createVoiceWidget

@@ -17,9 +17,9 @@ Keller.prototype.utils = function() {
         },
 
         removeClass: function(elements, className) {
-            if (!elements) {  
+            if (!elements) {
                 return;
-            }            
+            }
             if (elements.constructor === NodeList) {
                 for (var i = 0; i < elements.length; i++) {
                     elements[i].classList.remove(className);
@@ -30,7 +30,7 @@ Keller.prototype.utils = function() {
         },
 
         addClass: function(elements, className) {
-            if (!elements) { 
+            if (!elements) {
                 return;
             }
             if (elements.constructor === NodeList) {
@@ -59,9 +59,9 @@ Keller.prototype.utils = function() {
         },
 
         activateItem: function(elements, id, value, className) {
-            if (!elements) { 
+            if (!elements) {
                 return;
-            }            
+            }
             for (var i = 0; i < elements.length; i++) {
                 this.toggleClass(elements[i], className, elements[i].getAttribute(id) === value.toString());
             }
@@ -78,9 +78,9 @@ Keller.prototype.utils = function() {
         },
 
         addEvent: function(element, type, callback, bubble) {
-            if (!element) { 
+            if (!element) {
                 return;
-            }            
+            }
             if (document.addEventListener) {
                 return element.addEventListener(type, callback, bubble || false);
             }
@@ -89,9 +89,9 @@ Keller.prototype.utils = function() {
         },
 
         onEvent: function(element, type, callback, bubble) {
-            if (!element) { 
+            if (!element) {
                 return;
-            }               
+            }
             if (document.addEventListener) {
                 document.addEventListener(type, function(event) {
                     if (event.target === element || event.target.id === element) {
@@ -128,11 +128,11 @@ Keller.prototype.utils = function() {
                 return func.apply(thisValue, arguments);
             };
         },
-        
+
         extend: function() {
-            for(var i = 1; i < arguments.length; i++) {
-                for(var key in arguments[i]) {
-                    if(arguments[i].hasOwnProperty(key)) {
+            for (var i = 1; i < arguments.length; i++) {
+                for (var key in arguments[i]) {
+                    if (arguments[i].hasOwnProperty(key)) {
                         arguments[0][key] = arguments[i][key];
                     }
                 }
@@ -142,6 +142,6 @@ Keller.prototype.utils = function() {
 
         contains: function(obj, item) {
             return obj.indexOf(item) >= 0;
-        }    
+        }
     };
 };

@@ -5,7 +5,7 @@ Keller.prototype.dateinput = function() {
 
     var modifyDates = function(action, focus) {
         var $moduleWithFocus = $elem.querySelector('[data-ue-module="' + _this.currentModuleId + '"]');
-        
+
         switch (_this.focusOnModule) {
             case 1:
                 var valueDay = parseInt($moduleWithFocus.querySelector('input[data-day]').getAttribute('data-day'), 10);

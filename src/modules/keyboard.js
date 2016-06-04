@@ -40,7 +40,7 @@ Keller.prototype.keyboard = function() {
         _.removeClass(keyboard.querySelectorAll('li'), className);
         _.addClass(key, className);
     };
-    
+
     return {
         createAlphabet: createAlphabet,
         activateKey: activateKey

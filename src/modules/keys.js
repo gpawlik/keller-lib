@@ -34,7 +34,7 @@ Keller.prototype.keys = function() {
                 break;
         }
     };
-    
+
     return {
         getEvent: getKeyEvent
     };

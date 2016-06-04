@@ -63,7 +63,7 @@ Keller.prototype.speech = function() {
         _this.options.enableAudio = !_this.options.enableAudio;
         _.toggleClass(e.currentTarget, 'active', _this.options.enableAudio);
     };
-    
+
     return {
         init: initSpeechSynthesis,
         readModuleHeaders: readModuleHeaders,

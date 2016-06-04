@@ -17,10 +17,10 @@ module.exports = function () {
                 expect('[data-widget-name="vid"]').to.be.visible;
             })
             .wait(150)
-            .thenClick('[data-ue-control-name="mic"]')
+            .thenClick('[data-ue-control-name="set"]')
             .wait(150)
             .then(function() {            
-                expect('[data-widget-name="mic"]').to.be.visible;
+                expect('[data-widget-name="set"]').to.be.visible;
                 expect('[data-widget-name="vid"]').to.be.not.visible;
             });
         });  
