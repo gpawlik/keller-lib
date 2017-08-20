@@ -2,13 +2,17 @@
 
 A library that transforms every website to its accessible version just with inclusion of several HTML attributes. Supports navigation by voice, keyboard and gamepad. Content on the website can be delivered by the speech generator feature.
 
+## Demo
+
+<img src="demo.gif" title="Keller Demo" />
+
 ## Installation
 
-	$ npm install
+	$ npm i
 
 ## Usage
 
-Run `$ grunt --serve` and open `http://localhost:9000/demo/index.hmtl` in the browser
+Run `$ grunt` and open `http://localhost:9000/demo/index.hmtl` in the browser
 
 ## Build
 
@@ -35,7 +39,7 @@ Chrome 33+, Firefox 44+, IE 9+, Safari 5.1+
 
 ## Gamepad navigation support
 
-Different gamepad devices have varying support across platforms. The best overall is to get a Wired Xbox 360 Controller. It works out of the box on Windows XP, Windows Vista, Windows 7, and popular Linux distributions. On Mac OS X, it first requires a [driver to be installed][driver], but works fine. 
+Different gamepad devices have varying support across platforms. The best overall is to get a Wired Xbox 360 Controller. It works out of the box on Windows XP, Windows Vista, Windows 7, and popular Linux distributions. On Mac OS X, it first requires a [driver to be installed][driver], but works fine.
 
   [driver]: http://tattiebogle.net/index.php/ProjectRoot/Xbox360Controller/OsxDriver
 
