@@ -27,7 +27,7 @@ Keller.prototype.settings = function() {
             'label': 'Line height',
             'type': 'stepper',
             'name': 'line-height',
-            'value': 5
+            'value': 6
         },
         {
             'label': 'Show images',
