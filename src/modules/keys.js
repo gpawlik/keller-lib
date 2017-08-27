@@ -4,7 +4,6 @@ Keller.prototype.keys = function() {
         _ = _this.utils();
 
     var getKeyEvent = function(e) {
-        //  direction;
         e.preventDefault();
         switch (e.keyCode) {
             case 13:
